@@ -1,0 +1,5 @@
+textarea.input-text {
+    background: #f1f1f1;
+    resize: vertical;
+    height: 150px;
+}

@@ -1,0 +1,20 @@
+div.output-text {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    object-fit: contain;
+    background: #f1f1f1;
+    font-size: 20px;
+}
+
+div.output-text p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    line-height: 1.25;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+div.output-text br {
+    height: 30px
+}
