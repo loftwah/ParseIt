@@ -25,7 +25,7 @@ class InputText extends Component {
         // do I need a submit button?
         return (
             <div className="input-text-container">
-                <h1 className="black-text"><b>INPUT TEXT</b></h1>
+                <h4 className="black-text"><b>INPUT TEXT</b></h4>
                 <form onSubmit={this.handleSubmit}>
                     <textarea className="input-text"
                         onChange = {this.handleTextareaChange}

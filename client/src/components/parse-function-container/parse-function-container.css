@@ -1,0 +1,15 @@
+ul.dropdown-content{
+    overflow-y: visible !important;
+}
+
+div.common-module-dropdown {
+    float: left
+}
+div.replace-module-dropdown {
+    padding-left: 200px
+}
+
+a.dropdown-trigger-replace-module {
+    padding-left: 20px;
+    padding-right: 20px
+}

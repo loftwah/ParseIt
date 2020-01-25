@@ -12,9 +12,6 @@ class OutputText extends Component {
 
     render() {
         const { outputText } = this.props;
-
-        // const outputText = "hello\nthere\nit is me"
-
         const outputSplitNewLine = outputText.split('\n');
         const createOutput = outputSplitNewLine.map( (line, idx) => {
             idx = idx + 1
@@ -33,7 +30,7 @@ class OutputText extends Component {
         })
         return (
             <div className="input-text-container">
-                <h1 className="black-text"><b>OUTPUT TEXT</b></h1>
+                <h4 className="black-text"><b>OUTPUT TEXT</b></h4>
                 <div className="output-text-box"
                     style={{ fontFamily: 'Courier' }}> 
                     <div className="output-text">
