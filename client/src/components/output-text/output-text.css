@@ -10,11 +10,17 @@ div.output-text {
 div.output-text p {
     margin-top: 0px;
     margin-bottom: 0px;
-    line-height: 1.25;
+    /* line-height: 1.25; */
     word-wrap: break-word;
     white-space: pre-wrap;
 }
 
 div.output-text br {
     height: 30px
+}
+
+span.line-number {
+    float:left;
+    padding-left: -30px;
+    color: rgb(163, 163, 163);
 }

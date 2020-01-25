@@ -12,7 +12,6 @@ class InputText extends Component {
     }
 
     async handleTextareaChange (e) {
-        console.log('e.target.value', e.target.value)
         await this.setState({
             inputText: e.target.value
         }, () => {

@@ -13,12 +13,21 @@ class OutputText extends Component {
     render() {
         const { outputText } = this.props;
 
+        // const outputText = "hello\nthere\nit is me"
+
         const outputSplitNewLine = outputText.split('\n');
         const createOutput = outputSplitNewLine.map( (line, idx) => {
+            idx = idx + 1
             if (line === "") {
-                return <p key={idx}>&#160;</p>
+                return (<div className="line" key={idx}>
+                    <span className="line-number">[{idx}]&#160;</span>
+                    <p className = "line-text">&#160;</p>
+                </div>)
             } else {
-                return <p key={idx}>{line}</p>
+                return ( <div className="line" key={idx}>
+                    <span className="line-number">[{idx}]&#160;</span>
+                    <p className = "line-text">{line}</p>
+                </div>)
             }
             
         })
