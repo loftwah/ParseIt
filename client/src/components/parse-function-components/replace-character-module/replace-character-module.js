@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import './replace-character-module.css';
+import * as actions from '../../../actions';
 
 class ReplaceCharacterModule extends Component {
     constructor(props) {
@@ -27,7 +29,7 @@ class ReplaceCharacterModule extends Component {
         e.preventDefault();
         console.log('submitted character!');
         // Future: be able to delete a certain number of instances?
-        const { inputText } = this.props;
+        const { inputText, updateOutputText } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
         
         function escapeRegExp(stringToGoIntoTheRegex) {
@@ -37,11 +39,10 @@ class ReplaceCharacterModule extends Component {
         
         var stringToGoIntoTheRegex = escapeRegExp(replaceCharacter);
         var regex = new RegExp(stringToGoIntoTheRegex, "g");
-        var finalText = inputText.replace(regex, insertCharacter);
+        // 2nd param is a function to handle the "$$" case for character insert
+        var finalText = inputText.replace(regex, () => { return insertCharacter });
 
-        console.log(finalText);
-        this.props.handleReplaceText(finalText)
-
+        updateOutputText(finalText)
     }
 
     render() {
@@ -75,10 +76,10 @@ class ReplaceCharacterModule extends Component {
                         </div>
                     </div>
 
-                    <div className="card-action preview-submit">
+                    {/* <div className="card-action instances">
                         <span>Instances: </span>
                         <span>Every Instance</span>
-                    </div>
+                    </div> */}
                     <div className="card-action preview-submit">
                         <a href="!#">Preview changes</a>
                         <a
@@ -92,4 +93,11 @@ class ReplaceCharacterModule extends Component {
     };
 };
 
-export default ReplaceCharacterModule;
+const mapStateToProps = (state) => {
+    return {
+        inputText: state.textRed.inputText,
+        outputText: state.textRed.outputText,
+    };
+};
+
+export default connect(mapStateToProps, actions)(ReplaceCharacterModule);

@@ -5,9 +5,6 @@ import './header.css';
 class Header extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            placeholder: '',
-        };
     }
 
     render() {

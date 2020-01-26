@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import './output-text.css';
+import * as actions from '../../actions';
 
 class OutputText extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            outputText: '',
-        };
     }
 
-    handleOutputText = outputText => {
-        this.setState({
-            outputText: outputText
-        })
+    // When component updates, turn output text into input text?
+    componentDidUpdate() {
+        const { updateInputText, outputText } = this.props
+        updateInputText(outputText)
     }
 
     render() {
@@ -50,4 +49,11 @@ class OutputText extends Component {
     };
 };
 
-export default OutputText;
+const mapStateToProps = (state) => {
+    return {
+        inputText: state.textRed.inputText,
+        outputText: state.textRed.outputText,
+    };
+};
+
+export default connect(mapStateToProps, actions)(OutputText);

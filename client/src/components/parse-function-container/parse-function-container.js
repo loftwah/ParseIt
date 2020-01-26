@@ -20,22 +20,13 @@ class ParseFunctionContainer extends Component {
         M.Dropdown.init(replaceDropdown, { coverTrigger: false });
     }
 
-    // handleSelectedModule
-    handleReplaceText = text => {
-        // send text to output
-        this.props.handleOutputText(text);
-    }
     handleCreateReplaceCharacterModule = e => {
         e.preventDefault();
         console.log('create a "replace character" module!')
         let { modules } = this.state
-        let { inputText } = this.props
         modules.push(<div className="replace-character-module">
-            <ReplaceCharacterModule
-                inputText={inputText}
-                handleReplaceText={this.handleReplaceText}
-            />
-            </div>
+                        <ReplaceCharacterModule/>
+                    </div>
         )
 
         this.setState({
@@ -58,7 +49,7 @@ class ParseFunctionContainer extends Component {
         return (
             <div className="parse-function-container">
                 <h4 className="black-text"><b>PARSE FUNCTION CONTAINER</b></h4>
-                
+                {moduleList}
                 <div className="common-module-dropdown">
                     <a className='dropdown-trigger-common-module btn'
                         href='!#'
@@ -80,7 +71,7 @@ class ParseFunctionContainer extends Component {
                         <li><a href="!#">Replace Words</a></li>
                     </ul>
                 </div>
-                {moduleList}
+                
             </div>
         );
     };
