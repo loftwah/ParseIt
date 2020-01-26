@@ -8,8 +8,7 @@ class ParseFunctionContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputText: this.props.inputText,
-            outputText: ''
+            modules: []
         };
     }
 
@@ -22,20 +21,39 @@ class ParseFunctionContainer extends Component {
     }
 
     // handleSelectedModule
-
     handleReplaceText = text => {
-        // change to inputText instead? To keep making modifications?
-        this.setState({
-            outputText: text
-        })
         // send text to output
         this.props.handleOutputText(text);
     }
+    handleCreateReplaceCharacterModule = e => {
+        e.preventDefault();
+        console.log('create a "replace character" module!')
+        let { modules } = this.state
+        let { inputText } = this.props
+        modules.push(<div className="replace-character-module">
+            <ReplaceCharacterModule
+                inputText={inputText}
+                handleReplaceText={this.handleReplaceText}
+            />
+            </div>
+        )
+
+        this.setState({
+            modules: modules
+        })
+    }
 
     render() {
-        const { inputText } = this.props;
-        // Before and during the text goes through the filters, text will be called "parsedText"
-        const parsedText = inputText;
+        let { modules } = this.state;
+
+        let key = 0;
+        const moduleList = modules.map(module => {
+            key++
+            return (<div className="single-module" key={key}>
+                    {module}
+                </div>
+            )
+        })
 
         return (
             <div className="parse-function-container">
@@ -58,15 +76,11 @@ class ParseFunctionContainer extends Component {
                         href='!#'
                         data-target='replace-module-dropdown'>Replace Modules</a>
                     <ul id='replace-module-dropdown' className='dropdown-content'>
-                        <li><a href="!#">Replace Characters</a></li>
+                        <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
                         <li><a href="!#">Replace Words</a></li>
                     </ul>
                 </div>
-
-                <ReplaceCharacterModule
-                    parsedText={parsedText}
-                    handleReplaceText={this.handleReplaceText}
-                />
+                {moduleList}
             </div>
         );
     };

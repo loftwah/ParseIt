@@ -23,7 +23,7 @@ class ParseItContainer extends Component {
 
     handleOutputText = text => {
         this.setState({
-            outputText: text
+            inputText: text
         })
     }
 
@@ -45,7 +45,7 @@ class ParseItContainer extends Component {
                     inputText = {inputText}
                     handleOutputText = {this.handleOutputText}/>
                 <OutputText
-                    outputText={outputText}
+                    outputText={inputText}
                 />
             </div>
         );

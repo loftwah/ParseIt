@@ -27,7 +27,7 @@ class ReplaceCharacterModule extends Component {
         e.preventDefault();
         console.log('submitted character!');
         // Future: be able to delete a certain number of instances?
-        const { parsedText } = this.props;
+        const { inputText } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
         
         function escapeRegExp(stringToGoIntoTheRegex) {
@@ -37,7 +37,7 @@ class ReplaceCharacterModule extends Component {
         
         var stringToGoIntoTheRegex = escapeRegExp(replaceCharacter);
         var regex = new RegExp(stringToGoIntoTheRegex, "g");
-        var finalText = parsedText.replace(regex, insertCharacter);
+        var finalText = inputText.replace(regex, insertCharacter);
 
         console.log(finalText);
         this.props.handleReplaceText(finalText)
@@ -45,8 +45,6 @@ class ReplaceCharacterModule extends Component {
     }
 
     render() {
-        const { parsedText } = this.props;
-
         return (
             <div className="replace-character-function">
                 <h4 className="black-character"><b>REPLACE TEXT</b></h4>
