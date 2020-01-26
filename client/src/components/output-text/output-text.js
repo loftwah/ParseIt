@@ -10,6 +10,12 @@ class OutputText extends Component {
         };
     }
 
+    handleOutputText = outputText => {
+        this.setState({
+            outputText: outputText
+        })
+    }
+
     render() {
         const { outputText } = this.props;
         const outputSplitNewLine = outputText.split('\n');
@@ -35,6 +41,8 @@ class OutputText extends Component {
                     style={{ fontFamily: 'Courier' }}> 
                     <div className="output-text">
                         {createOutput}
+                        {/* <p>More <span style={{background: "red"}}>input</span> hi</p>
+                        <p>More <span style={{background: "rgb(74, 255, 83)"}}>input</span> hi</p> */}
                     </div>   
                 </div>
             </div>

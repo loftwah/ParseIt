@@ -29,12 +29,18 @@ class ReplaceCharacterModule extends Component {
         // Future: be able to delete a certain number of instances?
         const { parsedText } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
-
-        let finalText = parsedText;
-        while (finalText.indexOf(replaceCharacter) !== -1 ) {
-            finalText = finalText.replace(replaceCharacter, insertCharacter);
+        
+        function escapeRegExp(stringToGoIntoTheRegex) {
+            // escape character: \/ is NOT a useless escape
+            return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
         }
+        
+        var stringToGoIntoTheRegex = escapeRegExp(replaceCharacter);
+        var regex = new RegExp(stringToGoIntoTheRegex, "g");
+        var finalText = parsedText.replace(regex, insertCharacter);
+
         console.log(finalText);
+        this.props.handleReplaceText(finalText)
 
     }
 
@@ -44,7 +50,6 @@ class ReplaceCharacterModule extends Component {
         return (
             <div className="replace-character-function">
                 <h4 className="black-character"><b>REPLACE TEXT</b></h4>
-                <p>{parsedText}</p>
                 <div className="replace-character-card card white">
                     <div className="replace-character-card-content card-content black-character">
                         <span className="card-title center">Module: Replace Characters</span>

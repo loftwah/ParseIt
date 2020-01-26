@@ -24,9 +24,12 @@ class ParseFunctionContainer extends Component {
     // handleSelectedModule
 
     handleReplaceText = text => {
+        // change to inputText instead? To keep making modifications?
         this.setState({
             outputText: text
         })
+        // send text to output
+        this.props.handleOutputText(text);
     }
 
     render() {
@@ -62,6 +65,7 @@ class ParseFunctionContainer extends Component {
 
                 <ReplaceCharacterModule
                     parsedText={parsedText}
+                    handleReplaceText={this.handleReplaceText}
                 />
             </div>
         );

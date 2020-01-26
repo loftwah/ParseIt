@@ -19,6 +19,11 @@ class InputText extends Component {
         })
     }
 
+    handleInputSubmit = e => {
+        e.preventDefault();
+        this.props.handleOutputText(this.state.inputText);
+    }
+
     render() {
         // Text area: value={this.state.value} onChange={this.handleChange}
         // Form: <form onSubmit={this.handleSubmit}>
@@ -32,7 +37,10 @@ class InputText extends Component {
                         value={this.state.inputText}
                         disabled={false}>
                     </textarea>
-                    {/* <button className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-form-button">Start Parsing</button> */}
+                    <button 
+                        className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-form-button"
+                        onClick={this.handleInputSubmit}
+                        >Start Parsing</button>
                 </form>
             </div>
         );
