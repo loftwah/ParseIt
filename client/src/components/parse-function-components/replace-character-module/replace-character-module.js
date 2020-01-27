@@ -56,6 +56,10 @@ class ReplaceCharacterModule extends Component {
 
         // preview deletion
 
+        // Detect case sensitivity
+        const regexConstruct = '(' + replaceCharacter + ')'
+        let regex = new RegExp((regexConstruct), "g")
+
         const deletionSplitNewLine = inputText.split('\n');
         const createDeletionPreview = deletionSplitNewLine.map((line, idx) => {
             idx = idx + 1
@@ -67,8 +71,8 @@ class ReplaceCharacterModule extends Component {
             }
             else if (line.indexOf(replaceCharacter) !== -1) {
                 // responsible for finding the characters that are being deleted
-                const matchedLine = reactStringReplace(line, replaceCharacter, (match, i) => (
-                    <span style={{ background: "red" }}><b>{match}</b></span>
+                const matchedLine = reactStringReplace(line, regex, (match, i) => (
+                    <span style={{ background: "red" }} key={i}><b>{match}</b></span>
                 ));
                 return (<div className="line" key={idx}>
                     <span className="line-number">[{idx}]&#160;</span>
