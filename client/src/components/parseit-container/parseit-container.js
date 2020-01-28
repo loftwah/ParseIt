@@ -8,10 +8,15 @@ import InputText from '../input-text/input-text';
 import ParseFunctionContainer from '../parse-function-container/parse-function-container'
 import OutputText from '../output-text/output-text';
 import PreviewDeletions from '../previews/preview-deletions/preview-deletions';
+import PreviewAdditions from '../previews/preview-additions/preview-additions';
 
 class ParseItContainer extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            previewDeletions: true,
+            previewAdditions: false
+        }
     }
 
     render() {
@@ -26,7 +31,9 @@ class ParseItContainer extends Component {
                     <OutputText/>    
                 ) : (
                     <div className="preview-text">
+                        Toggle between deletions and additions
                         <PreviewDeletions />
+                        <PreviewAdditions />
                     </div>
                 )}
                 

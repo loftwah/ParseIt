@@ -26,13 +26,13 @@ class ReplaceCharacterModule extends Component {
         })
     }
 
-    replaceAndInsertChar = (text, replaceChar, insertChar) => {
-        function escapeRegExp(stringToGoIntoTheRegex) {
-            // escape character: \/ is NOT a useless escape
-            return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        }
+    escapeRegExp = (stringToGoIntoTheRegex) => {
+        // escape character: \/ is NOT a useless escape
+        return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
 
-        const stringToGoIntoTheRegex = escapeRegExp(replaceChar);
+    replaceAndInsertChar = (text, replaceChar, insertChar) => {
+        const stringToGoIntoTheRegex = this.escapeRegExp(replaceChar);
         const regex = new RegExp(stringToGoIntoTheRegex, "g");
         // 2nd param is a function to handle the "$$" case for character insert
         return text.replace(regex, () => { return insertChar });
@@ -51,42 +51,65 @@ class ReplaceCharacterModule extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            inputText, updateDeletionsPreview } = this.props;
+            inputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
 
-        // preview deletion
+        // preview deletion + preview addition
 
-        // Detect case sensitivity
-        const regexConstruct = '(' + replaceCharacter + ')'
-        let regex = new RegExp((regexConstruct), "g")
-
+        const stringToGoIntoTheRegex = this.escapeRegExp(replaceCharacter);
+        let regexDelete = new RegExp('(' + stringToGoIntoTheRegex + ')', "g");
+        
+        let createAdditionPreview = []
         const deletionSplitNewLine = inputText.split('\n');
         const createDeletionPreview = deletionSplitNewLine.map((line, idx) => {
             idx = idx + 1
             if (line === "") {
+                // addition preview
+                createAdditionPreview.push((<div className="line" key={idx}>
+                    <span className="line-number">[{idx}]&#160;</span>
+                    <p className="line-text">&#160;</p>
+                </div>))
+                //deletion preview
                 return (<div className="line" key={idx}>
                     <span className="line-number">[{idx}]&#160;</span>
                     <p className="line-text">&#160;</p>
                 </div>)
             }
             else if (line.indexOf(replaceCharacter) !== -1) {
+                // addition preview
+                const matchedLineAddition = reactStringReplace(line, regexDelete, (match, i) => (
+                    <span style={{ background: "rgb(74, 255, 83)" }} key={i}><b>{insertCharacter}</b></span>
+                ));
+                createAdditionPreview.push(<div className="line" key={idx}>
+                    <span className="line-number">[{idx}]&#160;</span>
+                    <p className="line-text">{matchedLineAddition}</p>
+                </div>)
+                
+                // deletion preview
                 // responsible for finding the characters that are being deleted
-                const matchedLine = reactStringReplace(line, regex, (match, i) => (
+                const matchedLineDelete = reactStringReplace(line, regexDelete, (match, i) => (
                     <span style={{ background: "red" }} key={i}><b>{match}</b></span>
                 ));
+                // deletion preview
                 return (<div className="line" key={idx}>
                     <span className="line-number">[{idx}]&#160;</span>
-                    <p className="line-text">{matchedLine}</p>
+                    <p className="line-text">{matchedLineDelete}</p>
                 </div>)
             }
             else {
+                createAdditionPreview.push(<div className="line" key={idx}>
+                    <span className="line-number">[{idx}]&#160;</span>
+                    <p className="line-text">{line}</p>
+                </div>)
                 return (<div className="line" key={idx}>
                     <span className="line-number">[{idx}]&#160;</span>
                     <p className="line-text">{line}</p>
                 </div>)
             }
         })
+        console.log(createAdditionPreview)
         updateDeletionsPreview(createDeletionPreview);
+        updateAdditionsPreview(createAdditionPreview)
 
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
     }

@@ -1,0 +1,30 @@
+div.preview-additions-text {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    object-fit: contain;
+    background: #f1f1f1;
+    font-size: 13px;
+}
+
+div.preview-additions-text p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    /* line-height: 1.25; */
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+div.preview-additions-text br {
+    height: 30px
+}
+
+span.line-number {
+    float:left;
+    padding-left: -30px;
+    color: rgb(163, 163, 163);
+}
+
+/* span {
+    color: rgb(74, 255, 83)
+} */
