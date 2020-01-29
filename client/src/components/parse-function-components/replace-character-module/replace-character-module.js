@@ -9,9 +9,19 @@ class ReplaceCharacterModule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            replaceCharacter: '',
-            insertCharacter: ''
+            replaceCharacter: this.props.replaceCharacter,
+            insertCharacter: this.props.insertCharacter,
+            disabledActions: this.props.disabledActions,
+            moduleNum:this.props.moduleNum,
         };
+    }
+
+    componentDidMount() {
+        // If the component is supplied with an insert and delete character, this means the component was made with a pre-determined insert and replace intention
+        if (this.props.insertCharacter !== "" && this.props.replaceCharacter !== "" ) {
+            const { event } = this.props;
+            this.handleSubmit(event);
+        }
     }
 
     handleReplaceCharacter = e => {
@@ -38,20 +48,34 @@ class ReplaceCharacterModule extends Component {
         return text.replace(regex, () => { return insertChar });
     }
 
+    handleDelete = (e) => {
+        const { handleDeleteModule, id } = this.props;
+        handleDeleteModule(e, id);
+    }
+
     handleSubmit = e => {
         e.preventDefault();
         console.log('submitted character!');
         // Future: be able to delete a certain number of instances?
-        const { inputText, updateOutputText } = this.props;
+        const { outputText, updateOutputText, handleModuleCode, togglePreviewOff, id } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
-        const finalText = this.replaceAndInsertChar(inputText, replaceCharacter, insertCharacter);
+        const finalText = this.replaceAndInsertChar(outputText, replaceCharacter, insertCharacter);
         updateOutputText(finalText);
+        togglePreviewOff();
+        this.setState({
+            disabledActions: true
+        });
+        const moduleCode = "ReplaceCharacterModule" + " " + replaceCharacter + " " + insertCharacter;
+        handleModuleCode({
+            moduleCode: moduleCode,
+            id: id
+        });
     }
 
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            inputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
+            outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
 
         // preview deletion + preview addition
@@ -60,7 +84,7 @@ class ReplaceCharacterModule extends Component {
         let regexDelete = new RegExp('(' + stringToGoIntoTheRegex + ')', "g");
         
         let createAdditionPreview = []
-        const deletionSplitNewLine = inputText.split('\n');
+        const deletionSplitNewLine = outputText.split('\n');
         const createDeletionPreview = deletionSplitNewLine.map((line, idx) => {
             idx = idx + 1
             if (line === "") {
@@ -107,7 +131,6 @@ class ReplaceCharacterModule extends Component {
                 </div>)
             }
         })
-        console.log(createAdditionPreview)
         updateDeletionsPreview(createDeletionPreview);
         updateAdditionsPreview(createAdditionPreview)
 
@@ -116,11 +139,16 @@ class ReplaceCharacterModule extends Component {
 
     render() {
         const { previewToggle } = this.props;
+        const { disabledActions, insertCharacter, replaceCharacter } = this.state;
         return (
             <div className="replace-character-function">
                 <h4 className="black-character"><b>REPLACE TEXT</b></h4>
                 <div className="replace-character-card card white">
                     <div className="replace-character-card-content card-content black-character">
+                        <button 
+                            className="waves-effect waves-light btn #42a5f5 red lighten-1 submit-form-button"
+                            onClick={this.handleDelete}
+                            >Delete</button>
                         <span className="card-title center">Module: Replace Characters</span>
                     </div>
                     <div className="row">
@@ -131,6 +159,8 @@ class ReplaceCharacterModule extends Component {
                                     type="text"
                                     id="replace-delete-input"
                                     onChange={this.handleReplaceCharacter}
+                                    value = {replaceCharacter}
+                                    disabled={disabledActions}
                                 />
                                 <label htmlFor="replace-delete-input"></label>
                             </div>
@@ -140,6 +170,8 @@ class ReplaceCharacterModule extends Component {
                                     type="text"
                                     id="replace-insert-input"
                                     onChange={this.handleInsertCharacter}
+                                    disabled={disabledActions}
+                                    value={insertCharacter}
                                 />
                                 <label htmlFor="replace-insert-input"></label>
                             </div>
@@ -150,7 +182,8 @@ class ReplaceCharacterModule extends Component {
                         <span>Instances: </span>
                         <span>Every Instance</span>
                     </div> */}
-                    <div className="card-action preview-submit">
+                    {disabledActions === true ? (<div className="disabled-actions"></div>) : (
+                        <div className="card-action preview-submit">
                         {previewToggle === true ? (
                             <a
                                 href="!#"
@@ -168,6 +201,8 @@ class ReplaceCharacterModule extends Component {
                             onClick={this.handleSubmit}
                         >Submit</a>
                     </div>
+                    )}
+                    
                 </div>
             </div>
         );

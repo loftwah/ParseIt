@@ -7,11 +7,14 @@ import {
     UPDATE_ADDITIONS_PREVIEW
 } from '../actions/types'
 
+// Input text: keeps the text from the input text area throughout the entire lifetime
+// Output text: the latest parsed text
+
 const initState = {
-    // inputText: 'good stuff right now\n\n    It is very good\n\nIt is good good good and stuff',
-    inputText: '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~',
-    // outputText: 'good stuff right now\n\n    It is very good\n\nIt is good good good and stuff',
-    outputText: '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~',
+    inputText: 'good stuff right now\n\n    It is very good\n\nIt is good good good and stuff',
+    // inputText: '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~',
+    outputText: 'good stuff right now\n\n    It is very good\n\nIt is good good good and stuff',
+    // outputText: '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~',
     previewToggle: false,
     deletionsPreview: '',
     additionsPreview: ''
