@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import M from 'materialize-css';
 
 import './parse-function-container.css';
-import ReplaceCharacterModule from '../parse-function-components/replace-character-module/replace-character-module'
+import ReplaceCharacterModule from '../parse-function-components/replace-character-module/replace-character-module';
+import ReplaceCharacterModuleComplete from '../parse-function-components/replace-character-module/replace-character-module-complete';
 import * as actions from '../../actions';
 
 class ParseFunctionContainer extends Component {
@@ -13,6 +14,7 @@ class ParseFunctionContainer extends Component {
             modules: [],
             moduleCode: []
         };
+        this.handleDeleteModule = this.handleDeleteModule.bind(this);
     }
 
     componentDidMount() {
@@ -23,15 +25,44 @@ class ParseFunctionContainer extends Component {
         M.Dropdown.init(replaceDropdown, { coverTrigger: false });
     }
 
-    handleDeleteModule = (e, id) => {
-        console.log('id to be deleted: ', id)
+    setStateAsync = (state) => {
+        return new Promise((resolve) => {
+            this.setState(state, resolve)
+        });
+    }
+
+    async handleDeleteModule(e, id) {
+        console.log('id to be deleted: ', id);
         // debugger;
 
         // At this moment, "delete module will create a "ReplaceCharacterModule" using the following characters:
 
-        const insert = "e"
-        const replace = "hello from react!"
-        this.handleCreateReplaceCharacterModule(e, insert, replace);
+        const newModuleCode = this.state.moduleCode.filter(moduleCode => {
+            if (moduleCode.id !== id) {
+                return moduleCode;
+            }
+        })
+        const newState = { ...this.state, modules: [], moduleCode: newModuleCode };
+
+        await this.setStateAsync(newState);
+
+        // With the module code we will "start over"
+        // Bring back the output text
+        this.props.updateOutputText(this.props.inputText);
+
+        // Begin executing module code
+        // console.log(newModuleCode);
+        let insertCharacter;
+        let replaceCharacter;
+        for (let i = 0; i < newModuleCode.length; i++) {
+            let singleModule = newModuleCode[i].moduleCode.split(' ')
+            if (singleModule[0] === "ReplaceCharacterModule") {
+                id = newModuleCode[i].id;
+                replaceCharacter = singleModule[1];
+                insertCharacter = singleModule[2];
+                await this.handleCreateReplaceCharacterModuleComplete(id, replaceCharacter, insertCharacter);
+            }
+        }
     }
 
     handleModuleCode = moduleCodeText => {
@@ -51,22 +82,18 @@ class ParseFunctionContainer extends Component {
         // the above means "create a character module and submit a replacement of "text" with "other text"
     }
 
-    handleCreateReplaceCharacterModule = (e, replaceCharacter = '', insertCharacter = '') => {
+    handleCreateReplaceCharacterModule = (e) => {
         e.preventDefault();
-        e.persist();
         console.log('create a "replace character" module!')
 
         let id = Math.random();
         let replaceCharModule = {
             moduleJSX: (<div className="replace-character-module" key={id}>
                 <ReplaceCharacterModule
-                    disabledActions={false}
                     id={id}
                     handleDeleteModule={this.handleDeleteModule}
                     handleModuleCode={this.handleModuleCode}
-                    insertCharacter={insertCharacter}
-                    replaceCharacter={replaceCharacter}
-                    event={e} />
+                    completeModule={this.handleCreateReplaceCharacterModuleComplete} />
             </div>),
             id: id
         };
@@ -79,8 +106,35 @@ class ParseFunctionContainer extends Component {
         })
     }
 
+    handleCreateReplaceCharacterModuleComplete = (id, replaceCharacter, insertCharacter) => {
+        console.log('create a completed "replace character" module!')
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let replaceCharModule = {
+            moduleJSX: (<div className="replace-character-module" key={id}>
+                <ReplaceCharacterModuleComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    insertCharacter={insertCharacter}
+                    replaceCharacter={replaceCharacter} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, replaceCharModule]
+        })
+    }
+
     render() {
-        let { modules } = this.state;
+        let { modules, moduleCode } = this.state;
+
+        // console.log('modules: ', modules);
+        // console.log('moduleCode: ', moduleCode);
 
         let key = 0;
         const moduleList = modules.map(module => {

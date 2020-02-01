@@ -4,24 +4,15 @@ import reactStringReplace from 'react-string-replace';
 
 import './replace-character-module.css';
 import * as actions from '../../../actions';
+import { escapeRegExp, replaceAndInsertChar } from './replace-character-module-functions';
 
 class ReplaceCharacterModule extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            replaceCharacter: this.props.replaceCharacter,
-            insertCharacter: this.props.insertCharacter,
-            disabledActions: this.props.disabledActions,
-            moduleNum:this.props.moduleNum,
+            replaceCharacter: '',
+            insertCharacter: '',
         };
-    }
-
-    componentDidMount() {
-        // If the component is supplied with an insert and delete character, this means the component was made with a pre-determined insert and replace intention
-        if (this.props.insertCharacter !== "" && this.props.replaceCharacter !== "" ) {
-            const { event } = this.props;
-            this.handleSubmit(event);
-        }
     }
 
     handleReplaceCharacter = e => {
@@ -36,19 +27,8 @@ class ReplaceCharacterModule extends Component {
         })
     }
 
-    escapeRegExp = (stringToGoIntoTheRegex) => {
-        // escape character: \/ is NOT a useless escape
-        return stringToGoIntoTheRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    }
-
-    replaceAndInsertChar = (text, replaceChar, insertChar) => {
-        const stringToGoIntoTheRegex = this.escapeRegExp(replaceChar);
-        const regex = new RegExp(stringToGoIntoTheRegex, "g");
-        // 2nd param is a function to handle the "$$" case for character insert
-        return text.replace(regex, () => { return insertChar });
-    }
-
     handleDelete = (e) => {
+        e.preventDefault();
         const { handleDeleteModule, id } = this.props;
         handleDeleteModule(e, id);
     }
@@ -59,17 +39,15 @@ class ReplaceCharacterModule extends Component {
         // Future: be able to delete a certain number of instances?
         const { outputText, updateOutputText, handleModuleCode, togglePreviewOff, id } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
-        const finalText = this.replaceAndInsertChar(outputText, replaceCharacter, insertCharacter);
+        const finalText = replaceAndInsertChar(outputText, replaceCharacter, insertCharacter);
         updateOutputText(finalText);
         togglePreviewOff();
-        this.setState({
-            disabledActions: true
-        });
         const moduleCode = "ReplaceCharacterModule" + " " + replaceCharacter + " " + insertCharacter;
         handleModuleCode({
             moduleCode: moduleCode,
             id: id
         });
+        this.props.completeModule(id, replaceCharacter, insertCharacter);
     }
 
     handlePreview = e => {
@@ -80,9 +58,9 @@ class ReplaceCharacterModule extends Component {
 
         // preview deletion + preview addition
 
-        const stringToGoIntoTheRegex = this.escapeRegExp(replaceCharacter);
+        const stringToGoIntoTheRegex = escapeRegExp(replaceCharacter);
         let regexDelete = new RegExp('(' + stringToGoIntoTheRegex + ')', "g");
-        
+
         let createAdditionPreview = []
         const deletionSplitNewLine = outputText.split('\n');
         const createDeletionPreview = deletionSplitNewLine.map((line, idx) => {
@@ -108,7 +86,7 @@ class ReplaceCharacterModule extends Component {
                     <span className="line-number">[{idx}]&#160;</span>
                     <p className="line-text">{matchedLineAddition}</p>
                 </div>)
-                
+
                 // deletion preview
                 // responsible for finding the characters that are being deleted
                 const matchedLineDelete = reactStringReplace(line, regexDelete, (match, i) => (
@@ -139,16 +117,16 @@ class ReplaceCharacterModule extends Component {
 
     render() {
         const { previewToggle } = this.props;
-        const { disabledActions, insertCharacter, replaceCharacter } = this.state;
+        const { insertCharacter, replaceCharacter } = this.state;
         return (
             <div className="replace-character-function">
                 <h4 className="black-character"><b>REPLACE TEXT</b></h4>
                 <div className="replace-character-card card white">
                     <div className="replace-character-card-content card-content black-character">
-                        <button 
+                        <button
                             className="waves-effect waves-light btn #42a5f5 red lighten-1 submit-form-button"
                             onClick={this.handleDelete}
-                            >Delete</button>
+                        >Delete</button>
                         <span className="card-title center">Module: Replace Characters</span>
                     </div>
                     <div className="row">
@@ -159,8 +137,8 @@ class ReplaceCharacterModule extends Component {
                                     type="text"
                                     id="replace-delete-input"
                                     onChange={this.handleReplaceCharacter}
-                                    value = {replaceCharacter}
-                                    disabled={disabledActions}
+                                    value={replaceCharacter}
+                                    disabled={false}
                                 />
                                 <label htmlFor="replace-delete-input"></label>
                             </div>
@@ -170,7 +148,7 @@ class ReplaceCharacterModule extends Component {
                                     type="text"
                                     id="replace-insert-input"
                                     onChange={this.handleInsertCharacter}
-                                    disabled={disabledActions}
+                                    disabled={false}
                                     value={insertCharacter}
                                 />
                                 <label htmlFor="replace-insert-input"></label>
@@ -182,18 +160,18 @@ class ReplaceCharacterModule extends Component {
                         <span>Instances: </span>
                         <span>Every Instance</span>
                     </div> */}
-                    {disabledActions === true ? (<div className="disabled-actions"></div>) : (
-                        <div className="card-action preview-submit">
+
+                    <div className="card-action preview-submit">
                         {previewToggle === true ? (
                             <a
                                 href="!#"
                                 onClick={this.handlePreview}>
                                 Edit Module</a>
                         ) : (
-                            <a
-                                href="!#"
-                                onClick={this.handlePreview}>
-                                Preview Changes
+                                <a
+                                    href="!#"
+                                    onClick={this.handlePreview}>
+                                    Preview Changes
                             </a>
                             )}
                         <a
@@ -201,8 +179,7 @@ class ReplaceCharacterModule extends Component {
                             onClick={this.handleSubmit}
                         >Submit</a>
                     </div>
-                    )}
-                    
+
                 </div>
             </div>
         );
