@@ -3,6 +3,8 @@ import * as text from './text';
 export const updateInputText = text.updateInputText;
 export const updateOutputText = text.updateOutputText;
 
+export const updateCodeText = text.updateCodeText;
+
 export const togglePreviewOn = text.togglePreviewOn;
 export const togglePreviewOff = text.togglePreviewOff;
 

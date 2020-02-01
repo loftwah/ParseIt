@@ -36,8 +36,7 @@ class OutputText extends Component {
         return (
             <div className="input-text-container">
                 <h4 className="black-text"><b>OUTPUT TEXT</b></h4>
-                <div className="output-text-box"
-                    style={{ fontFamily: 'Courier' }}> 
+                <div className="output-text-box"> 
                     <div className="output-text">
                         {createOutput}
                         {/* <p>More <span style={{background: "red"}}>input</span> hi</p>

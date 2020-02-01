@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import M from 'materialize-css';
 
 import './parse-function-container.css';
+import ParseItCode from '../parse-function-components/parseit-code/parseit-code';
 import ReplaceCharacterModule from '../parse-function-components/replace-character-module/replace-character-module';
 import ReplaceCharacterModuleComplete from '../parse-function-components/replace-character-module/replace-character-module-complete';
 import * as actions from '../../actions';
@@ -11,8 +12,8 @@ class ParseFunctionContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            modules: [],
-            moduleCode: []
+            modules: [], // JSX for modules
+            moduleCode: [], // moduleCode will be converted into codeText for reducer
         };
         this.handleDeleteModule = this.handleDeleteModule.bind(this);
     }
@@ -31,12 +32,13 @@ class ParseFunctionContainer extends Component {
         });
     }
 
-    async handleDeleteModule(e, id) {
+    async handleDeleteModule(id) {
         console.log('id to be deleted: ', id);
         // debugger;
 
-        // At this moment, "delete module will create a "ReplaceCharacterModule" using the following characters:
+        const { updateOutputText, updateCodeText } = this.props;
 
+        // At this moment, "delete module will create a "ReplaceCharacterModule" using the following characters:
         const newModuleCode = this.state.moduleCode.filter(moduleCode => {
             if (moduleCode.id !== id) {
                 return moduleCode;
@@ -48,14 +50,14 @@ class ParseFunctionContainer extends Component {
 
         // With the module code we will "start over"
         // Bring back the output text
-        this.props.updateOutputText(this.props.inputText);
+        updateOutputText(this.props.inputText);
 
         // Begin executing module code
         // console.log(newModuleCode);
         let insertCharacter;
         let replaceCharacter;
         for (let i = 0; i < newModuleCode.length; i++) {
-            let singleModule = newModuleCode[i].moduleCode.split(' ')
+            let singleModule = newModuleCode[i].code.split(' ')
             if (singleModule[0] === "ReplaceCharacterModule") {
                 id = newModuleCode[i].id;
                 replaceCharacter = singleModule[1];
@@ -63,18 +65,28 @@ class ParseFunctionContainer extends Component {
                 await this.handleCreateReplaceCharacterModuleComplete(id, replaceCharacter, insertCharacter);
             }
         }
+
+        const codeText = this.convertCodeToText(this.state.moduleCode);
+        updateCodeText(codeText);
     }
 
+    // for additional modules
     handleModuleCode = moduleCodeText => {
         // Example of how the "Module Code" will work:
         // Template: ReplaceCharacterModule "text" "other text"
         // the above means "create a character module and submit a replacement of "text" with "other text"
+
+        const { updateCodeText } = this.props;
 
         let moduleCode = [...this.state.moduleCode, moduleCodeText];
 
         this.setState({
             moduleCode: moduleCode
         }, () => console.log(this.state.moduleCode));
+
+        const codeText = this.convertCodeToText(moduleCode)
+        updateCodeText(codeText)
+
     }
 
     parseItCode = (codeArr) => {
@@ -130,11 +142,20 @@ class ParseFunctionContainer extends Component {
         })
     }
 
+    convertCodeToText = (moduleCode) => {
+        if (moduleCode.length === 0) {
+            return '';
+        } else {
+            let textCode = ''
+            for (let i = 0; i < moduleCode.length; i++) {
+                textCode += moduleCode[i].code + '\n';
+            }
+            return textCode;
+        }
+    }
+
     render() {
         let { modules, moduleCode } = this.state;
-
-        // console.log('modules: ', modules);
-        // console.log('moduleCode: ', moduleCode);
 
         let key = 0;
         const moduleList = modules.map(module => {
@@ -148,6 +169,10 @@ class ParseFunctionContainer extends Component {
         return (
             <div className="parse-function-container">
                 <h4 className="black-text"><b>PARSE FUNCTION CONTAINER</b></h4>
+                <ParseItCode />
+                <br />
+                <br />
+                <br />
                 {moduleList}
                 <div className="common-module-dropdown">
                     <a className='dropdown-trigger-common-module btn'
@@ -180,6 +205,7 @@ const mapStateToProps = (state) => {
     return {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
+        codeText: state.textRed.codeText,
         previewToggle: state.textRed.previewToggle,
         deletionsPreview: state.textRed.deletionsPreview,
         additionsPreview: state.textRed.additionsPreview

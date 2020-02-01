@@ -1,6 +1,7 @@
 import {
     UPDATE_INPUT_TEXT,
     UPDATE_OUTPUT_TEXT,
+    UPDATE_CODE_TEXT,
     TOGGLE_PREVIEW_ON,
     TOGGLE_PREVIEW_OFF,
     UPDATE_DELETIONS_PREVIEW,
@@ -20,6 +21,15 @@ export const updateOutputText = data => {
     return dispatch => {
         dispatch({
             type: UPDATE_OUTPUT_TEXT,
+            payload: data,
+        });
+    }
+}
+
+export const updateCodeText = data => {
+    return dispatch => {
+        dispatch({
+            type: UPDATE_CODE_TEXT,
             payload: data,
         });
     }

@@ -1,6 +1,7 @@
 import {
     UPDATE_INPUT_TEXT,
     UPDATE_OUTPUT_TEXT,
+    UPDATE_CODE_TEXT,
     TOGGLE_PREVIEW_ON,
     TOGGLE_PREVIEW_OFF,
     UPDATE_DELETIONS_PREVIEW,
@@ -15,6 +16,7 @@ const initState = {
     // inputText: '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~',
     outputText: 'good stuff right now\n\n    It is very good\n\nIt is good good good and stuff',
     // outputText: '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~',
+    codeText: '',
     previewToggle: false,
     deletionsPreview: '',
     additionsPreview: ''
@@ -28,6 +30,9 @@ function textReducer(state = initState, action) {
         case UPDATE_OUTPUT_TEXT:
             // console.log('[TextReducer] got a UPDATE_OUTPUT_TEXT action');
             return { ...state, outputText: action.payload };
+        case UPDATE_CODE_TEXT:
+            // console.log('[TextReducer] got a UPDATE_OUTPUT_TEXT action');
+            return { ...state, codeText: action.payload };
         case TOGGLE_PREVIEW_ON:
             // console.log('[TextReducer] got a TOGGLE_PREVIEW_ON action');
             return { ...state, previewToggle: action.payload };

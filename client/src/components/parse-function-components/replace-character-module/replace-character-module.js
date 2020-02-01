@@ -30,7 +30,7 @@ class ReplaceCharacterModule extends Component {
     handleDelete = (e) => {
         e.preventDefault();
         const { handleDeleteModule, id } = this.props;
-        handleDeleteModule(e, id);
+        handleDeleteModule(id);
     }
 
     handleSubmit = e => {
@@ -44,7 +44,7 @@ class ReplaceCharacterModule extends Component {
         togglePreviewOff();
         const moduleCode = "ReplaceCharacterModule" + " " + replaceCharacter + " " + insertCharacter;
         handleModuleCode({
-            moduleCode: moduleCode,
+            code: moduleCode,
             id: id
         });
         this.props.completeModule(id, replaceCharacter, insertCharacter);

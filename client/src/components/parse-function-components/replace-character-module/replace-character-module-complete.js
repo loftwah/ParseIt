@@ -24,7 +24,7 @@ class ReplaceCharacterModuleComplete extends Component {
     handleDelete = (e) => {
         e.preventDefault();
         const { handleDeleteModule, id } = this.props;
-        handleDeleteModule(e, id);
+        handleDeleteModule(id);
     }
 
     render() {

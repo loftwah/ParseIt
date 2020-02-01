@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './parseit-container.css';
 import * as actions from '../../actions';
 import Header from '../header/header';
+import Navbar from '../navbar/navbar';
 import InputText from '../input-text/input-text';
 import ParseFunctionContainer from '../parse-function-container/parse-function-container'
 import OutputText from '../output-text/output-text';
@@ -23,20 +24,22 @@ class ParseItContainer extends Component {
         const { previewToggle } = this.props;
         return (
             <div className="parseit-container">
-                <Header />
-                <InputText />
-                <ParseFunctionContainer/>
-                
-                { previewToggle === false ? (
-                    <OutputText/>    
-                ) : (
-                    <div className="preview-text">
-                        Toggle between deletions and additions
+                <Navbar />
+                <div className="parseit-content">
+                    {/* <Header /> */}
+                    <InputText />
+                    <ParseFunctionContainer />
+
+                    {previewToggle === false ? (
+                        <OutputText />
+                    ) : (
+                            <div className="preview-text">
+                                Toggle between deletions and additions
                         <PreviewDeletions />
-                        <PreviewAdditions />
-                    </div>
-                )}
-                
+                                <PreviewAdditions />
+                            </div>
+                        )}
+                </div>
             </div>
         );
     };
