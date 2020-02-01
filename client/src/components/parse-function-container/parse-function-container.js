@@ -16,6 +16,8 @@ class ParseFunctionContainer extends Component {
             moduleCode: [], // moduleCode will be converted into codeText for reducer
         };
         this.handleDeleteModule = this.handleDeleteModule.bind(this);
+        this.ouptutModulesFromModuleCodeState = this.ouptutModulesFromModuleCodeState.bind(this);
+        this.parseItCode = this.parseItCode.bind(this);
     }
 
     componentDidMount() {
@@ -48,25 +50,13 @@ class ParseFunctionContainer extends Component {
         await this.setStateAsync(newState);
 
         // With the module code we will "start over"
-        // Bring back the output text
+        // Bring back the input text
         updateOutputText(this.props.inputText);
 
-        // Begin executing module code
-        // console.log(newModuleCode);
-        let insertCharacter;
-        let replaceCharacter;
-        for (let i = 0; i < newModuleCode.length; i++) {
-            let singleModule = newModuleCode[i].code.split(' ')
-            if (singleModule[0] === "ReplaceCharacterModule") {
-                id = newModuleCode[i].id;
-                // slice off the double quotes - found at the beginning and the end
-                replaceCharacter = singleModule[1].slice(1,singleModule[1].length - 1);
-                insertCharacter = singleModule[2].slice(1,singleModule[2].length - 1);
-                await this.handleCreateReplaceCharacterModuleComplete(id, replaceCharacter, insertCharacter);
-            }
-        }
-
-        const codeText = this.convertCodeToText(this.state.moduleCode);
+        console.log(newModuleCode)
+        // build all modules found in the moduleCode state
+        this.ouptutModulesFromModuleCodeState(newModuleCode);
+        const codeText = this.convertCodeArrayToText(newModuleCode);
         updateCodeText(codeText);
     }
 
@@ -84,14 +74,49 @@ class ParseFunctionContainer extends Component {
             moduleCode: moduleCode
         }, () => console.log(this.state.moduleCode));
 
-        const codeText = this.convertCodeToText(moduleCode)
+        const codeText = this.convertCodeArrayToText(moduleCode)
         updateCodeText(codeText)
 
     }
 
-    parseItCode = (codeArr) => {
-        // ReplaceCharacterModule "text" "other text"
-        // the above means "create a character module and submit a replacement of "text" with "other text"
+    async parseItCode (codeStr) {
+        const { updateCodeText, updateOutputText } = this.props
+
+        // We will create modules based on the ParseIt Code
+        // We will begin by deleting everything
+
+        // Bring back the input text
+        updateOutputText(this.props.inputText);
+
+        // create moduleCode using the codeStr made inside the parse-it-code component's textarea
+        const pureCodeArr = codeStr.split('\n');
+
+        let newModuleCode = [];
+        let id;
+        // run through the pureCodeArr to fill newModuleCode with code and id properties
+        for (let i = 0; i < pureCodeArr.length; i++ ) {
+            id = Math.random();
+            newModuleCode.push({
+                id: id,
+                code: pureCodeArr[i]
+            })
+        }
+
+        const newState = { ...this.state, modules: [], moduleCode: newModuleCode };
+
+        // update the state with the "new module code" list
+        await this.setStateAsync(newState);
+
+        // With the module code, we will "start over" and build modules based on the ParseIt Code
+
+        // Bring back the input text
+        updateOutputText(this.props.inputText);
+
+        console.log(newModuleCode)
+        // build all modules found in the moduleCode state list
+        this.ouptutModulesFromModuleCodeState(newModuleCode)
+        const codeText = this.convertCodeArrayToText(newModuleCode);
+        updateCodeText(codeText);
     }
 
     handleCreateReplaceCharacterModule = (e) => {
@@ -142,15 +167,36 @@ class ParseFunctionContainer extends Component {
         })
     }
 
-    convertCodeToText = (moduleCode) => {
+    convertCodeArrayToText = (moduleCode) => {
         if (moduleCode.length === 0) {
             return '';
         } else {
             let textCode = ''
             for (let i = 0; i < moduleCode.length; i++) {
+                if(moduleCode[i].code === "") {
+                    continue;
+                }
                 textCode += moduleCode[i].code + '\n';
             }
             return textCode;
+        }
+    }
+
+    async ouptutModulesFromModuleCodeState (moduleCodeArr) {
+        let insertCharacter;
+        let replaceCharacter;
+        let id;
+        for (let i = 0; i < moduleCodeArr.length; i++) {
+            let moduleType = moduleCodeArr[i].code.split(' ')[0]
+            let moduleParams = moduleCodeArr[i].code.slice(0, moduleCodeArr[i].code.length - 1)
+                .replace(moduleType + ' \"','').split("\" \"")
+            if (moduleType === "ReplaceCharacterModule") {
+                id = moduleCodeArr[i].id;
+                // slice off the double quotes - found at the beginning and the end
+                replaceCharacter = moduleParams[0]
+                insertCharacter = moduleParams[1]
+                await this.handleCreateReplaceCharacterModuleComplete(id, replaceCharacter, insertCharacter);
+            }
         }
     }
 
@@ -169,7 +215,9 @@ class ParseFunctionContainer extends Component {
         return (
             <div className="parse-function-container">
                 <h4 className="black-text"><b>PARSE FUNCTION CONTAINER</b></h4>
-                <ParseItCode />
+                <ParseItCode
+                    parseItCode={this.parseItCode}
+                />
                 <br />
                 <br />
                 <br />

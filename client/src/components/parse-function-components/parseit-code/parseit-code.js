@@ -15,10 +15,20 @@ class ParseItCode extends Component {
         updateCodeText(e.target.value);
     }
 
+    handleSubmitCode = e => {
+        // notify the container that we would like to update:
+        // 1: The list of modules
+        // 2: The output text
+        const { codeText } = this.props; // reducer state
+        const { parseItCode } = this.props; // passed in props
+
+        parseItCode(codeText)
+    }
+
     render() {
         // debugger;
         const { codeText } = this.props;
-        console.log('codeText Reducer', codeText);
+        // console.log('codeText Reducer', codeText);
 
         return (
             <div className="parseit-code-component">
@@ -31,6 +41,7 @@ class ParseItCode extends Component {
                 </div>
                 <button
                     className="waves-effect waves-light btn blue lighten-1 submit-parseit-code-button"
+                    onClick={this.handleSubmitCode}
                 >Submit ParseIt Code</button>
             </div>
         );
