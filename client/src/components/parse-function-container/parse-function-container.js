@@ -34,7 +34,6 @@ class ParseFunctionContainer extends Component {
 
     async handleDeleteModule(id) {
         console.log('id to be deleted: ', id);
-        // debugger;
 
         const { updateOutputText, updateCodeText } = this.props;
 
@@ -60,8 +59,9 @@ class ParseFunctionContainer extends Component {
             let singleModule = newModuleCode[i].code.split(' ')
             if (singleModule[0] === "ReplaceCharacterModule") {
                 id = newModuleCode[i].id;
-                replaceCharacter = singleModule[1];
-                insertCharacter = singleModule[2];
+                // slice off the double quotes - found at the beginning and the end
+                replaceCharacter = singleModule[1].slice(1,singleModule[1].length - 1);
+                insertCharacter = singleModule[2].slice(1,singleModule[2].length - 1);
                 await this.handleCreateReplaceCharacterModuleComplete(id, replaceCharacter, insertCharacter);
             }
         }

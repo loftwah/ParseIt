@@ -42,7 +42,7 @@ class ReplaceCharacterModule extends Component {
         const finalText = replaceAndInsertChar(outputText, replaceCharacter, insertCharacter);
         updateOutputText(finalText);
         togglePreviewOff();
-        const moduleCode = "ReplaceCharacterModule" + " " + replaceCharacter + " " + insertCharacter;
+        const moduleCode = "ReplaceCharacterModule" + " \"" + replaceCharacter + "\" \"" + insertCharacter + "\"";
         handleModuleCode({
             code: moduleCode,
             id: id
