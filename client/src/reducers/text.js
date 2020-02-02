@@ -14,10 +14,18 @@ import {
 // Output text: the latest parsed text
 
 const initState = {
-    inputText: 'good stuff right now\n\n    It is very good\n\nIt is good good good and stuff',
+    // inputText: 'good stuff right now\n\n    It is very good\n\nIt is good good good and stuff',
     // inputText: '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~',
-    outputText: 'good stuff right now\n\n    It is very good\n\nIt is good good good and stuff',
+    // outputText: 'good stuff right now\n\n    It is very good\n\nIt is good good good and stuff',
     // outputText: '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~',
+
+    // inputText: [{inputContainer: 0, text: 'hello world, inputContainer 0', name: "Textbox 1"},
+    //     {inputContainer: 1, text: 'hello world, THIS IS inputContainer 1', name: "Textbox 2"}],
+    // outputText: [{inputContainer: 0, text: 'hello world, inputContainer 0', name: "Textbox 1"},
+    //     {inputContainer: 1, text: 'hello world, THIS IS inputContainer 1', name: "Textbox 2"}],
+
+    inputText: [],
+    outputText: [],
     codeText: '',
     previewToggle: false,
     moduleActiveToggle: false,

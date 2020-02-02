@@ -3,3 +3,7 @@ textarea.input-text {
     resize: vertical;
     height: 150px;
 }
+
+button.pdf-text-select {
+    margin-left: 10px
+}
