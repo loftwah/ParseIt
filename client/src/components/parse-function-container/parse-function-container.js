@@ -190,8 +190,9 @@ class ParseFunctionContainer extends Component {
         let id;
         for (let i = 0; i < moduleCodeArr.length; i++) {
             let moduleType = moduleCodeArr[i].code.split(' ')[0]
-            let moduleParams = moduleCodeArr[i].code.slice(0, moduleCodeArr[i].code.length - 1)
-                .replace(moduleType + ' \"','').split("\" \"")
+            // the slice takes off the 2 ending quotations and ending parenthesis off of the 2nd param
+            let moduleParams = moduleCodeArr[i].code.slice(0, moduleCodeArr[i].code.length - 2)
+                .replace(moduleType + ' \"(','').split(")\" \"(")
             if (moduleType === "ReplaceCharacterModule") {
                 id = moduleCodeArr[i].id;
                 // slice off the double quotes - found at the beginning and the end
