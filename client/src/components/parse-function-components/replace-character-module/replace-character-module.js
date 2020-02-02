@@ -29,15 +29,17 @@ class ReplaceCharacterModule extends Component {
 
     handleDelete = (e) => {
         e.preventDefault();
-        const { handleDeleteModule, id } = this.props;
+        const { handleDeleteModule, id, moduleActiveOff } = this.props;
         handleDeleteModule(id);
+        moduleActiveOff();
     }
 
     handleSubmit = e => {
         e.preventDefault();
         console.log('submitted character!');
         // Future: be able to delete a certain number of instances?
-        const { outputText, updateOutputText, handleModuleCode, togglePreviewOff, id } = this.props;
+        const { outputText, updateOutputText, handleModuleCode, 
+            togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
         const finalText = replaceAndInsertChar(outputText, replaceCharacter, insertCharacter);
         updateOutputText(finalText);
@@ -47,7 +49,8 @@ class ReplaceCharacterModule extends Component {
             code: moduleCode,
             id: id
         });
-        this.props.completeModule(id, replaceCharacter, insertCharacter);
+        completeModule(id, replaceCharacter, insertCharacter);
+        moduleActiveOff();
     }
 
     handlePreview = e => {
@@ -138,7 +141,7 @@ class ReplaceCharacterModule extends Component {
                                     id="replace-delete-input"
                                     onChange={this.handleReplaceCharacter}
                                     value={replaceCharacter}
-                                    disabled={false}
+                                    disabled={previewToggle}
                                 />
                                 <label htmlFor="replace-delete-input"></label>
                             </div>
@@ -148,7 +151,7 @@ class ReplaceCharacterModule extends Component {
                                     type="text"
                                     id="replace-insert-input"
                                     onChange={this.handleInsertCharacter}
-                                    disabled={false}
+                                    disabled={previewToggle}
                                     value={insertCharacter}
                                 />
                                 <label htmlFor="replace-insert-input"></label>

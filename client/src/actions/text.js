@@ -4,6 +4,8 @@ import {
     UPDATE_CODE_TEXT,
     TOGGLE_PREVIEW_ON,
     TOGGLE_PREVIEW_OFF,
+    TOGGLE_MODULE_ACTIVE_ON,
+    TOGGLE_MODULE_ACTIVE_OFF,
     UPDATE_DELETIONS_PREVIEW,
     UPDATE_ADDITIONS_PREVIEW
 } from './types';
@@ -48,6 +50,24 @@ export const togglePreviewOff = () => {
     return dispatch => {
         dispatch({
             type: TOGGLE_PREVIEW_OFF,
+            payload: false,
+        });
+    }
+}
+
+export const moduleActiveOn = () => {
+    return dispatch => {
+        dispatch({
+            type: TOGGLE_MODULE_ACTIVE_ON,
+            payload: true,
+        });
+    }
+}
+
+export const moduleActiveOff = () => {
+    return dispatch => {
+        dispatch({
+            type: TOGGLE_MODULE_ACTIVE_OFF,
             payload: false,
         });
     }

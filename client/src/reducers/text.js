@@ -4,6 +4,8 @@ import {
     UPDATE_CODE_TEXT,
     TOGGLE_PREVIEW_ON,
     TOGGLE_PREVIEW_OFF,
+    TOGGLE_MODULE_ACTIVE_ON,
+    TOGGLE_MODULE_ACTIVE_OFF,
     UPDATE_DELETIONS_PREVIEW,
     UPDATE_ADDITIONS_PREVIEW
 } from '../actions/types'
@@ -18,6 +20,7 @@ const initState = {
     // outputText: '!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~',
     codeText: '',
     previewToggle: false,
+    moduleActiveToggle: false,
     deletionsPreview: '',
     additionsPreview: ''
 };
@@ -39,6 +42,12 @@ function textReducer(state = initState, action) {
         case TOGGLE_PREVIEW_OFF:
             // console.log('[TextReducer] got a TOGGLE_PREVIEW_OFF action');
             return { ...state, previewToggle: action.payload };
+        case TOGGLE_MODULE_ACTIVE_ON:
+            // console.log('[TextReducer] got a TOGGLE_MODULE_ACTIVE_ON action');
+            return { ...state, moduleActiveToggle: action.payload };
+        case TOGGLE_MODULE_ACTIVE_OFF:
+            // console.log('[TextReducer] got a TOGGLE_MODULE_ACTIVE_OFF action');
+            return { ...state, moduleActiveToggle: action.payload };
         case UPDATE_DELETIONS_PREVIEW:
             // console.log('[TextReducer] got a UPDATE_DELETIONS_PREVIEW action');
             return { ...state, deletionsPreview: action.payload };

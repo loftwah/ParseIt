@@ -122,6 +122,8 @@ class ParseFunctionContainer extends Component {
     handleCreateReplaceCharacterModule = (e) => {
         e.preventDefault();
         console.log('create a "replace character" module!')
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
 
         let id = Math.random();
         let replaceCharModule = {
@@ -201,7 +203,8 @@ class ParseFunctionContainer extends Component {
     }
 
     render() {
-        let { modules, moduleCode } = this.state;
+        let { modules } = this.state;
+        const { moduleActiveToggle } = this.props;
 
         let key = 0;
         const moduleList = modules.map(module => {
@@ -222,26 +225,31 @@ class ParseFunctionContainer extends Component {
                 <br />
                 <br />
                 {moduleList}
-                <div className="common-module-dropdown">
-                    <a className='dropdown-trigger-common-module btn'
-                        href='!#'
-                        data-target='common-module-dropdown'>Common Modules</a>
-                    <ul id='common-module-dropdown' className='dropdown-content'>
-                        <li><a href="!#">To Uppercase</a></li>
-                        <li><a href="!#">To Lowercase</a></li>
-                        <li><a href="!#">Remove Blank Lines</a></li>
-                        <li><a href="!#">Single Spaces</a></li>
-                    </ul>
-                </div>
+                
+                    <div className="module-dropdown-list">
+                    <div className="common-module-dropdown">
+                        <a className='dropdown-trigger-common-module btn'
+                            href='!#'
+                            data-target='common-module-dropdown'
+                            disabled={moduleActiveToggle}>Common Modules</a>
+                        <ul id='common-module-dropdown' className='dropdown-content'>
+                            <li><a href="!#">To Uppercase</a></li>
+                            <li><a href="!#">To Lowercase</a></li>
+                            <li><a href="!#">Remove Blank Lines</a></li>
+                            <li><a href="!#">Single Spaces</a></li>
+                        </ul>
+                    </div>
 
-                <div className="replace-module-dropdown">
-                    <a className='dropdown-trigger-replace-module btn'
-                        href='!#'
-                        data-target='replace-module-dropdown'>Replace Modules</a>
-                    <ul id='replace-module-dropdown' className='dropdown-content'>
-                        <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
-                        <li><a href="!#">Replace Words</a></li>
-                    </ul>
+                    <div className="replace-module-dropdown">
+                        <a className='dropdown-trigger-replace-module btn'
+                            href='!#'
+                            data-target='replace-module-dropdown'
+                            disabled={moduleActiveToggle}>Replace Modules</a>
+                        <ul id='replace-module-dropdown' className='dropdown-content'>
+                            <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
+                            <li><a href="!#">Replace Words</a></li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>
@@ -255,6 +263,7 @@ const mapStateToProps = (state) => {
         outputText: state.textRed.outputText,
         codeText: state.textRed.codeText,
         previewToggle: state.textRed.previewToggle,
+        moduleActiveToggle: state.textRed.moduleActiveToggle,
         deletionsPreview: state.textRed.deletionsPreview,
         additionsPreview: state.textRed.additionsPreview
     };

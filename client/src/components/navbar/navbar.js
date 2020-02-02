@@ -33,7 +33,7 @@ class Navbar extends Component {
 
                 <ul id="slide-out" className="sidenav">
 
-                    <li><a href="#!" className="waves-effect">What is it?</a></li>
+                    <li><a href="#!" className="waves-effect">What is ParseIt?</a></li>
                     <li><a href="#!" className="waves-effect">Tutorial</a></li>
                     <li><a className="waves-effect" href="#!">ParseIt Code</a></li>
                 </ul>
