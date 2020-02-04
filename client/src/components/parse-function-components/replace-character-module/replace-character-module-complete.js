@@ -17,8 +17,20 @@ class ReplaceCharacterModuleComplete extends Component {
     componentDidMount() {
         // handle output text and convert it in here
         const { outputText, replaceCharacter, insertCharacter, updateOutputText } = this.props;
-        const finalText = replaceAndInsertChar(outputText, replaceCharacter, insertCharacter);
-        updateOutputText(finalText);
+
+        const finalText = []
+        let finalTextContainer
+        for (let i = 0; i < outputText.length; i++ ) {
+            // debugger;
+            finalTextContainer = replaceAndInsertChar(outputText[i].text, replaceCharacter, insertCharacter);
+            finalText.push({
+                inputContainer: outputText[i].inputContainer,
+                text: finalTextContainer,
+                name: outputText[i].name
+            })
+        }
+        
+        updateOutputText(finalText); 
     }
 
     handleDelete = (e) => {

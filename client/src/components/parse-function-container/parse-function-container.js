@@ -110,7 +110,7 @@ class ParseFunctionContainer extends Component {
         // With the module code, we will "start over" and build modules based on the ParseIt Code
 
         // Bring back the input text
-        updateOutputText(this.props.inputText);
+        updateOutputText(this.props.inputText); // I can probably delete this, it's a duplicate
 
         console.log(newModuleCode)
         // build all modules found in the moduleCode state list
@@ -151,7 +151,6 @@ class ParseFunctionContainer extends Component {
         let newModules = this.state.modules.filter(mod => {
             return mod.id !== id
         })
-
         let replaceCharModule = {
             moduleJSX: (<div className="replace-character-module" key={id}>
                 <ReplaceCharacterModuleComplete
@@ -206,7 +205,7 @@ class ParseFunctionContainer extends Component {
     render() {
         let { modules } = this.state;
         const { moduleActiveToggle } = this.props;
-
+ 
         let key = 0;
         const moduleList = modules.map(module => {
             key++

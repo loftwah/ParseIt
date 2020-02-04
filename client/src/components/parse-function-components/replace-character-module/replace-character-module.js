@@ -38,11 +38,12 @@ class ReplaceCharacterModule extends Component {
         e.preventDefault();
         console.log('submitted character!');
         // Future: be able to delete a certain number of instances?
-        const { outputText, updateOutputText, handleModuleCode, 
+        const { handleModuleCode, 
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
-        const finalText = replaceAndInsertChar(outputText, replaceCharacter, insertCharacter);
-        updateOutputText(finalText);
+
+        // Output text gets updated on the "complete" module
+        // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
         const moduleCode = "ReplaceCharacterModule" + " \"(" + replaceCharacter + ")\" \"(" + insertCharacter + ")\"";
         handleModuleCode({
@@ -115,6 +116,7 @@ class ReplaceCharacterModule extends Component {
         updateDeletionsPreview(createDeletionPreview);
         updateAdditionsPreview(createAdditionPreview)
 
+        // is this even useful? Why not just have togglePreviewOn() ???
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
     }
 

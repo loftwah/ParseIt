@@ -12,16 +12,6 @@ class OutputText extends Component {
         }
     }
 
-    // won't need the following if we choose to not allow number of textboxes to change
-    // componentWillUpdate(nextProps) {
-    //     const { inputText } = this.props
-    //     if (inputText.length !== nextProps.inputText.length) {
-    //         this.setState({
-    //             inputContainerDisplay: 0
-    //         })
-    //     }
-    // }
-
     handleRadioButtonOnChange = e => {
         const containerNumber = Number(e.target.className)
         this.setState({
