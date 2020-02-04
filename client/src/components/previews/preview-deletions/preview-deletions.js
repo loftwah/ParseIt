@@ -17,7 +17,7 @@ class PreviewDeletions extends Component {
 
     render() {
         // may get rid of "outputText " variable?
-        const { outputText, deletionsPreview } = this.props;
+        const { inputContainerDisplay, deletionsPreview } = this.props;
         
 
         return (
@@ -26,7 +26,7 @@ class PreviewDeletions extends Component {
                 <div className="preview-deletions-text-box"
                     style={{ fontFamily: 'Courier' }}> 
                     <div className="preview-deletions-text">
-                        {deletionsPreview}
+                        {deletionsPreview[inputContainerDisplay]}
                         {/* <p>More <span style={{background: "red"}}>input</span> hi</p>
                         <p>More <span style={{background: "rgb(74, 255, 83)"}}>input</span> hi</p> */}
                     </div>   
@@ -41,6 +41,7 @@ const mapStateToProps = (state) => {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
         deletionsPreview: state.textRed.deletionsPreview,
+        inputContainerDisplay: state.textRed.inputContainerDisplay
     };
 };
 

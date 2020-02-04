@@ -8,47 +8,16 @@ import Navbar from '../navbar/navbar';
 import InputText from '../input-text/input-text';
 import ParseFunctionContainer from '../parse-function-container/parse-function-container'
 import OutputText from '../output-text/output-text';
-import PreviewDeletions from '../previews/preview-deletions/preview-deletions';
-import PreviewAdditions from '../previews/preview-additions/preview-additions';
 import InputContainerRadio from '../input-container-radio/input-container-radio';
+import PreviewsMain from '../previews/previews-main/previews-main';
 
 class ParseItContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            previewUnified: true,
-            previewDeletions: false,
-            previewAdditions: false
-        }
-    }
-
-    handlePreviewUnified = e => {
-        this.setState({
-            previewUnified: true,
-            previewDeletions: false,
-            previewAdditions: false
-        });
-    }
-
-    handlePreviewDeletions = e => {
-        this.setState({
-            previewUnified: false,
-            previewDeletions: true,
-            previewAdditions: false
-        });
-    }
-
-    handlePreviewAdditions = e => {
-        this.setState({
-            previewUnified: false,
-            previewDeletions: false,
-            previewAdditions: true
-        });
     }
 
     render() {
         const { previewToggle } = this.props;
-        const { previewUnified, previewDeletions, previewAdditions } = this.state;
         return (
             <div className="parseit-container">
                 <Navbar />
@@ -57,32 +26,7 @@ class ParseItContainer extends Component {
                     <InputText />
                     <ParseFunctionContainer />
                     <InputContainerRadio />
-
-                    {previewToggle === false ? (
-                        <OutputText />
-                    ) : (
-                        <div className="preview-text">
-                            <div className="button-layout center">
-                                <button
-                                    className="waves-effect waves-light btn #42a5f5 green lighten-1 submit-form-button"
-                                    onClick={this.handlePreviewUnified}
-                                >Unified
-                                </button>
-                                <button
-                                    className="waves-effect waves-light btn #42a5f5 green lighten-1 submit-form-button"
-                                    onClick={this.handlePreviewDeletions}
-                                >Deletions
-                                </button>
-                                <button
-                                    className="waves-effect waves-light btn #42a5f5 green lighten-1 submit-form-button"
-                                    onClick={this.handlePreviewAdditions}
-                                >Additions
-                                </button>
-                            </div>
-                            {previewUnified === true || previewDeletions === true ? (<PreviewDeletions />) : (<div className="preview-deletion-off"></div>)}
-                            {previewUnified === true || previewAdditions === true ? (<PreviewAdditions />) : (<div className="preview-addition-off"></div>)}
-                        </div>
-                        )}
+                    {previewToggle === false ? (<OutputText />) : (<PreviewsMain />)}
                 </div>
             </div>
         );

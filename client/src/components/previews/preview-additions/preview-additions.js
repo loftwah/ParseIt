@@ -17,7 +17,7 @@ class PreviewAdditions extends Component {
 
     render() {
         // may get rid of "outputText " variable?
-        const { outputText, additionsPreview } = this.props;
+        const { inputContainerDisplay, additionsPreview } = this.props;
 
         return (
             <div className="preview-additions-text-container">
@@ -25,7 +25,7 @@ class PreviewAdditions extends Component {
                 <div className="preview-additions-text-box"
                     style={{ fontFamily: 'Courier' }}> 
                     <div className="preview-additions-text">
-                        {additionsPreview}
+                        {additionsPreview[inputContainerDisplay]}
                         {/* <p>More <span style={{background: "red"}}>input</span> hi</p>
                         <p>More <span style={{background: "rgb(74, 255, 83)"}}>input</span> hi</p> */}
                     </div>   
@@ -41,6 +41,7 @@ const mapStateToProps = (state) => {
         outputText: state.textRed.outputText,
         deletionsPreview: state.textRed.deletionsPreview,
         additionsPreview: state.textRed.additionsPreview,
+        inputContainerDisplay: state.textRed.inputContainerDisplay
     };
 };
 

@@ -8,23 +8,31 @@ class InputContainerRadio extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputContainerDisplay: 0
+            displayContainer: 0 // may delete in the future
         }
+        this.handleRadioButtonOnChange = this.handleRadioButtonOnChange.bind(this);
     }
 
-    handleRadioButtonOnChange = e => {
+    updateAndAnimateRadio = (containerNumber) => {
+        const RADIO_BUTTON_ANIMATION_TIME = 200
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                this.props.updateContainerDisplay(containerNumber);
+                resolve();
+            }, RADIO_BUTTON_ANIMATION_TIME)
+        })
+    }
+
+    async handleRadioButtonOnChange(e) {
         const containerNumber = Number(e.target.className);
-        this.setState({
-            inputContainerDisplay: containerNumber
-        });
-        this.props.updateContainerDisplay(containerNumber);
+        await this.updateAndAnimateRadio(containerNumber);
     }
 
     render() {
-        const { outputText } = this.props;
-        const { inputContainerDisplay } = this.state
-        // Toggle between inputContainers
+        const { outputText, inputContainerDisplay } = this.props;
+        let { displayContainer } = this.state;
 
+        // Toggle between inputContainers
         let inputContainerButtons = outputText.map(containerOutput => {
             let key = Math.random();
             if (containerOutput.inputContainer === inputContainerDisplay) {
@@ -32,7 +40,7 @@ class InputContainerRadio extends Component {
                     <div className="container" key={key}>
                         <p>
                             <label>
-                                <input name="input-container-group" type="radio" required defaultChecked={true} onClick={this.handleRadioButtonOnChange}
+                                <input name="input-container-group" type="radio" defaultChecked={true} onChange={this.handleRadioButtonOnChange}
                                     className={containerOutput.inputContainer}
                                     /* value={containerOutput.inputContainer}*/
                                     value={key} />
@@ -46,7 +54,7 @@ class InputContainerRadio extends Component {
                     <div className="container" key={key}>
                         <p>
                             <label>
-                                <input name="input-container-group" type="radio" defaultChecked={false} onClick={this.handleRadioButtonOnChange}
+                                <input name="input-container-group" type="radio" defaultChecked={false} onChange={this.handleRadioButtonOnChange}
                                     className={containerOutput.inputContainer}
                                     /* value={containerOutput.inputContainer*/
                                     value={key} />
@@ -62,7 +70,7 @@ class InputContainerRadio extends Component {
         if (outputText.length === 0) {
             outputSplitNewLine = [];
         } else {
-            outputSplitNewLine = outputText[inputContainerDisplay].text.split('\n');
+            outputSplitNewLine = outputText[displayContainer].text.split('\n');
         }
         return (
             // Display all possible inputContainers
@@ -84,6 +92,7 @@ const mapStateToProps = (state) => {
     return {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
+        inputContainerDisplay: state.textRed.inputContainerDisplay
     };
 };
 
