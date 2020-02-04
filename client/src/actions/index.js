@@ -5,6 +5,8 @@ export const updateOutputText = text.updateOutputText;
 
 export const updateCodeText = text.updateCodeText;
 
+export const updateContainerDisplay = text.updateContainerDisplay;
+
 export const togglePreviewOn = text.togglePreviewOn;
 export const togglePreviewOff = text.togglePreviewOff;
 

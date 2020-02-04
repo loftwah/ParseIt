@@ -10,6 +10,7 @@ import ParseFunctionContainer from '../parse-function-container/parse-function-c
 import OutputText from '../output-text/output-text';
 import PreviewDeletions from '../previews/preview-deletions/preview-deletions';
 import PreviewAdditions from '../previews/preview-additions/preview-additions';
+import InputContainerRadio from '../input-container-radio/input-container-radio';
 
 class ParseItContainer extends Component {
     constructor(props) {
@@ -55,6 +56,7 @@ class ParseItContainer extends Component {
                     {/* <Header /> */}
                     <InputText />
                     <ParseFunctionContainer />
+                    <InputContainerRadio />
 
                     {previewToggle === false ? (
                         <OutputText />

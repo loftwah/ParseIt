@@ -2,6 +2,7 @@ import {
     UPDATE_INPUT_TEXT,
     UPDATE_OUTPUT_TEXT,
     UPDATE_CODE_TEXT,
+    UPDATE_CONTAINER_DISPLAY,
     TOGGLE_PREVIEW_ON,
     TOGGLE_PREVIEW_OFF,
     TOGGLE_MODULE_ACTIVE_ON,
@@ -32,6 +33,15 @@ export const updateCodeText = data => {
     return dispatch => {
         dispatch({
             type: UPDATE_CODE_TEXT,
+            payload: data,
+        });
+    }
+}
+
+export const updateContainerDisplay = data => {
+    return dispatch => {
+        dispatch({
+            type: UPDATE_CONTAINER_DISPLAY,
             payload: data,
         });
     }

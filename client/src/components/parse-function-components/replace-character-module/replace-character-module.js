@@ -38,7 +38,7 @@ class ReplaceCharacterModule extends Component {
         e.preventDefault();
         console.log('submitted character!');
         // Future: be able to delete a certain number of instances?
-        const { handleModuleCode, 
+        const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
 
@@ -65,56 +65,63 @@ class ReplaceCharacterModule extends Component {
         const stringToGoIntoTheRegex = escapeRegExp(replaceCharacter);
         let regexDelete = new RegExp('(' + stringToGoIntoTheRegex + ')', "g");
 
-        let createAdditionPreview = []
-        const deletionSplitNewLine = outputText.split('\n');
-        const createDeletionPreview = deletionSplitNewLine.map((line, idx) => {
-            idx = idx + 1
-            if (line === "") {
-                // addition preview
-                createAdditionPreview.push((<div className="line" key={idx}>
-                    <span className="line-number">[{idx}]&#160;</span>
-                    <p className="line-text">&#160;</p>
-                </div>))
-                //deletion preview
-                return (<div className="line" key={idx}>
-                    <span className="line-number">[{idx}]&#160;</span>
-                    <p className="line-text">&#160;</p>
-                </div>)
-            }
-            else if (line.indexOf(replaceCharacter) !== -1) {
-                // addition preview
-                const matchedLineAddition = reactStringReplace(line, regexDelete, (match, i) => (
-                    <span style={{ background: "rgb(74, 255, 83)" }} key={i}><b>{insertCharacter}</b></span>
-                ));
-                createAdditionPreview.push(<div className="line" key={idx}>
-                    <span className="line-number">[{idx}]&#160;</span>
-                    <p className="line-text">{matchedLineAddition}</p>
-                </div>)
+        let additionPreviews = [];
+        let deletionPreviews = [];
 
-                // deletion preview
-                // responsible for finding the characters that are being deleted
-                const matchedLineDelete = reactStringReplace(line, regexDelete, (match, i) => (
-                    <span style={{ background: "red" }} key={i}><b>{match}</b></span>
-                ));
-                // deletion preview
-                return (<div className="line" key={idx}>
-                    <span className="line-number">[{idx}]&#160;</span>
-                    <p className="line-text">{matchedLineDelete}</p>
-                </div>)
-            }
-            else {
-                createAdditionPreview.push(<div className="line" key={idx}>
-                    <span className="line-number">[{idx}]&#160;</span>
-                    <p className="line-text">{line}</p>
-                </div>)
-                return (<div className="line" key={idx}>
-                    <span className="line-number">[{idx}]&#160;</span>
-                    <p className="line-text">{line}</p>
-                </div>)
-            }
-        })
-        updateDeletionsPreview(createDeletionPreview);
-        updateAdditionsPreview(createAdditionPreview)
+        for (let i = 0; i < outputText.length; i++) {
+            let createSingleAdditionPreview = []
+            let deletionSplitNewLine = outputText[i].text.split('\n');
+            let createSingleDeletionPreview = deletionSplitNewLine.map((line, idx) => {
+                idx = idx + 1
+                if (line === "") {
+                    // addition preview
+                    createSingleAdditionPreview.push((<div className="line" key={idx}>
+                        <span className="line-number">[{idx}]&#160;</span>
+                        <p className="line-text">&#160;</p>
+                    </div>))
+                    //deletion preview
+                    return (<div className="line" key={idx}>
+                        <span className="line-number">[{idx}]&#160;</span>
+                        <p className="line-text">&#160;</p>
+                    </div>)
+                }
+                else if (line.indexOf(replaceCharacter) !== -1) {
+                    // addition preview
+                    const matchedLineAddition = reactStringReplace(line, regexDelete, (match, i) => (
+                        <span style={{ background: "rgb(74, 255, 83)" }} key={i}><b>{insertCharacter}</b></span>
+                    ));
+                    createSingleAdditionPreview.push(<div className="line" key={idx}>
+                        <span className="line-number">[{idx}]&#160;</span>
+                        <p className="line-text">{matchedLineAddition}</p>
+                    </div>)
+
+                    // deletion preview
+                    // responsible for finding the characters that are being deleted
+                    const matchedLineDelete = reactStringReplace(line, regexDelete, (match, i) => (
+                        <span style={{ background: "red" }} key={i}><b>{match}</b></span>
+                    ));
+                    // deletion preview
+                    return (<div className="line" key={idx}>
+                        <span className="line-number">[{idx}]&#160;</span>
+                        <p className="line-text">{matchedLineDelete}</p>
+                    </div>)
+                }
+                else {
+                    createSingleAdditionPreview.push(<div className="line" key={idx}>
+                        <span className="line-number">[{idx}]&#160;</span>
+                        <p className="line-text">{line}</p>
+                    </div>)
+                    return (<div className="line" key={idx}>
+                        <span className="line-number">[{idx}]&#160;</span>
+                        <p className="line-text">{line}</p>
+                    </div>)
+                }
+            })
+            additionPreviews.push(createSingleAdditionPreview);
+            deletionPreviews.push(createSingleDeletionPreview);
+        }
+        updateDeletionsPreview(deletionPreviews); // replace this an array of ALL deletion previews
+        updateAdditionsPreview(additionPreviews); // replace this an array of ALL addition previews
 
         // is this even useful? Why not just have togglePreviewOn() ???
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();

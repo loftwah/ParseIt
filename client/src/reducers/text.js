@@ -2,6 +2,7 @@ import {
     UPDATE_INPUT_TEXT,
     UPDATE_OUTPUT_TEXT,
     UPDATE_CODE_TEXT,
+    UPDATE_CONTAINER_DISPLAY,
     TOGGLE_PREVIEW_ON,
     TOGGLE_PREVIEW_OFF,
     TOGGLE_MODULE_ACTIVE_ON,
@@ -30,7 +31,8 @@ const initState = {
     previewToggle: false,
     moduleActiveToggle: false,
     deletionsPreview: '',
-    additionsPreview: ''
+    additionsPreview: '',
+    inputContainerDisplay: 0
 };
 
 function textReducer(state = initState, action) {
@@ -44,6 +46,9 @@ function textReducer(state = initState, action) {
         case UPDATE_CODE_TEXT:
             // console.log('[TextReducer] got a UPDATE_OUTPUT_TEXT action');
             return { ...state, codeText: action.payload };
+        case UPDATE_CONTAINER_DISPLAY:
+            // console.log('[TextReducer] got a UPDATE_OUTPUT_TEXT action');
+            return { ...state, inputContainerDisplay: action.payload };
         case TOGGLE_PREVIEW_ON:
             // console.log('[TextReducer] got a TOGGLE_PREVIEW_ON action');
             return { ...state, previewToggle: action.payload };
