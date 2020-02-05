@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './input-text.css';
 import * as actions from '../../actions';
+import InputPDF from '../input-PDF/input-PDF';
 
 class InputText extends Component {
     constructor(props) {
@@ -85,8 +86,12 @@ class InputText extends Component {
     }
 
     render() {
-        const { toggleTextbox, togglePDF, textboxNumber } = this.state;
+        let { toggleTextbox, togglePDF, textboxNumber } = this.state;
         const { inputText } = this.props;
+
+        // Dev: Instantly view the PDF input
+        // toggleTextbox = false;
+        // togglePDF = true;
 
         let textboxNumberSelect = [];
         const minNumber = 1;
@@ -155,7 +160,7 @@ class InputText extends Component {
                     </div>
                 ) : (
                         <div className="pdf-input">
-                            <p>PDF input here</p>
+                            <InputPDF />
                         </div>
                     )}
 

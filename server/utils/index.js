@@ -1,1 +1,3 @@
-// utils code
+const readPDF = require('./read-PDF');
+
+module.exports = { readPDF }
