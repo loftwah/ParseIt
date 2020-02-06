@@ -11,7 +11,7 @@ class InputText extends Component {
         this.state = {
             toggleTextbox: true,
             togglePDF: false,
-            textboxNumber: 2, // when complete, go back to 0
+            textboxNumber: 0,
         };
         this.handleTextareaChange = this.handleTextareaChange.bind(this);
     }
@@ -67,6 +67,11 @@ class InputText extends Component {
     }
 
     handleTextboxNumChange = e => {
+        // input display will default to 0
+
+        const {updateContainerDisplay, updateInputText, updateOutputText} = this.props;
+        updateContainerDisplay(0);
+
         const numTextboxes = Number(e.target.value.split(' ')[0]);
         this.setState({
             textboxNumber: numTextboxes
@@ -81,8 +86,8 @@ class InputText extends Component {
                 name: `Textbox ${i}`
             })
         }
-        this.props.updateInputText(initInputText);
-        this.props.updateOutputText(initInputText);
+        updateInputText(initInputText);
+        updateOutputText(initInputText);
     }
 
     render() {

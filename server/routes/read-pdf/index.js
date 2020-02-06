@@ -9,9 +9,15 @@ const router = express.Router();
 router.post('/read-pdf', upload.any(), (req, res) => {
 	
     (async function readPdfIIFE(req, res) {
-		const buffer = req.files[0].buffer;
-		const text = await readPDF(buffer);
-		res.status(200).json({ data: text});
+		let buffer;
+		let text;
+		let allPDFinput = [];
+		for (let i = 0; i < req.files.length; i++ ) {
+			buffer = req.files[i].buffer;
+			text = await readPDF(buffer);
+			allPDFinput.push(text)
+		}
+		res.status(200).json({ PDFtext: allPDFinput});
 	})(req, res)
 	
 });
