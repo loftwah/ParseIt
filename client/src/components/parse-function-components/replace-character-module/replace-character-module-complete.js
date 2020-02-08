@@ -70,6 +70,7 @@ class ReplaceCharacterModuleComplete extends Component {
                                 />
                                 <label htmlFor="replace-delete-input"></label>
                             </div>
+                            <br/>
                             <span>With the characters: </span>
                             <div className="replace-character-user-input input-field inline">
                                 <input

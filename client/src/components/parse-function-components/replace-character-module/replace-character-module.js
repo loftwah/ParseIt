@@ -144,7 +144,7 @@ class ReplaceCharacterModule extends Component {
                     <div className="row">
                         <div className="replace-character-delete col s12">
                             <span>Replace the characters: </span>
-                            <div className="replace-character-user-input input-field inline">
+                            <div className="replace-character-user-input replace input-field inline">
                                 <input
                                     type="text"
                                     id="replace-delete-input"
@@ -154,8 +154,9 @@ class ReplaceCharacterModule extends Component {
                                 />
                                 <label htmlFor="replace-delete-input"></label>
                             </div>
+                            <br/>
                             <span>With the characters: </span>
-                            <div className="replace-character-user-input input-field inline">
+                            <div className="replace-character-user-input insert input-field inline">
                                 <input
                                     type="text"
                                     id="replace-insert-input"

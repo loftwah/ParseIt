@@ -79,7 +79,7 @@ class ParseFunctionContainer extends Component {
 
     }
 
-    async parseItCode (codeStr) {
+    async parseItCode(codeStr) {
         const { updateCodeText, updateOutputText } = this.props
 
         // We will create modules based on the ParseIt Code
@@ -94,7 +94,7 @@ class ParseFunctionContainer extends Component {
         let newModuleCode = [];
         let id;
         // run through the pureCodeArr to fill newModuleCode with code and id properties
-        for (let i = 0; i < pureCodeArr.length; i++ ) {
+        for (let i = 0; i < pureCodeArr.length; i++) {
             id = Math.random();
             newModuleCode.push({
                 id: id,
@@ -174,7 +174,7 @@ class ParseFunctionContainer extends Component {
         } else {
             let textCode = ''
             for (let i = 0; i < moduleCode.length; i++) {
-                if(moduleCode[i].code === "") {
+                if (moduleCode[i].code === "") {
                     continue;
                 }
                 textCode += moduleCode[i].code + '\n';
@@ -183,7 +183,7 @@ class ParseFunctionContainer extends Component {
         }
     }
 
-    async ouptutModulesFromModuleCodeState (moduleCodeArr) {
+    async ouptutModulesFromModuleCodeState(moduleCodeArr) {
         let insertCharacter;
         let replaceCharacter;
         let id;
@@ -191,7 +191,7 @@ class ParseFunctionContainer extends Component {
             let moduleType = moduleCodeArr[i].code.split(' ')[0]
             // the slice takes off the 2 ending quotations and ending parenthesis off of the 2nd param
             let moduleParams = moduleCodeArr[i].code.slice(0, moduleCodeArr[i].code.length - 2)
-                .replace(moduleType + ' \"(','').split(")\" \"(")
+                .replace(moduleType + ' \"(', '').split(")\" \"(")
             if (moduleType === "ReplaceCharacterModule") {
                 id = moduleCodeArr[i].id;
                 // slice off the double quotes - found at the beginning and the end
@@ -205,7 +205,7 @@ class ParseFunctionContainer extends Component {
     render() {
         let { modules } = this.state;
         const { moduleActiveToggle } = this.props;
- 
+
         let key = 0;
         const moduleList = modules.map(module => {
             key++
@@ -225,9 +225,10 @@ class ParseFunctionContainer extends Component {
                 <br />
                 <br />
                 {moduleList}
-                
-                    <div className="module-dropdown-list">
-                    <div className="common-module-dropdown">
+
+                <div className="row module-dropdown-list">
+                    
+                    <div className="module-dropdown common-module-dropdown col s12 m6 l3">
                         <a className='dropdown-trigger-common-module btn'
                             href='!#'
                             data-target='common-module-dropdown'
@@ -240,7 +241,7 @@ class ParseFunctionContainer extends Component {
                         </ul>
                     </div>
 
-                    <div className="replace-module-dropdown">
+                    <div className="module-dropdown replace-module-dropdown col s12 m6 l3">
                         <a className='dropdown-trigger-replace-module btn'
                             href='!#'
                             data-target='replace-module-dropdown'
@@ -250,6 +251,51 @@ class ParseFunctionContainer extends Component {
                             <li><a href="!#">Replace Words</a></li>
                         </ul>
                     </div>
+
+                    <div className="module-dropdown replace-module-dropdown col s12 m6 l2">
+                        <a className='dropdown-trigger-replace-module btn'
+                            href='!#'
+                            data-target='replace-module-dropdown'
+                            disabled={moduleActiveToggle}>Dummy1</a>
+                        <ul id='replace-module-dropdown' className='dropdown-content'>
+                            <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
+                            <li><a href="!#">Replace Words</a></li>
+                        </ul>
+                    </div>
+
+                    <div className="module-dropdown replace-module-dropdown col s12 m6 l2">
+                        <a className='dropdown-trigger-replace-module btn'
+                            href='!#'
+                            data-target='replace-module-dropdown'
+                            disabled={moduleActiveToggle}>Dummy2</a>
+                        <ul id='replace-module-dropdown' className='dropdown-content'>
+                            <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
+                            <li><a href="!#">Replace Words</a></li>
+                        </ul>
+                    </div>
+
+                    <div className="module-dropdown replace-module-dropdown col s12 m6 l2">
+                        <a className='dropdown-trigger-replace-module btn'
+                            href='!#'
+                            data-target='replace-module-dropdown'
+                            disabled={moduleActiveToggle}>Dummy3</a>
+                        <ul id='replace-module-dropdown' className='dropdown-content'>
+                            <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
+                            <li><a href="!#">Replace Words</a></li>
+                        </ul>
+                    </div>
+
+                    <div className="module-dropdown replace-module-dropdown col s12 m6 l2">
+                        <a className='dropdown-trigger-replace-module btn'
+                            href='!#'
+                            data-target='replace-module-dropdown'
+                            disabled={moduleActiveToggle}>Dummy4</a>
+                        <ul id='replace-module-dropdown' className='dropdown-content'>
+                            <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
+                            <li><a href="!#">Replace Words</a></li>
+                        </ul>
+                    </div>
+
                 </div>
 
             </div>
