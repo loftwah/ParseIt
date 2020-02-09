@@ -11,7 +11,7 @@ class InputText extends Component {
         this.state = {
             toggleTextbox: true,
             togglePDF: false,
-            textboxNumber: 0,
+            textboxNumber: 0, // Development: 2
         };
         this.handleTextareaChange = this.handleTextareaChange.bind(this);
     }

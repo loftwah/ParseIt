@@ -18,14 +18,13 @@ class ReplaceCharacterModuleComplete extends Component {
         // handle output text and convert it in here
         const { outputText, replaceCharacter, insertCharacter, updateOutputText } = this.props;
         this.setState({
-            replaceCharacter: this.props.replaceCharacter,
-            insertCharacter: this.props.insertCharacter
+            replaceCharacter: replaceCharacter,
+            insertCharacter: insertCharacter
         })
 
         const finalText = []
         let finalTextContainer
-        for (let i = 0; i < outputText.length; i++ ) {
-            // debugger;
+        for (let i = 0; i < outputText.length; i++) {
             finalTextContainer = replaceAndInsertChar(outputText[i].text, replaceCharacter, insertCharacter);
             finalText.push({
                 inputContainer: outputText[i].inputContainer,
@@ -33,8 +32,8 @@ class ReplaceCharacterModuleComplete extends Component {
                 name: outputText[i].name
             })
         }
-        
-        updateOutputText(finalText); 
+
+        updateOutputText(finalText);
     }
 
     handleDelete = (e) => {
@@ -70,13 +69,12 @@ class ReplaceCharacterModuleComplete extends Component {
                                 />
                                 <label htmlFor="replace-delete-input"></label>
                             </div>
-                            <br/>
+                            <br />
                             <span>With the characters: </span>
                             <div className="replace-character-user-input input-field inline">
                                 <input
                                     type="text"
                                     id={`replace-insert-input ${id}`}
-                                    onChange={this.handleInsertCharacter}
                                     disabled={true}
                                     value={insertCharacter}
                                 />
@@ -84,9 +82,6 @@ class ReplaceCharacterModuleComplete extends Component {
                             </div>
                         </div>
                     </div>
-
-                    <div className="disabled-actions"></div>
-
                 </div>
             </div>
         );

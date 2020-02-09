@@ -67,6 +67,7 @@ class ReplaceCharacterModule extends Component {
 
         let additionPreviews = [];
         let deletionPreviews = [];
+        let addIdx = 0;
 
         for (let i = 0; i < outputText.length; i++) {
             let createSingleAdditionPreview = []
@@ -74,9 +75,10 @@ class ReplaceCharacterModule extends Component {
             let createSingleDeletionPreview = deletionSplitNewLine.map((line, idx) => {
                 idx = idx + 1
                 if (line === "") {
+                    addIdx = addIdx + 1;
                     // addition preview
-                    createSingleAdditionPreview.push((<div className="line" key={idx}>
-                        <span className="line-number">[{idx}]&#160;</span>
+                    createSingleAdditionPreview.push((<div className="line" key={addIdx}>
+                        <span className="line-number">[{addIdx}]&#160;</span>
                         <p className="line-text">&#160;</p>
                     </div>))
                     //deletion preview
@@ -90,10 +92,14 @@ class ReplaceCharacterModule extends Component {
                     const matchedLineAddition = reactStringReplace(line, regexDelete, (match, i) => (
                         <span style={{ background: "rgb(74, 255, 83)" }} key={i}><b>{insertCharacter}</b></span>
                     ));
-                    createSingleAdditionPreview.push(<div className="line" key={idx}>
-                        <span className="line-number">[{idx}]&#160;</span>
-                        <p className="line-text">{matchedLineAddition}</p>
-                    </div>)
+                    if (line !== replaceCharacter || insertCharacter !== "") {
+                        // If the whole line is not equal to replace character, and the insert character is not nothing, we will show the line in the "additions preview"
+                        addIdx = addIdx + 1;
+                        createSingleAdditionPreview.push(<div className="line" key={addIdx}>
+                            <span className="line-number">[{addIdx}]&#160;</span>
+                            <p className="line-text">{matchedLineAddition}</p>
+                        </div>)
+                    }
 
                     // deletion preview
                     // responsible for finding the characters that are being deleted
@@ -107,8 +113,9 @@ class ReplaceCharacterModule extends Component {
                     </div>)
                 }
                 else {
-                    createSingleAdditionPreview.push(<div className="line" key={idx}>
-                        <span className="line-number">[{idx}]&#160;</span>
+                    addIdx = addIdx + 1;
+                    createSingleAdditionPreview.push(<div className="line" key={addIdx}>
+                        <span className="line-number">[{addIdx}]&#160;</span>
                         <p className="line-text">{line}</p>
                     </div>)
                     return (<div className="line" key={idx}>
@@ -123,7 +130,6 @@ class ReplaceCharacterModule extends Component {
         updateDeletionsPreview(deletionPreviews); // replace this an array of ALL deletion previews
         updateAdditionsPreview(additionPreviews); // replace this an array of ALL addition previews
 
-        // is this even useful? Why not just have togglePreviewOn() ???
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
     }
 
@@ -154,7 +160,7 @@ class ReplaceCharacterModule extends Component {
                                 />
                                 <label htmlFor="replace-delete-input"></label>
                             </div>
-                            <br/>
+                            <br />
                             <span>With the characters: </span>
                             <div className="replace-character-user-input insert input-field inline">
                                 <input
