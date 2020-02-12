@@ -10,6 +10,7 @@ import ParseFunctionContainer from '../parse-function-container/parse-function-c
 import OutputText from '../output-text/output-text';
 import InputContainerRadio from '../input-container-radio/input-container-radio';
 import PreviewsMain from '../previews/previews-main/previews-main';
+import OutputSavedText from '../output-saved-text/output-saved-text';
 
 class ParseItContainer extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class ParseItContainer extends Component {
     }
 
     render() {
-        const { previewToggle } = this.props;
+        const { previewToggle, toggleOutputText, toggleSavedText } = this.props;
         return (
             <div className="parseit-container">
                 <Navbar />
@@ -26,7 +27,10 @@ class ParseItContainer extends Component {
                     <InputText />
                     <ParseFunctionContainer />
                     <InputContainerRadio />
-                    {previewToggle === false ? (<OutputText />) : (<PreviewsMain />)}
+                    {previewToggle === false ? (<div className="no-previews"></div>) : (<PreviewsMain />)}
+                    {previewToggle === false && toggleOutputText === true ? (<OutputText />) : (<div className="no-output-text"></div>)}
+                    {previewToggle === false && toggleSavedText === true ? (<OutputSavedText />) : (<div className="no-saved-text"></div>)}
+
                 </div>
             </div>
         );
@@ -37,6 +41,8 @@ class ParseItContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         previewToggle: state.textRed.previewToggle,
+        toggleOutputText: state.textRed.toggleOutputText,
+        toggleSavedText: state.textRed.toggleSavedText,
     };
 };
 

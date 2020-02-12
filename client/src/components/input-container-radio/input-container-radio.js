@@ -10,7 +10,8 @@ class InputContainerRadio extends Component {
         this.state = {
             displayContainer: 0 // may delete in the future
         }
-        this.handleRadioButtonOnChange = this.handleRadioButtonOnChange.bind(this);
+        this.handleRadioButtonInputDisplayOnChange = this.handleRadioButtonInputDisplayOnChange.bind(this);
+        this.handleRadioButtonSavedDisplayOnChange = this.handleRadioButtonSavedDisplayOnChange.bind(this);
     }
 
     updateAndAnimateRadio = (containerNumber) => {
@@ -18,18 +19,39 @@ class InputContainerRadio extends Component {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 this.props.updateContainerDisplay(containerNumber);
+                this.props.toggleOutputTextOn();
+                this.props.toggleSavedTextOff();
                 resolve();
             }, RADIO_BUTTON_ANIMATION_TIME)
         })
     }
 
-    async handleRadioButtonOnChange(e) {
+    // Buttons tied to below function: all "Display Inputs" buttons
+    async handleRadioButtonInputDisplayOnChange(e) {
         const containerNumber = Number(e.target.className);
         await this.updateAndAnimateRadio(containerNumber);
     }
 
+    // Buttons tied to below function: all "Display Saved Text" buttons
+    async handleRadioButtonSavedDisplayOnChange(e) {
+        const container = e.target.className;
+        console.log(container)
+        if (container.indexOf("saved-text") === 0) {
+            // If the user chooses a "saved text" that they have created, show the saved text to them
+            const outputSavedTextNum = Number(container.replace("saved-text-", ""));
+            this.props.updateSavedTextContainerDisplay(outputSavedTextNum);
+        } else if (container === "combine-saves") {
+            this.props.updateSavedTextContainerDisplay(container);
+        } else if (container === "combine-input-then-saves") {
+            this.props.updateSavedTextContainerDisplay(container);
+        }
+        // await this.updateAndAnimateRadio(containerNumber);
+        this.props.toggleOutputTextOff();
+        this.props.toggleSavedTextOn();
+    }
+
     render() {
-        const { outputText, inputContainerDisplay } = this.props;
+        const { outputText, inputContainerDisplay, savedText, previewToggle } = this.props;
         let { displayContainer } = this.state;
 
         // Toggle between inputContainers
@@ -37,10 +59,10 @@ class InputContainerRadio extends Component {
             let key = Math.random();
             if (containerOutput.inputContainer === inputContainerDisplay) {
                 return (
-                    <div className="container" key={key}>
+                    <div className="radio-button-container" key={key}>
                         <p>
                             <label>
-                                <input name="input-container-group" type="radio" defaultChecked={true} onChange={this.handleRadioButtonOnChange}
+                                <input name="input-container-group" type="radio" defaultChecked={true} onChange={this.handleRadioButtonInputDisplayOnChange}
                                     className={containerOutput.inputContainer}
                                     /* value={containerOutput.inputContainer}*/
                                     value={key} />
@@ -51,10 +73,10 @@ class InputContainerRadio extends Component {
                 )
             } else {
                 return (
-                    <div className="container" key={key}>
+                    <div className="radio-button-container" key={key}>
                         <p>
                             <label>
-                                <input name="input-container-group" type="radio" defaultChecked={false} onChange={this.handleRadioButtonOnChange}
+                                <input name="input-container-group" type="radio" defaultChecked={false} onChange={this.handleRadioButtonInputDisplayOnChange}
                                     className={containerOutput.inputContainer}
                                     /* value={containerOutput.inputContainer*/
                                     value={key} />
@@ -66,6 +88,59 @@ class InputContainerRadio extends Component {
             }
         })
 
+
+        let savedTextContainerButtons
+        if (savedText.length === 0) {
+            savedTextContainerButtons = (
+                <div className="no-saved-text">
+                    No Saved Text to Display
+                </div>
+            )
+        } else {
+            // Toggle between savedText
+            savedTextContainerButtons = savedText.map((savedContainerOutput, idx) => {
+                let key = Math.random();
+                return (
+                    <div className="radio-button-container" key={key}>
+                        <p>
+                            <label>
+                                <input name="input-container-group"
+                                    type="radio"
+                                    defaultChecked={false}
+                                    onChange={this.handleRadioButtonSavedDisplayOnChange}
+                                    className={`saved-text-${idx}`}
+                                    value={key} />
+                                <span>{savedText[idx].name}</span>
+                            </label>
+                        </p>
+                    </div>
+                )
+            })
+
+            savedTextContainerButtons = [...savedTextContainerButtons, (
+                <div className="saved-text-functions" key="saved-text-functions">
+                    <p>
+                        <label>
+                            <input name="input-container-group" type="radio" onChange={this.handleRadioButtonSavedDisplayOnChange}
+                                className='combine-saves'
+                                value={"some key"} />
+                            <span>Combined Saves</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input name="input-container-group" type="radio" onChange={this.handleRadioButtonSavedDisplayOnChange}
+                                className='combine-input-then-saves'
+                                value={"some key"} />
+                            <span>Combined by Input, And Then Combined Saves</span>
+                        </label>
+                    </p>
+                </div>
+            )]
+
+        }
+
+        // Saved Text - last two buttons for combining
         let outputSplitNewLine;
         if (outputText.length === 0) {
             outputSplitNewLine = [];
@@ -77,11 +152,26 @@ class InputContainerRadio extends Component {
             <div className="input-text-container">
                 <br />
 
-                <div className="card-panel white">
-                    <p>Display inputContainers</p>
-                    <form action="#">
-                        {inputContainerButtons}
-                    </form>
+                <div className="toggle-container">
+                    <div className="row toggle-container card-panel white">
+
+                        <form action="#" className="radio-button-form col s12 m12 l12">
+                            <div className="input-container-toggle col s12 m12 l5 offset-l1">
+                                <h5>Display Inputs</h5>
+                                {inputContainerButtons}
+                            </div>
+
+                            {previewToggle === true ? (
+                                <div className="display-saved-text-hidden"></div>
+                            ) : (
+                                    <div className="saved-container-toggle col s12 m12 l5">
+                                        <h5>Display Saved Text</h5>
+                                        {savedTextContainerButtons}
+                                    </div>
+                                )}
+
+                        </form>
+                    </div>
                 </div>
             </div>
         );
@@ -92,7 +182,9 @@ const mapStateToProps = (state) => {
     return {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
-        inputContainerDisplay: state.textRed.inputContainerDisplay
+        inputContainerDisplay: state.textRed.inputContainerDisplay,
+        savedText: state.textRed.savedText,
+        previewToggle: state.textRed.previewToggle,
     };
 };
 

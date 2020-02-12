@@ -21,7 +21,7 @@ class InputText extends Component {
         const { inputText } = this.props;
 
         let textboxNum = Number(e.target.className.replace('input-text ', ''));
-        let name = "Textbox " + textboxNum;
+        let name = "Textbox " + (textboxNum + 1); // The user would rather index at 1
 
         // Create a new inputText state
 
@@ -69,7 +69,7 @@ class InputText extends Component {
     handleTextboxNumChange = e => {
         // input display will default to 0
 
-        const {updateContainerDisplay, updateInputText, updateOutputText} = this.props;
+        const { updateContainerDisplay, updateInputText, updateOutputText } = this.props;
         updateContainerDisplay(0);
 
         const numTextboxes = Number(e.target.value.split(' ')[0]);
@@ -83,7 +83,7 @@ class InputText extends Component {
             initInputText.push({
                 inputContainer: i,
                 text: '',
-                name: `Textbox ${i}`
+                name: `Textbox ${i + 1}` // initialize the textboxes indexing at 0 for the user
             })
         }
         updateInputText(initInputText);

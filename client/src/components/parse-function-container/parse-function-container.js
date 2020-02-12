@@ -8,6 +8,9 @@ import ReplaceCharacterModule from '../parse-function-components/replace-charact
 import ReplaceCharacterModuleComplete from '../parse-function-components/replace-character-module/replace-character-module-complete';
 import DeleteBeginningModule from '../parse-function-components/delete-beginning-module/delete-beginning-module';
 import DeleteBeginningModuleComplete from '../parse-function-components/delete-beginning-module/delete-beginning-module-complete';
+import SavedTextModule from '../parse-function-components/saved-text-module/saved-text-module';
+import SavedTextModuleComplete from '../parse-function-components/saved-text-module/saved-text-module-complete';
+
 import * as actions from '../../actions';
 
 class ParseFunctionContainer extends Component {
@@ -31,6 +34,9 @@ class ParseFunctionContainer extends Component {
 
         let deleteDropdown = document.querySelectorAll('.dropdown-trigger-delete-module');
         M.Dropdown.init(deleteDropdown, { coverTrigger: false });
+
+        let saveDropdown = document.querySelectorAll('.dropdown-trigger-save-module');
+        M.Dropdown.init(saveDropdown, { coverTrigger: false });
     }
 
     setStateAsync = (state) => {
@@ -42,7 +48,10 @@ class ParseFunctionContainer extends Component {
     async handleDeleteModule(id) {
         console.log('id to be deleted: ', id);
 
-        const { updateOutputText, updateCodeText } = this.props;
+        const { updateOutputText, updateCodeText, togglePreviewOff } = this.props;
+
+        // in the case where the application was in "preview mode" we will turn the preview off
+        togglePreviewOff();
 
         // At this moment, "delete module will create a "ReplaceCharacterModule" using the following characters:
         const newModuleCode = this.state.moduleCode.filter(moduleCode => {
@@ -180,7 +189,7 @@ class ParseFunctionContainer extends Component {
         moduleActiveOn();
         let id = Math.random();
         let replaceCharModule = {
-            moduleJSX: (<div className="replace-character-module" key={id}>
+            moduleJSX: (<div className="delete-beginning-module" key={id}>
                 <DeleteBeginningModule
                     id={id}
                     handleDeleteModule={this.handleDeleteModule}
@@ -220,6 +229,54 @@ class ParseFunctionContainer extends Component {
         })
     }
 
+    handleCreateSavedTextModule = (e) => {
+        e.preventDefault();
+        console.log('create a "saved text" module!')
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let savedTextModule = {
+            moduleJSX: (<div className="saved-text-module" key={id}>
+                <SavedTextModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateSavedTextModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, savedTextModule];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateSavedTextModuleComplete = (id, savedTextName) => {
+        console.log('create a completed "saved text complete" module!')
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let saveTextModule = {
+            moduleJSX: (<div className="delete-beginning-module" key={id}>
+                <SavedTextModuleComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    savedTextName={savedTextName} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, saveTextModule]
+        })
+    }
+
     convertCodeArrayToText = (moduleCode) => {
         if (moduleCode.length === 0) {
             return '';
@@ -236,6 +293,8 @@ class ParseFunctionContainer extends Component {
     }
 
     async ouptutModulesFromModuleCodeState(moduleCodeArr) {
+        // begin by deleting all savedText
+        this.props.updateSavedText([]);
         for (let i = 0; i < moduleCodeArr.length; i++) {
             let moduleType = moduleCodeArr[i].code.split(' ')[0]
             // the slice takes off the 2 ending quotations and ending parenthesis off of the 2nd param
@@ -252,6 +311,11 @@ class ParseFunctionContainer extends Component {
                 let id = moduleCodeArr[i].id;
                 let stoppingCharacters = moduleParams[0];
                 await this.handleCreateDeleteBeginningModuleComplete(id, stoppingCharacters);
+            }
+            else if (moduleType === "SaveTextModule") {
+                let id = moduleCodeArr[i].id;
+                let saveTextName = moduleParams[0];
+                await this.handleCreateSavedTextModuleComplete(id, saveTextName);
             }
         }
     }
@@ -307,7 +371,7 @@ class ParseFunctionContainer extends Component {
                     </div>
 
                     <div className="module-dropdown delete-module-dropdown col s12 m6 l3">
-                        <a className='dropdown-trigger-delete-module yellow btn'
+                        <a className='dropdown-trigger-delete-module btn'
                             href='!#'
                             data-target='delete-module-dropdown'
                             disabled={moduleActiveToggle}>Delete Modules</a>
@@ -317,14 +381,13 @@ class ParseFunctionContainer extends Component {
                         </ul>
                     </div>
 
-                    <div className="module-dropdown replace-module-dropdown col s12 m6 l3">
-                        <a className='dropdown-trigger-replace-module btn'
+                    <div className="module-dropdown save-module-dropdown col s12 m6 l3">
+                        <a className='dropdown-trigger-save-module yellow btn'
                             href='!#'
-                            data-target='replace-module-dropdown'
-                            disabled={moduleActiveToggle}>Dummy2</a>
-                        <ul id='replace-module-dropdown' className='dropdown-content'>
-                            <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
-                            <li><a href="!#">Replace Words</a></li>
+                            data-target='save-module-dropdown'
+                            disabled={moduleActiveToggle}>Save Text Modules</a>
+                        <ul id='save-module-dropdown' className='dropdown-content'>
+                            <li><a href="!#" onClick={this.handleCreateSavedTextModule}>Save Text and then Get Original Text</a></li>
                         </ul>
                     </div>
 
