@@ -15,6 +15,10 @@ div.saved-text-user-input.insert {
     padding-left: 30px;
 }
 
+div.saved-text-name-complete {
+    margin-bottom: 30px;
+}
+
 @media only screen and (max-width: 450px) {
     div.saved-text-user-input.insert {
         padding-left: 10px

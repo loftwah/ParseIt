@@ -83,7 +83,7 @@ const initState = {
     deletionsPreview: '',
     additionsPreview: '',
     inputContainerDisplay: 0, // back to 0 when complete - controls the radio button for "Display Input"
-    savedTextContainerDisplay: 1, // controls radio button for "Display Saved Text" - in the beginning, there will not be any containers to display
+    savedTextContainerDisplay: 0, // controls radio button for "Display Saved Text" - in the beginning, there will not be any containers to display
     // both of the 2 above dispays may cause some issues in the future... Keep that in mind
 };
 

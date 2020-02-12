@@ -48,7 +48,11 @@ class ParseFunctionContainer extends Component {
     async handleDeleteModule(id) {
         console.log('id to be deleted: ', id);
 
-        const { updateOutputText, updateCodeText, togglePreviewOff } = this.props;
+        const { updateOutputText, updateCodeText,
+            togglePreviewOff, toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
 
         // in the case where the application was in "preview mode" we will turn the preview off
         togglePreviewOff();
@@ -94,13 +98,18 @@ class ParseFunctionContainer extends Component {
     }
 
     async parseItCode(codeStr) {
-        const { updateCodeText, updateOutputText } = this.props
+        const { updateCodeText, updateOutputText, updateContainerDisplay,
+            toggleSavedTextOff, toggleOutputTextOn, inputText } = this.props
+
+        updateContainerDisplay(0);
+        toggleSavedTextOff()
+        toggleOutputTextOn()
 
         // We will create modules based on the ParseIt Code
         // We will begin by deleting everything
 
         // Bring back the input text
-        updateOutputText(this.props.inputText);
+        updateOutputText(inputText);
 
         // create moduleCode using the codeStr made inside the parse-it-code component's textarea
         const pureCodeArr = codeStr.split('\n');

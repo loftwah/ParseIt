@@ -223,7 +223,7 @@ class OutputSavedText extends Component {
                     </div>) : (
                         <div className="display-no-combine-input-then-saves"></div>
                     )}
-                    
+
             </div>
         );
     };

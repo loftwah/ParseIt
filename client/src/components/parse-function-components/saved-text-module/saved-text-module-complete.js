@@ -57,19 +57,11 @@ class SavedTextModuleComplete extends Component {
                             <p>This module will combine all of your current "Inputs" into a "Saved Text" input.</p>
                             <p>This module will also update the "Inputs" to the original input, if you wish to keep parsing.</p>
                             <br />
-                            <div className="save-text-name col s12">
+                            <div className="saved-text-name-complete col s12">
                                 <span>Saved Text Name: "{savedTextName}"</span>
                             </div>
                         </div>
                     </div>
-
-                    <div className="card-action submit">
-                        <a
-                            href="!#"
-                            onClick={this.handleSubmit}
-                        >Submit</a>
-                    </div>
-
                 </div>
             </div>
         );
