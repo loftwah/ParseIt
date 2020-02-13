@@ -1,26 +1,26 @@
-div.delete-beginning-user-input {
+div.delete-ending-user-input {
     padding-left: 10px;
     padding-right: 10px
 }
 
 div.row {
-    padding-left: 10px
+    padding-left: 10px;
 }
 
-div.delete-beginning-user-input{
+div.delete-ending-user-input{
     margin: 0px;
 }
 
-div.delete-beginning-user-input.insert {
+div.delete-ending-user-input.insert {
     padding-left: 30px;
 }
 
-div.delete-beginning-complete {
+div.delete-ending-complete {
     margin-bottom: 30px;
 }
 
 @media only screen and (max-width: 450px) {
-    div.delete-beginning-user-input.insert {
+    div.delete-ending-user-input.insert {
         padding-left: 10px
     }
   }

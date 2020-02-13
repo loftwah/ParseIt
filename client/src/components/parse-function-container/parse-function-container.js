@@ -10,6 +10,8 @@ import DeleteBeginningModule from '../parse-function-components/delete-beginning
 import DeleteBeginningModuleComplete from '../parse-function-components/delete-beginning-module/delete-beginning-module-complete';
 import SavedTextModule from '../parse-function-components/saved-text-module/saved-text-module';
 import SavedTextModuleComplete from '../parse-function-components/saved-text-module/saved-text-module-complete';
+import DeleteEndingModule from '../parse-function-components/delete-ending-module/delete-ending-module';
+import DeleteEndingModuleComplete from '../parse-function-components/delete-ending-module/delete-ending-module-complete';
 
 import * as actions from '../../actions';
 
@@ -171,11 +173,16 @@ class ParseFunctionContainer extends Component {
     handleCreateReplaceCharacterModuleComplete = (id, replaceCharacter, insertCharacter) => {
         console.log('create a completed "replace character" module!')
 
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
         let newModules = this.state.modules.filter(mod => {
             return mod.id !== id
         })
         let replaceCharModule = {
-            moduleJSX: (<div className="replace-character-module" key={id}>
+            moduleJSX: (<div className="replace-character-module-complete" key={id}>
                 <ReplaceCharacterModuleComplete
                     id={id}
                     handleDeleteModule={this.handleDeleteModule}
@@ -219,11 +226,16 @@ class ParseFunctionContainer extends Component {
     handleCreateDeleteBeginningModuleComplete = (id, stoppingCharacters) => {
         console.log('create a completed "delete beginning" module!')
 
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
         let newModules = this.state.modules.filter(mod => {
             return mod.id !== id
         })
         let replaceCharModule = {
-            moduleJSX: (<div className="delete-beginning-module" key={id}>
+            moduleJSX: (<div className="delete-beginning-module-complete" key={id}>
                 <DeleteBeginningModuleComplete
                     id={id}
                     handleDeleteModule={this.handleDeleteModule}
@@ -235,6 +247,57 @@ class ParseFunctionContainer extends Component {
         console.log(id);;
         this.setState({
             modules: [...newModules, replaceCharModule]
+        })
+    }
+
+    handleCreateDeleteEndingModule = (e) => {
+        e.preventDefault();
+        console.log('create a "delete ending" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let replaceCharModule = {
+            moduleJSX: (<div className="delete-ending-module" key={id}>
+                <DeleteEndingModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateDeleteEndingModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, replaceCharModule];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateDeleteEndingModuleComplete = (id, stoppingCharacters) => {
+        console.log('create a completed "delete ending" module!')
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+        let deleteEndModule = {
+            moduleJSX: (<div className="delete-ending-module-complete" key={id}>
+                <DeleteEndingModuleComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    stoppingCharacters={stoppingCharacters} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, deleteEndModule]
         })
     }
 
@@ -266,12 +329,17 @@ class ParseFunctionContainer extends Component {
     handleCreateSavedTextModuleComplete = (id, savedTextName) => {
         console.log('create a completed "saved text complete" module!')
 
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
         let newModules = this.state.modules.filter(mod => {
             return mod.id !== id
         })
 
         let saveTextModule = {
-            moduleJSX: (<div className="delete-beginning-module" key={id}>
+            moduleJSX: (<div className="saved-text-module-complete" key={id}>
                 <SavedTextModuleComplete
                     id={id}
                     handleDeleteModule={this.handleDeleteModule}
@@ -320,6 +388,11 @@ class ParseFunctionContainer extends Component {
                 let id = moduleCodeArr[i].id;
                 let stoppingCharacters = moduleParams[0];
                 await this.handleCreateDeleteBeginningModuleComplete(id, stoppingCharacters);
+            }
+            else if (moduleType === "DeleteEndingModule") {
+                let id = moduleCodeArr[i].id;
+                let stoppingCharacters = moduleParams[0];
+                await this.handleCreateDeleteEndingModuleComplete(id, stoppingCharacters);
             }
             else if (moduleType === "SaveTextModule") {
                 let id = moduleCodeArr[i].id;
@@ -386,12 +459,12 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Delete Modules</a>
                         <ul id='delete-module-dropdown' className='dropdown-content'>
                             <li><a href="!#" onClick={this.handleCreateDeleteBeginningModule}>Delete beginning until a set of characters</a></li>
-                            <li><a href="!#">Delete everything from the end to a set of characters</a></li>
+                            <li><a href="!#" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</a></li>
                         </ul>
                     </div>
 
                     <div className="module-dropdown save-module-dropdown col s12 m6 l3">
-                        <a className='dropdown-trigger-save-module yellow btn'
+                        <a className='dropdown-trigger-save-module btn'
                             href='!#'
                             data-target='save-module-dropdown'
                             disabled={moduleActiveToggle}>Save Text Modules</a>
@@ -404,7 +477,7 @@ class ParseFunctionContainer extends Component {
                         <a className='dropdown-trigger-replace-module btn'
                             href='!#'
                             data-target='replace-module-dropdown'
-                            disabled={moduleActiveToggle}>Dummy3</a>
+                            disabled={moduleActiveToggle}>Multi-Line Modules</a>
                         <ul id='replace-module-dropdown' className='dropdown-content'>
                             <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
                             <li><a href="!#">Replace Words</a></li>

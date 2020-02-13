@@ -58,7 +58,7 @@ class SavedTextModuleComplete extends Component {
                             <p>This module will also update the "Inputs" to the original input, if you wish to keep parsing.</p>
                             <br />
                             <div className="saved-text-name-complete col s12">
-                                <span>Saved Text Name: "{savedTextName}"</span>
+                                <p>Saved Text Name: "{savedTextName}"</p>
                             </div>
                         </div>
                     </div>

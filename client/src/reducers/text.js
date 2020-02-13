@@ -24,19 +24,11 @@ const initState = {
 
 
     // Development: Dummy text
+    inputText: [{ inputContainer: 0, text: 'hello world, inputContainer 0\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
+    { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
 
-    // inputText: [{ inputContainer: 0, text: 'hello world, inputContainer 0\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
-    // { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
-
-    // outputText: [{ inputContainer: 0, text: 'hello world, inputContainer 0\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
-    // { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
-
-    // outputSavedText: [
-    //     [{ inputContainer: 0, text: 'saved text 0 hello world, inputContainer 0\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
-    //     { inputContainer: 1, text: 'saved text 0 hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
-    //     [{ inputContainer: 0, text: 'saved text 1 hello world, inputContainer 0\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
-    //     { inputContainer: 1, text: 'yooo saved text 1 hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
-    // ],
+    outputText: [{ inputContainer: 0, text: 'hello world, inputContainer 0\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
+    { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
 
     /*
     savedText: [
@@ -58,22 +50,20 @@ const initState = {
             inputContainers: [{ inputContainer: 0, text: '2:1yeet but better saved text 2 hello world, inputContainer 0\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
             { inputContainer: 1, text: '2:2yeet yooo saved text 2 hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
 
-            name: "Saved Text yeet...$$$ money **$$$"
+            name: "Saved Text 33"
 
         }
 
     ],
     */
-
-
-
+    
     // Development: 2 Empty textboxes
     // inputText: [{ inputContainer: 0, text: '', name: "Textbox 1" }, { inputContainer: 1, text: '', name: "Textbox 2" }],
     // outputText: [{ inputContainer: 0, text: '', name: "Textbox 1" }, { inputContainer: 1, text: '', name: "Textbox 2" }],
 
-    // Initial state
-    inputText: [],
-    outputText: [],
+    // Initial state: Production
+    // inputText: [],
+    // outputText: [],
     savedText: [],
     codeText: '',
     previewToggle: false,

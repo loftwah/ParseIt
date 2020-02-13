@@ -57,29 +57,9 @@ class ReplaceCharacterModuleComplete extends Component {
                         <span className="card-title center">Module: Replace Characters</span>
                     </div>
                     <div className="row">
-                        <div className="replace-character-delete col s12">
-                            <span>Replace the characters: </span>
-                            <div className="replace-character-user-input input-field inline">
-                                <input
-                                    type="text"
-                                    id={`replace-delete-input ${id}`}
-                                    onChange={this.handleReplaceCharacter}
-                                    value={replaceCharacter}
-                                    disabled={true}
-                                />
-                                <label htmlFor="replace-delete-input"></label>
-                            </div>
-                            <br />
-                            <span>With the characters: </span>
-                            <div className="replace-character-user-input input-field inline">
-                                <input
-                                    type="text"
-                                    id={`replace-insert-input ${id}`}
-                                    disabled={true}
-                                    value={insertCharacter}
-                                />
-                                <label htmlFor="replace-insert-input"></label>
-                            </div>
+                        <div className="replace-character-complete col s12">
+                            <p>Replace the characters: "{replaceCharacter}"</p>
+                            <p>With the characters: "{insertCharacter}"</p>
                         </div>
                     </div>
                 </div>
