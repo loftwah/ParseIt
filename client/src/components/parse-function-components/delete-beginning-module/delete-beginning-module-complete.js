@@ -27,6 +27,18 @@ class DeleteBeginningModuleComplete extends Component {
             const textLines = outputText[i].text.split('\n');
             let newText = [];
             let found = false;
+
+            // will a deletion ever be found?
+            if (outputText[i].text.indexOf(stoppingCharacters) == -1) {
+                // We will never find stopping characters - output the original text
+                finalText.push({
+                    inputContainer: outputText[i].inputContainer,
+                    text: outputText[i].text,
+                    name: outputText[i].name
+                })
+                continue;
+            }
+
             for (let i = 0; i < textLines.length; i++) {
 
                 let stoppingCharIdx = textLines[i].indexOf(stoppingCharacters);
