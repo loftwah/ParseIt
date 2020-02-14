@@ -1,0 +1,20 @@
+div.concatenate-user-input {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+div.row {
+    padding-left: 10px
+}
+
+div.concatenate-user-input{
+    margin: 0px;
+}
+
+div.concatenate-user-input.insert {
+    padding-left: 30px;
+}
+
+div.concatenate-description-complete {
+    margin-bottom: 30px;
+}

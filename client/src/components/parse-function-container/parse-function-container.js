@@ -12,6 +12,8 @@ import SavedTextModule from '../parse-function-components/saved-text-module/save
 import SavedTextModuleComplete from '../parse-function-components/saved-text-module/saved-text-module-complete';
 import DeleteEndingModule from '../parse-function-components/delete-ending-module/delete-ending-module';
 import DeleteEndingModuleComplete from '../parse-function-components/delete-ending-module/delete-ending-module-complete';
+import ConcatenateModule from '../parse-function-components/concatenate-module/concatenate-module';
+import ConcatenateModuleComplete from '../parse-function-components/concatenate-module/concatenate-module-complete';
 
 import * as actions from '../../actions';
 
@@ -28,8 +30,8 @@ class ParseFunctionContainer extends Component {
     }
 
     componentDidMount() {
-        let commonDropdown = document.querySelectorAll('.dropdown-trigger-common-module');
-        M.Dropdown.init(commonDropdown, { coverTrigger: false });
+        let miscDropdown = document.querySelectorAll('.dropdown-trigger-misc-module');
+        M.Dropdown.init(miscDropdown, { coverTrigger: false });
 
         let replaceDropdown = document.querySelectorAll('.dropdown-trigger-replace-module');
         M.Dropdown.init(replaceDropdown, { coverTrigger: false });
@@ -354,6 +356,59 @@ class ParseFunctionContainer extends Component {
         })
     }
 
+    handleCreateConcatenateModule = (e) => {
+        e.preventDefault();
+        console.log('create a "concatenate" module!')
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let concatenateModule = {
+            moduleJSX: (<div className="concatenate-module" key={id}>
+                <ConcatenateModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateConcatenateModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, concatenateModule];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateConcatenateModuleComplete = (id) => {
+        console.log('create a completed "concatenate complete" module!')
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let concatenateModule = {
+            moduleJSX: (<div className="concatenate-module-complete" key={id}>
+                <ConcatenateModuleComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, concatenateModule]
+        })
+        
+    }
+
     convertCodeArrayToText = (moduleCode) => {
         if (moduleCode.length === 0) {
             return '';
@@ -399,6 +454,11 @@ class ParseFunctionContainer extends Component {
                 let saveTextName = moduleParams[0];
                 await this.handleCreateSavedTextModuleComplete(id, saveTextName);
             }
+            else if (moduleCodeArr[i].code === "ConcatenateModule") {
+                let id = moduleCodeArr[i].id;
+                await this.handleCreateConcatenateModuleComplete(id);
+            }
+
         }
     }
 
@@ -427,19 +487,6 @@ class ParseFunctionContainer extends Component {
                 {moduleList}
 
                 <div className="row module-dropdown-list">
-
-                    <div className="module-dropdown common-module-dropdown col s12 m6 l3">
-                        <a className='dropdown-trigger-common-module btn'
-                            href='!#'
-                            data-target='common-module-dropdown'
-                            disabled={moduleActiveToggle}>Common Modules</a>
-                        <ul id='common-module-dropdown' className='dropdown-content'>
-                            <li><a href="!#">To Uppercase</a></li>
-                            <li><a href="!#">To Lowercase</a></li>
-                            <li><a href="!#">Remove Blank Lines</a></li>
-                            <li><a href="!#">Single Spaces</a></li>
-                        </ul>
-                    </div>
 
                     <div className="module-dropdown replace-module-dropdown col s12 m6 l3">
                         <a className='dropdown-trigger-replace-module btn'
@@ -492,6 +539,20 @@ class ParseFunctionContainer extends Component {
                         <ul id='replace-module-dropdown' className='dropdown-content'>
                             <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
                             <li><a href="!#">Replace Words</a></li>
+                        </ul>
+                    </div>
+
+                    <div className="module-dropdown misc-module-dropdown col s12 m6 l3">
+                        <a className='dropdown-trigger-misc-module btn'
+                            href='!#'
+                            data-target='misc-module-dropdown'
+                            disabled={moduleActiveToggle}>Misc Modules</a>
+                        <ul id='misc-module-dropdown' className='dropdown-content'>
+                            <li><a href="!#" onClick={this.handleCreateConcatenateModule}>Concatenate On One Line</a></li>
+                            <li><a href="!#">To Uppercase</a></li>
+                            <li><a href="!#">To Lowercase</a></li>
+                            <li><a href="!#">Remove Blank Lines</a></li>
+                            <li><a href="!#">Single Spaces</a></li>
                         </ul>
                     </div>
 
