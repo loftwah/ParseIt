@@ -14,6 +14,8 @@ import DeleteEndingModule from '../parse-function-components/delete-ending-modul
 import DeleteEndingModuleComplete from '../parse-function-components/delete-ending-module/delete-ending-module-complete';
 import ConcatenateModule from '../parse-function-components/concatenate-module/concatenate-module';
 import ConcatenateModuleComplete from '../parse-function-components/concatenate-module/concatenate-module-complete';
+import RemoveBlankLinesModule from '../parse-function-components/remove-blank-lines-module/remove-blank-lines-module';
+import RemoveBlankLinesModuleComplete from '../parse-function-components/remove-blank-lines-module/remove-blank-lines-module-complete';
 
 import * as actions from '../../actions';
 
@@ -406,7 +408,61 @@ class ParseFunctionContainer extends Component {
         this.setState({
             modules: [...newModules, concatenateModule]
         })
-        
+
+    }
+
+    handleCreateRemoveBlankLinesModule = (e) => {
+        e.preventDefault();
+        console.log('create a "remove blank lines" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let removeBlankLinesModule = {
+            moduleJSX: (<div className="remove-blank-lines-module" key={id}>
+                <RemoveBlankLinesModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateRemoveBlankLinesModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, removeBlankLinesModule];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+
+    handleCreateRemoveBlankLinesModuleComplete = (id) => {
+        console.log('create a completed "remove blank lines" module!')
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let removeBlankLinesModule = {
+            moduleJSX: (<div className="remove-blank-lines-module-complete" key={id}>
+                <RemoveBlankLinesModuleComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, removeBlankLinesModule]
+        })
+
     }
 
     convertCodeArrayToText = (moduleCode) => {
@@ -458,7 +514,10 @@ class ParseFunctionContainer extends Component {
                 let id = moduleCodeArr[i].id;
                 await this.handleCreateConcatenateModuleComplete(id);
             }
-
+            else if (moduleCodeArr[i].code === "RemoveBlankLinesModule") {
+                let id = moduleCodeArr[i].id;
+                await this.handleCreateRemoveBlankLinesModuleComplete(id);
+            }
         }
     }
 
@@ -549,10 +608,10 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Misc Modules</a>
                         <ul id='misc-module-dropdown' className='dropdown-content'>
                             <li><a href="!#" onClick={this.handleCreateConcatenateModule}>Concatenate On One Line</a></li>
+                            <li><a href="!#" onClick={this.handleCreateRemoveBlankLinesModule}>Remove Blank Lines</a></li>
+                            <li><a href="!#">Single Spaces</a></li>
                             <li><a href="!#">To Uppercase</a></li>
                             <li><a href="!#">To Lowercase</a></li>
-                            <li><a href="!#">Remove Blank Lines</a></li>
-                            <li><a href="!#">Single Spaces</a></li>
                         </ul>
                     </div>
 
