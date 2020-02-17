@@ -1,0 +1,26 @@
+div.remove-excess-spaces-user-input {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+div.row {
+    padding-left: 10px
+}
+
+div.remove-excess-spaces-user-input{
+    margin: 0px;
+}
+
+div.remove-excess-spaces-user-input.insert {
+    padding-left: 30px;
+}
+
+div.remove-excess-spaces-name-complete {
+    margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 450px) {
+    div.remove-excess-spaces-user-input.insert {
+        padding-left: 10px
+    }
+  }

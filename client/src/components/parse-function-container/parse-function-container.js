@@ -16,6 +16,8 @@ import ConcatenateModule from '../parse-function-components/concatenate-module/c
 import ConcatenateModuleComplete from '../parse-function-components/concatenate-module/concatenate-module-complete';
 import RemoveBlankLinesModule from '../parse-function-components/remove-blank-lines-module/remove-blank-lines-module';
 import RemoveBlankLinesModuleComplete from '../parse-function-components/remove-blank-lines-module/remove-blank-lines-module-complete';
+import RemoveExcessSpacesModule from '../parse-function-components/remove-excess-spaces-module/remove-excess-spaces-module';
+import RemoveExcessSpacesModuleComplete from '../parse-function-components/remove-excess-spaces-module/remove-excess-spaces-module-complete';
 
 import * as actions from '../../actions';
 
@@ -43,6 +45,9 @@ class ParseFunctionContainer extends Component {
 
         let saveDropdown = document.querySelectorAll('.dropdown-trigger-save-module');
         M.Dropdown.init(saveDropdown, { coverTrigger: false });
+
+        let multiLineDropdown = document.querySelectorAll('.dropdown-trigger-multi-line-module');
+        M.Dropdown.init(multiLineDropdown, { coverTrigger: false });
     }
 
     setStateAsync = (state) => {
@@ -465,6 +470,59 @@ class ParseFunctionContainer extends Component {
 
     }
 
+    handleCreateRemoveExcessSpacesModule = (e) => {
+        e.preventDefault();
+        console.log('create a "remove excess spaces" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let removeExcessSpacesModule = {
+            moduleJSX: (<div className="remove-excess-spaces-module" key={id}>
+                <RemoveExcessSpacesModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateRemoveExcessSpacesModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, removeExcessSpacesModule];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateRemoveExcessSpacesModuleComplete = (id) => {
+        console.log('create a completed "remove excess spaces" module!');
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let removeExcessSpacesModule = {
+            moduleJSX: (<div className="remove-excess-spaces-module-complete" key={id}>
+                <RemoveExcessSpacesModuleComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, removeExcessSpacesModule]
+        })
+
+    }
+
     convertCodeArrayToText = (moduleCode) => {
         if (moduleCode.length === 0) {
             return '';
@@ -518,6 +576,10 @@ class ParseFunctionContainer extends Component {
                 let id = moduleCodeArr[i].id;
                 await this.handleCreateRemoveBlankLinesModuleComplete(id);
             }
+            else if (moduleCodeArr[i].code === "RemoveExcessSpacesModule") {
+                let id = moduleCodeArr[i].id;
+                await this.handleCreateRemoveExcessSpacesModuleComplete(id);
+            }
         }
     }
 
@@ -553,8 +615,8 @@ class ParseFunctionContainer extends Component {
                             data-target='replace-module-dropdown'
                             disabled={moduleActiveToggle}>Replace Modules</a>
                         <ul id='replace-module-dropdown' className='dropdown-content'>
-                            <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
-                            <li><a href="!#">Replace Words</a></li>
+                            <li><button href="!#" onClick={this.handleCreateReplaceCharacterModule} className="dropdown-button">Replace Characters</button></li>
+                            <li><button href="!#" className="dropdown-button">Replace Words</button></li>
                         </ul>
                     </div>
 
@@ -564,8 +626,8 @@ class ParseFunctionContainer extends Component {
                             data-target='delete-module-dropdown'
                             disabled={moduleActiveToggle}>Delete Modules</a>
                         <ul id='delete-module-dropdown' className='dropdown-content'>
-                            <li><a href="!#" onClick={this.handleCreateDeleteBeginningModule}>Delete beginning until a set of characters</a></li>
-                            <li><a href="!#" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</a></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBeginningModule}>Delete beginning until a set of characters</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</button></li>
                         </ul>
                     </div>
 
@@ -575,18 +637,19 @@ class ParseFunctionContainer extends Component {
                             data-target='save-module-dropdown'
                             disabled={moduleActiveToggle}>Save Text Modules</a>
                         <ul id='save-module-dropdown' className='dropdown-content'>
-                            <li><a href="!#" onClick={this.handleCreateSavedTextModule}>Save Text and then Get Original Text</a></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSavedTextModule}>Save Text and then Get Original Text</button></li>
                         </ul>
                     </div>
 
-                    <div className="module-dropdown replace-module-dropdown col s12 m6 l3">
-                        <a className='dropdown-trigger-replace-module btn'
+                    <div className="module-dropdown multi-line-module-dropdown col s12 m6 l3">
+                        <a className='dropdown-trigger-multi-line-module btn'
                             href='!#'
-                            data-target='replace-module-dropdown'
+                            data-target='multi-line-module-dropdown'
                             disabled={moduleActiveToggle}>Multi-Line Modules</a>
-                        <ul id='replace-module-dropdown' className='dropdown-content'>
-                            <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
-                            <li><a href="!#">Replace Words</a></li>
+                        <ul id='multi-line-module-dropdown' className='dropdown-content'>
+                            <li><button href="!#" className="dropdown-button" >Add Text to Beginning Multiple</button></li>
+                            <li><button href="!#" className="dropdown-button" >Split Line Multiple After Characters</button></li>
+                            <li><button href="!#" className="dropdown-button" >Concatenate a Multiple</button></li>
                         </ul>
                     </div>
 
@@ -596,8 +659,8 @@ class ParseFunctionContainer extends Component {
                             data-target='replace-module-dropdown'
                             disabled={moduleActiveToggle}>Dummy4</a>
                         <ul id='replace-module-dropdown' className='dropdown-content'>
-                            <li><a href="!#" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</a></li>
-                            <li><a href="!#">Replace Words</a></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</button></li>
+                            <li><button href="!#" className="dropdown-button">Replace Words</button></li>
                         </ul>
                     </div>
 
@@ -607,11 +670,11 @@ class ParseFunctionContainer extends Component {
                             data-target='misc-module-dropdown'
                             disabled={moduleActiveToggle}>Misc Modules</a>
                         <ul id='misc-module-dropdown' className='dropdown-content'>
-                            <li><a href="!#" onClick={this.handleCreateConcatenateModule}>Concatenate On One Line</a></li>
-                            <li><a href="!#" onClick={this.handleCreateRemoveBlankLinesModule}>Remove Blank Lines</a></li>
-                            <li><a href="!#">Single Spaces</a></li>
-                            <li><a href="!#">To Uppercase</a></li>
-                            <li><a href="!#">To Lowercase</a></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateConcatenateModule}>Concatenate On One Line</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateRemoveBlankLinesModule}>Remove Blank Lines</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateRemoveExcessSpacesModule}>Remove Excess Spaces</button></li>
+                            <li><button href="!#" className="dropdown-button">To Uppercase</button></li>
+                            <li><button href="!#" className="dropdown-button">To Lowercase</button></li>
                         </ul>
                     </div>
 

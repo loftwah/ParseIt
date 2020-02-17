@@ -23,12 +23,19 @@ import {
 const initState = {
 
 
-    // Development: Dummy text
-    inputText: [{ inputContainer: 0, text: 'hello world, inputContainer 0\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
+    // Development: Dummy text with spaces
+    inputText: [{ inputContainer: 0, text: 'hello  world, inputContainer 0\n good   stuff right      now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
     { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
 
-    outputText: [{ inputContainer: 0, text: 'hello world, inputContainer 0\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
+    outputText: [{ inputContainer: 0, text: 'hello  world, inputContainer 0\n good   stuff right      now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" },
     { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
+
+    // Development: Dummy text
+    // inputText: [{ inputContainer: 0, text: ' hello  world, inputContainer 0', name: "Textbox 1" },
+    // { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1', name: "Textbox 2" }],
+
+    // outputText: [{ inputContainer: 0, text: ' hello  world, inputContainer 0', name: "Textbox 1" },
+    // { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1', name: "Textbox 2" }],
 
     /*
     savedText: [

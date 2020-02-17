@@ -25,7 +25,7 @@ class OutputText extends Component {
             if (line === "") {
                 return (<div className="line" key={idx}>
                     <span className="line-number">[{idx}]&#160;</span>
-                    <p className="line-text">&#160;</p>
+                    <p className="line-text">&#x200B;</p>
                 </div>)
             } else {
                 return (<div className="line" key={idx}>

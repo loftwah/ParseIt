@@ -15,3 +15,18 @@ div.module-dropdown a{
 .col.s12 > .btn {
     width: 100%;
  }
+
+button.dropdown-button{
+     width: 100%;
+     font-size: 16px;
+     color: #26a69a;
+     display: block;
+     line-height: 22px;
+     padding: 14px 22px;
+     background: none;
+     border: none;
+     text-align: left;
+}
+button.dropdown-button:hover{
+    cursor: pointer;
+}

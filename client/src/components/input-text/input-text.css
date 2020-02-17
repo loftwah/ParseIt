@@ -7,3 +7,8 @@ textarea.input-text {
 button.pdf-text-select {
     margin-left: 10px
 }
+
+select.textbox-number-dropdown-menu {
+    border-color: rgb(197, 197, 197);
+    margin-bottom: 10px
+}

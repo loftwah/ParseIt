@@ -67,9 +67,9 @@ class ReplaceCharacterModule extends Component {
 
         let additionPreviews = [];
         let deletionPreviews = [];
-        let addIdx = 0;
 
         for (let i = 0; i < outputText.length; i++) {
+            let addIdx = 0;
             let createSingleAdditionPreview = []
             let deletionSplitNewLine = outputText[i].text.split('\n');
             let createSingleDeletionPreview = deletionSplitNewLine.map((line, idx) => {
