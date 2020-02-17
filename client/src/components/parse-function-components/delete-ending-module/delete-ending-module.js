@@ -110,7 +110,7 @@ class DeleteEndingModule extends Component {
                     //deletion preview
                     createSingleDeletionPreview.push((<div className="line" key={deleteIdx}>
                         <span className="line-number"
-                            style={{ background: "rgb(255, 210, 217)", float: "left" }}>[{deleteIdx}]&#160;</span>
+                            style={{ background: "rgb(255, 210, 217)" }}>[{deleteIdx}]&#160;</span>
                         <p className="line-text" style={{ background: "red" }}>&#160;</p>
                     </div>))
                     deleteIdx--;
@@ -134,8 +134,8 @@ class DeleteEndingModule extends Component {
                     // If found is false, and line does not contain the stopping characters:
                     // The whole line will be deleted
                     createSingleDeletionPreview.push((<div className="line" key={deleteIdx}>
-                        <span className="line-number" style={{ background: "rgb(255, 210, 217)", float: "left" }}>[{deleteIdx}]&#160;</span>
-                        <p className="line-text" style={{ background: "red" }}><b>{line}</b></p>
+                        <span className="line-number" style={{ background: "rgb(255, 210, 217)"}}>[{deleteIdx}]&#160;</span>
+                        <span className="line-text" style={{ background: "red" }}><b>{line}</b></span>
                     </div>))
                     deleteIdx--;
 
@@ -151,11 +151,11 @@ class DeleteEndingModule extends Component {
                     if (stoppingCharIdx === 0) {
                         createSingleDeletionPreview.push((
                             <div className="line" key={deleteIdx}>
-                                <span className="line-number" style={{ background: "rgb(255, 210, 217)", float: "left" }}>[{deleteIdx}]&#160;</span>
-                                <p className="line-text-keep"
-                                    style={{ float: "left", background: "#f1f1f1" }}>{sliceKeep}</p>
-                                <p className="line-text-remove"
-                                    style={{ background: "red" }}><b>{sliceDelete}</b></p>
+                                <span className="line-number" style={{ background: "rgb(255, 210, 217)" }}>[{deleteIdx}]&#160;</span>
+                                <span className="line-text-keep"
+                                    style={{ background: "#f1f1f1" }}>{sliceKeep}</span>
+                                <span className="line-text-remove"
+                                    style={{ background: "red" }}><b>{sliceDelete}</b></span>
 
                             </div>))
                         deleteIdx--;
@@ -168,11 +168,11 @@ class DeleteEndingModule extends Component {
 
                         createSingleDeletionPreview.push((
                             <div className="line" key={deleteIdx}>
-                                <span className="line-number" style={{ background: "rgb(255, 210, 217)", float: "left" }}>[{deleteIdx}]&#160;</span>
-                                <p className="line-text-keep"
-                                    style={{ float: "left", background: "#f1f1f1" }}>{sliceKeep}</p>
-                                <p className="line-text-remove"
-                                    style={{ background: "red" }}><b>{sliceDelete}</b></p>
+                                <span className="line-number" style={{ background: "rgb(255, 210, 217)" }}>[{deleteIdx}]&#160;</span>
+                                <span className="line-text-keep"
+                                    style={{ background: "#f1f1f1" }}>{sliceKeep}</span>
+                                <span className="line-text-remove"
+                                    style={{ background: "red" }}><b>{sliceDelete}</b></span>
 
                             </div>))
                         deleteIdx--;

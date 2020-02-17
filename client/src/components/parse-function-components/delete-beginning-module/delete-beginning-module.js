@@ -112,8 +112,8 @@ class DeleteBeginningModule extends Component {
                     // If found is false, and line does not contain the stopping characters:
                     // The whole line will be deleted
                     return (<div className="line" key={idx}>
-                        <span className="line-number" style={{ background: "rgb(255, 210, 217)", float: "left" }}>[{idx}]&#160;</span>
-                        <p className="line-text" style={{ background: "red" }}><b>{line}</b></p>
+                        <span className="line-number" style={{ background: "rgb(255, 210, 217)" }}>[{idx}]&#160;</span>
+                        <span className="line-text" style={{ background: "red" }}><b>{line}</b></span>
                     </div>)
 
                 } else if (found === false && stoppingCharIdx !== -1 && willBeFound == true) {
@@ -132,9 +132,9 @@ class DeleteBeginningModule extends Component {
 
                     return (<div className="line" key={idx}>
                         <span className="line-number" style={{ background: "rgb(255, 210, 217)", float: "left" }}>[{idx}]&#160;</span>
-                        <p className="line-text-remove"
-                            style={{ background: "red", float: "left" }}><b>{sliceDelete}</b></p>
-                        <p className="line-text-keep">{sliceKeep}</p>
+                        <span className="line-text-remove"
+                            style={{ background: "red" }}><b>{sliceDelete}</b></span>
+                        <span className="line-text-keep">{sliceKeep}</span>
                     </div>)
 
                 } else if (found === true || willBeFound == false) {
