@@ -18,6 +18,8 @@ import RemoveBlankLinesModule from '../parse-function-components/remove-blank-li
 import RemoveBlankLinesModuleComplete from '../parse-function-components/remove-blank-lines-module/remove-blank-lines-module-complete';
 import RemoveExcessSpacesModule from '../parse-function-components/remove-excess-spaces-module/remove-excess-spaces-module';
 import RemoveExcessSpacesModuleComplete from '../parse-function-components/remove-excess-spaces-module/remove-excess-spaces-module-complete';
+import SplitLinesBeforeBreakModule from '../parse-function-components/split-lines-before-break/split-lines-before-break-module';
+import SplitLinesBeforeBreakComplete from '../parse-function-components/split-lines-before-break/split-lines-before-break-module-complete';
 
 import * as actions from '../../actions';
 
@@ -48,6 +50,9 @@ class ParseFunctionContainer extends Component {
 
         let multiLineDropdown = document.querySelectorAll('.dropdown-trigger-multi-line-module');
         M.Dropdown.init(multiLineDropdown, { coverTrigger: false });
+
+        let splitLineDropdown = document.querySelectorAll('.dropdown-trigger-split-line-module');
+        M.Dropdown.init(splitLineDropdown, { coverTrigger: false });
     }
 
     setStateAsync = (state) => {
@@ -523,6 +528,62 @@ class ParseFunctionContainer extends Component {
 
     }
 
+
+    handleCreateSplitLinesBeforeBreakModule = (e) => {
+        e.preventDefault();
+        console.log('create a "split lines before break" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let splitLinesBeforeBreak = {
+            moduleJSX: (<div className="split-lines-before-break-module" key={id}>
+                <SplitLinesBeforeBreakModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateSplitLinesBeforeBreakModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, splitLinesBeforeBreak];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateSplitLinesBeforeBreakModuleComplete = (id, charToSplit) => {
+        console.log('create a completed "split lines before break" module!');
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let splitLinesBeforeBreak = {
+            moduleJSX: (<div className="split-lines-before-break-module-complete" key={id}>
+                <SplitLinesBeforeBreakComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    charToSplit={charToSplit}
+                />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, splitLinesBeforeBreak]
+        })
+
+    }
+
     convertCodeArrayToText = (moduleCode) => {
         if (moduleCode.length === 0) {
             return '';
@@ -568,17 +629,23 @@ class ParseFunctionContainer extends Component {
                 let saveTextName = moduleParams[0];
                 await this.handleCreateSavedTextModuleComplete(id, saveTextName);
             }
-            else if (moduleCodeArr[i].code === "ConcatenateModule") {
+            else if (moduleType === "ConcatenateModule") {
                 let id = moduleCodeArr[i].id;
                 await this.handleCreateConcatenateModuleComplete(id);
             }
-            else if (moduleCodeArr[i].code === "RemoveBlankLinesModule") {
+            else if (moduleType === "RemoveBlankLinesModule") {
                 let id = moduleCodeArr[i].id;
                 await this.handleCreateRemoveBlankLinesModuleComplete(id);
             }
-            else if (moduleCodeArr[i].code === "RemoveExcessSpacesModule") {
+            else if (moduleType === "RemoveExcessSpacesModule") {
                 let id = moduleCodeArr[i].id;
                 await this.handleCreateRemoveExcessSpacesModuleComplete(id);
+            }
+            else if (moduleType === "SplitLinesBeforeBreak") {
+                let id = moduleCodeArr[i].id;
+                console.log('hit')
+                let charToSplit = moduleParams[0];
+                await this.handleCreateSplitLinesBeforeBreakModuleComplete(id, charToSplit);
             }
         }
     }
@@ -616,7 +683,7 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Replace Modules</a>
                         <ul id='replace-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" onClick={this.handleCreateReplaceCharacterModule} className="dropdown-button">Replace Characters</button></li>
-                            <li><button href="!#" className="dropdown-button">Replace Words</button></li>
+                            <li><button href="!#" style={{ background: "grey" }} className="dropdown-button">Replace Words (is this needed?)</button></li>
                         </ul>
                     </div>
 
@@ -628,6 +695,7 @@ class ParseFunctionContainer extends Component {
                         <ul id='delete-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBeginningModule}>Delete beginning until a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</button></li>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }} onClick={this.handleCreateDeleteEndingModule}>Delete everything between two sets of characters</button></li>
                         </ul>
                     </div>
 
@@ -647,20 +715,21 @@ class ParseFunctionContainer extends Component {
                             data-target='multi-line-module-dropdown'
                             disabled={moduleActiveToggle}>Multi-Line Modules</a>
                         <ul id='multi-line-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" >Add Text to Beginning Multiple</button></li>
-                            <li><button href="!#" className="dropdown-button" >Split Line Multiple After Characters</button></li>
-                            <li><button href="!#" className="dropdown-button" >Concatenate a Multiple</button></li>
+                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Add Text to the Beginning of a Multiple</button></li>
+                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Split a Multiple Into Two Lines if a Word Contains a Phrase: Before Line Break</button></li>
+                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Split a Multiple Into Two Lines if a Word Contains a Phrase: After Line Break</button></li>
+                            <li><button href="!#" style={{ background: "grey" }} className="dropdown-button" >Concatenate a Multiple??? (Don't think this is too helpful)</button></li>
                         </ul>
                     </div>
 
-                    <div className="module-dropdown replace-module-dropdown col s12 m6 l3">
-                        <a className='dropdown-trigger-replace-module btn'
+                    <div className="module-dropdown split-line-module-dropdown col s12 m6 l3">
+                        <a className='dropdown-trigger-split-line-module btn'
                             href='!#'
-                            data-target='replace-module-dropdown'
-                            disabled={moduleActiveToggle}>Dummy4</a>
-                        <ul id='replace-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateReplaceCharacterModule}>Replace Characters</button></li>
-                            <li><button href="!#" className="dropdown-button">Replace Words</button></li>
+                            data-target='split-line-module-dropdown'
+                            disabled={moduleActiveToggle}>Split Line Modules</a>
+                        <ul id='split-line-module-dropdown' className='dropdown-content'>
+                            <li><button href="!#" style={{ background: "yellow" }} className="dropdown-button" onClick={this.handleCreateSplitLinesBeforeBreakModule}>Split Into Two Lines if a Word Contains a Phrase: Before Line Break</button></li>
+                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button">Split Into Two Lines if a Word Contains a Phrase: After Line Break</button></li>
                         </ul>
                     </div>
 
@@ -673,8 +742,8 @@ class ParseFunctionContainer extends Component {
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateConcatenateModule}>Concatenate On One Line</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateRemoveBlankLinesModule}>Remove Blank Lines</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateRemoveExcessSpacesModule}>Remove Excess Spaces</button></li>
-                            <li><button href="!#" className="dropdown-button">To Uppercase</button></li>
-                            <li><button href="!#" className="dropdown-button">To Lowercase</button></li>
+                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button">To Uppercase???</button></li>
+                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button">To Lowercase???</button></li>
                         </ul>
                     </div>
 

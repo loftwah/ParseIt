@@ -54,10 +54,10 @@ class ConcatenateModule extends Component {
                     </span>)
 
                 } else {
-                    // Addition: concatenate all lines with a green space
+                    // Addition: concatenate all lines with a green space, followed by orange text denoting a "merge"
                     return (<span className="line" key={idx}>
                         <span className="line-text" style={{ background: "rgb(74, 255, 83)", "whiteSpace": "pre-wrap" }}> </span>
-                        <span className="line-text" style={{ "whiteSpace": "pre-wrap" }}>{line}</span>
+                        <span className="line-text" style={{ "whiteSpace": "pre-wrap", background: "orange" }}>{line}</span>
                     </span>)
                 }
             })
@@ -78,14 +78,14 @@ class ConcatenateModule extends Component {
                     return (<div className="line" key={idx}>
                         <span className="line-number"
                             style={{ background: "rgb(250, 217, 155)" }}>[{idx}]&#160;</span>
-                        <span className="concatenate-char" style={{ background: "orange" }}><b>⤻</b></span>
+                        <span className="concatenate-char" style={{ background: "lightblue" }}><b>⤻</b></span>
                     </div>)
                 } else {
                     // Deletion: If line contains text, display concatenate-symbol at the end and orange idx
                     return (<div className="line" style={{ "wordWrap": "break-word" }} key={idx}>
                         <span className="line-number" style={{ background: "rgb(250, 217, 155)", float: "left" }}>[{idx}]&#160;</span>
-                        <span className="concatenate-char" style={{ background: "orange", float: "left" }}><b>⤻</b></span>
-                        <p className="line-text">{line}</p>
+                        <span className="concatenate-char" style={{ background: "lightblue", float: "left" }}><b>⤻</b></span>
+                        <p className="line-text" style={{ background: "orange" }} >{line}</p>
                     </div>)
                 }
             })
