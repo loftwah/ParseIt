@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 // Server 
 const server = http.createServer(app);
 
-// routes
+// Routes
 app.use('/', routes);
 
 // Handles any requests that do not match the ones above
