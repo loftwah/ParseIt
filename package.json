@@ -20,5 +20,8 @@
     "pdfjs-dist": "^2.2.228",
     "react-router-dom": "^5.1.2",
     "react-textarea-autosize": "^7.1.2"
+  },
+  "engines": {
+    "node": "8.11.1"
   }
 }
