@@ -58,10 +58,7 @@ class RemoveBlankLinesComplete extends Component {
             <div className="remove-blank-lines-function">
                 <div className="remove-blank-lines-card card white">
                     <div className="remove-blank-lines-card-content card-content black-character">
-                        <button
-                            className="waves-effect waves-light btn #42a5f5 red lighten-1 submit-form-button"
-                            onClick={this.handleDelete}
-                        >Delete</button>
+                        <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
                         <span className="card-title center">Module: Remove Blank Lines</span>
                     </div>
                     <div className="row">

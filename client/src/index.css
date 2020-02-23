@@ -16,3 +16,17 @@ code {
   padding: 10px;
   padding-bottom: 0px
 }
+
+i.module-delete-button {
+  font-size: 2.5rem;
+  opacity: 0.54;
+  transition: 0.2s;
+  float:right;
+}
+
+i.module-delete-button:hover{
+  opacity: 1;
+  cursor: pointer;
+  background: rgb(240, 240, 240);
+  border-radius: .25rem;
+}

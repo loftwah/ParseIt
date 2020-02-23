@@ -53,6 +53,9 @@ class ParseFunctionContainer extends Component {
 
         let splitLineDropdown = document.querySelectorAll('.dropdown-trigger-split-line-module');
         M.Dropdown.init(splitLineDropdown, { coverTrigger: false });
+
+        let createDropdown = document.querySelectorAll('.dropdown-trigger-create-module');
+        M.Dropdown.init(createDropdown, { coverTrigger: false });
     }
 
     setStateAsync = (state) => {
@@ -689,7 +692,7 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Replace Modules</a>
                         <ul id='replace-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" onClick={this.handleCreateReplaceCharacterModule} className="dropdown-button">Replace Characters</button></li>
-                            <li><button href="!#" style={{ background: "grey" }} className="dropdown-button">Replace Words (is this needed?)</button></li>
+                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button">Replace Words (will be done in future)</button></li>
                         </ul>
                     </div>
 
@@ -702,16 +705,20 @@ class ParseFunctionContainer extends Component {
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBeginningModule}>Delete beginning until a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }} onClick={this.handleCreateDeleteEndingModule}>Delete everything between two sets of characters</button></li>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }} onClick={this.handleCreateDeleteEndingModule}>Delete a line if it contains a set of characters</button></li>
                         </ul>
                     </div>
 
-                    <div className="module-dropdown save-module-dropdown col s12 m6 l3">
-                        <a className='dropdown-trigger-save-module btn'
+                    <div className="module-dropdown create-module-dropdown col s12 m6 l3">
+                        <a className='dropdown-trigger-create-module btn'
                             href='!#'
-                            data-target='save-module-dropdown'
-                            disabled={moduleActiveToggle}>Save Text Modules</a>
-                        <ul id='save-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSavedTextModule}>Save Text and then Get Original Text</button></li>
+                            data-target='create-module-dropdown'
+                            disabled={moduleActiveToggle}>Create Modules</a>
+                        <ul id='create-module-dropdown' className='dropdown-content'>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the beginning of all inputs</button></li>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of all inputs</button></li>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the beginning of the first input</button></li>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of the last input</button></li>
                         </ul>
                     </div>
 
@@ -734,8 +741,8 @@ class ParseFunctionContainer extends Component {
                             data-target='split-line-module-dropdown'
                             disabled={moduleActiveToggle}>Split Line Modules</a>
                         <ul id='split-line-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" style={{ background: "yellow" }} className="dropdown-button" onClick={this.handleCreateSplitLinesBeforeBreakModule}>Split Into Two Lines if a Word Contains a Phrase: Before Line Break</button></li>
-                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button">Split Into Two Lines if a Word Contains a Phrase: After Line Break</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesBeforeBreakModule}>Split Into Two Lines if a Word Contains a Phrase: Before Line Break</button></li>
+                            <li><button href="!#" style={{ background: "yellow" }} className="dropdown-button">Split Into Two Lines if a Word Contains a Phrase: After Line Break</button></li>
                         </ul>
                     </div>
 
@@ -748,8 +755,16 @@ class ParseFunctionContainer extends Component {
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateConcatenateModule}>Concatenate On One Line</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateRemoveBlankLinesModule}>Remove Blank Lines</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateRemoveExcessSpacesModule}>Remove Excess Spaces</button></li>
-                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button">To Uppercase???</button></li>
-                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button">To Lowercase???</button></li>
+                        </ul>
+                    </div>
+
+                    <div className="module-dropdown save-module-dropdown col s12 m6 l3">
+                        <a className='dropdown-trigger-save-module btn'
+                            href='!#'
+                            data-target='save-module-dropdown'
+                            disabled={moduleActiveToggle}>Save Text Modules</a>
+                        <ul id='save-module-dropdown' className='dropdown-content'>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSavedTextModule}>Save Text and then Get Original Text</button></li>
                         </ul>
                     </div>
 

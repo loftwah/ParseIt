@@ -251,11 +251,9 @@ class SplitLinesBeforeBreak extends Component {
             <div className="split-lines-before-break-function">
                 <div className="split-lines-before-break-card card white">
                     <div className="split-lines-before-break-card-content card-content black-character">
-                        <button
-                            className="waves-effect waves-light btn #42a5f5 red lighten-1 submit-form-button"
-                            onClick={this.handleDelete}
-                        >Delete</button>
-                        <span className="card-title center">Module: Split Into Two Lines if a Word Contains a Phrase: Before Line Break</span>
+                        <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
+                        <p className="card-title center">Module: Split Into Two Lines if a Word Contains a Phrase:</p>
+                        <p className="card-title center">Before Line Break</p>
                     </div>
                     <div className="row">
                         <div className="split-lines-before-break-module-introduction">

@@ -81,13 +81,9 @@ class DeleteEndingModuleComplete extends Component {
         const { id } = this.props;
         return (
             <div className="delete-ending-function">
-                <h4 className="black-character"><b>DELETE TEXT</b></h4>
                 <div className="delete-ending-card card white">
                     <div className="delete-ending-card-content card-content black-character">
-                        <button
-                            className="waves-effect waves-light btn #42a5f5 red lighten-1 submit-form-button"
-                            onClick={this.handleDelete}
-                        >Delete</button>
+                        <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
                         <span className="card-title center">Module: Delete Last Set of Characters until End</span>
                     </div>
                     <div className="row">

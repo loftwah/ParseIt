@@ -43,13 +43,9 @@ class SavedTextModuleComplete extends Component {
         const { savedTextName } = this.state;
         return (
             <div className="saved-text-function">
-                <h4 className="black-character"><b>SAVED TEXT</b></h4>
                 <div className="saved-text-card card white">
                     <div className="saved-text-card-content card-content black-character">
-                        <button
-                            className="waves-effect waves-light btn #42a5f5 red lighten-1 submit-form-button"
-                            onClick={this.handleDelete}
-                        >Delete</button>
+                        <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
                         <span className="card-title center">Module: Save Text and Get Original Text</span>
                     </div>
                     <div className="row">
