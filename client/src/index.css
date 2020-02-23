@@ -30,3 +30,7 @@ i.module-delete-button:hover{
   background: rgb(240, 240, 240);
   border-radius: .25rem;
 }
+
+p.error-msg {
+  color: red;
+}

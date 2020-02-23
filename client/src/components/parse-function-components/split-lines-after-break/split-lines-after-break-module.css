@@ -1,0 +1,40 @@
+div.split-lines-after-break-user-input {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+div.row {
+    padding-left: 10px
+}
+
+div.split-lines-after-break-user-input{
+    margin: 0px;
+}
+
+div.split-lines-after-break-user-input.insert {
+    padding-left: 10px
+}
+
+div.split-lines-after-break-complete {
+    margin-bottom: 10px;
+}
+
+input#instance-input{
+    width:30%;
+    background: rgb(243, 243, 243);
+}
+
+div.split-lines-after-break-module-introduction {
+    padding: 10px
+}
+
+span.line-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+@media only screen and (max-width: 450px) {
+    div.split-lines-after-break-user-input.insert {
+        padding-left: 10px
+    }
+  }

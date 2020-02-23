@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import M from 'materialize-css';
 
 import './parse-function-container.css';
+import { validateCode } from './validate-module-code';
 import ParseItCode from '../parse-function-components/parseit-code/parseit-code';
 import ReplaceCharacterModule from '../parse-function-components/replace-character-module/replace-character-module';
 import ReplaceCharacterModuleComplete from '../parse-function-components/replace-character-module/replace-character-module-complete';
@@ -20,6 +21,8 @@ import RemoveExcessSpacesModule from '../parse-function-components/remove-excess
 import RemoveExcessSpacesModuleComplete from '../parse-function-components/remove-excess-spaces-module/remove-excess-spaces-module-complete';
 import SplitLinesBeforeBreakModule from '../parse-function-components/split-lines-before-break/split-lines-before-break-module';
 import SplitLinesBeforeBreakComplete from '../parse-function-components/split-lines-before-break/split-lines-before-break-module-complete';
+import SplitLinesAfterBreakModule from '../parse-function-components/split-lines-after-break/split-lines-after-break-module';
+import SplitLinesAfterBreakComplete from '../parse-function-components/split-lines-after-break/split-lines-after-break-module-complete';
 
 import * as actions from '../../actions';
 
@@ -29,6 +32,7 @@ class ParseFunctionContainer extends Component {
         this.state = {
             modules: [], // JSX for modules
             moduleCode: [], // moduleCode will be converted into codeText for reducer
+            codeErrorMsg: '',
         };
         this.handleDeleteModule = this.handleDeleteModule.bind(this);
         this.ouptutModulesFromModuleCodeState = this.ouptutModulesFromModuleCodeState.bind(this);
@@ -587,11 +591,66 @@ class ParseFunctionContainer extends Component {
 
     }
 
+    handleCreateSplitLinesAfterBreakModule = (e) => {
+        e.preventDefault();
+        console.log('create a "split lines after break" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let splitLinesAfterBreak = {
+            moduleJSX: (<div className="split-lines-after-break-module" key={id}>
+                <SplitLinesAfterBreakModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateSplitLinesAfterBreakModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, splitLinesAfterBreak];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateSplitLinesAfterBreakModuleComplete = (id, charToSplit) => {
+        console.log('create a completed "split lines after break" module!');
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let splitLinesAfterBreak = {
+            moduleJSX: (<div className="split-lines-after-break-module-complete" key={id}>
+                <SplitLinesAfterBreakComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    charToSplit={charToSplit}
+                />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, splitLinesAfterBreak]
+        })
+
+    }
+
     convertCodeArrayToText = (moduleCode) => {
         if (moduleCode.length === 0) {
             return '';
         } else {
-            let textCode = ''
+            let textCode = '';
             for (let i = 0; i < moduleCode.length; i++) {
                 if (moduleCode[i].code === "") {
                     continue;
@@ -606,12 +665,30 @@ class ParseFunctionContainer extends Component {
         // begin by deleting all savedText
         this.props.updateSavedText([]);
         for (let i = 0; i < moduleCodeArr.length; i++) {
-            let moduleType = moduleCodeArr[i].code.split(' ')[0]
+            let moduleType = moduleCodeArr[i].code.split(' ')[0];
             // the slice takes off the 2 ending quotations and ending parenthesis off of the 2nd param
             let moduleParams = moduleCodeArr[i].code.slice(0, moduleCodeArr[i].code.length - 2)
-                .replace(moduleType + ' \"(', '').split(")\" \"(")
-            let id
-            let stoppingCharacters
+                .replace(moduleType + ' \"(', '').split(")\" \"(");
+
+            let id;
+            let stoppingCharacters;
+            let charToSplit;
+
+            // validate the incoming code line
+            let isValidCode = validateCode(moduleType, moduleParams);
+
+            if (isValidCode.valid === false) {
+                // if invalid, log out the error and quit
+                this.setState({
+                    codeErrorMsg: isValidCode.message
+                });
+                return;
+            } else if (isValidCode.valid === true && i === moduleCodeArr.length - 1) {
+                // if the last module code is valid, display no error messgaes
+                this.setState({
+                    codeErrorMsg: ""
+                });
+            }
 
             switch (moduleType) {
                 case "ReplaceCharacterModule":
@@ -650,8 +727,13 @@ class ParseFunctionContainer extends Component {
                     break;
                 case "SplitLinesBeforeBreak":
                     id = moduleCodeArr[i].id;
-                    let charToSplit = moduleParams[0];
+                    charToSplit = moduleParams[0];
                     await this.handleCreateSplitLinesBeforeBreakModuleComplete(id, charToSplit);
+                    break;
+                case "SplitLinesAfterBreak":
+                    id = moduleCodeArr[i].id;
+                    charToSplit = moduleParams[0];
+                    await this.handleCreateSplitLinesAfterBreakModuleComplete(id, charToSplit);
                     break;
                 default:
                     console.log('that module is not found')
@@ -660,7 +742,7 @@ class ParseFunctionContainer extends Component {
     }
 
     render() {
-        let { modules } = this.state;
+        let { modules, codeErrorMsg } = this.state;
         const { moduleActiveToggle } = this.props;
 
         let key = 0;
@@ -677,6 +759,7 @@ class ParseFunctionContainer extends Component {
                 <h4 className="black-text"><b>PARSE FUNCTION CONTAINER</b></h4>
                 <ParseItCode
                     parseItCode={this.parseItCode}
+                    errorMsg={codeErrorMsg}
                 />
                 <br />
                 <br />
@@ -742,7 +825,7 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Split Line Modules</a>
                         <ul id='split-line-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesBeforeBreakModule}>Split Into Two Lines if a Word Contains a Phrase: Before Line Break</button></li>
-                            <li><button href="!#" style={{ background: "yellow" }} className="dropdown-button">Split Into Two Lines if a Word Contains a Phrase: After Line Break</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesAfterBreakModule}>Split Into Two Lines if a Word Contains a Phrase: After Line Break</button></li>
                         </ul>
                     </div>
 

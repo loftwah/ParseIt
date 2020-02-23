@@ -9,12 +9,14 @@ class SplitLinesBeforeBreak extends Component {
         super(props);
         this.state = {
             charToSplit: '',
+            errorMsg: '',
         };
     }
 
     handleCharToSplit = e => {
         this.setState({
-            charToSplit: e.target.value
+            charToSplit: e.target.value,
+            errorMsg: '',
         })
     }
 
@@ -31,6 +33,14 @@ class SplitLinesBeforeBreak extends Component {
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
         const { charToSplit } = this.state;
+
+        // Handle errors: spaces
+        if(charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
+            this.setState({
+                errorMsg: "Do not begin or end with spaces in your set of characters"
+            });
+            return;
+        }
 
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
@@ -49,6 +59,14 @@ class SplitLinesBeforeBreak extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
         const { charToSplit } = this.state;
+
+        // Handle errors: spaces
+        if(charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
+            this.setState({
+                errorMsg: "Do not begin or end with spaces in your set of characters"
+            });
+            return;
+        }
 
         let additionPreviews = [];
         let deletionPreviews = [];
@@ -144,6 +162,8 @@ class SplitLinesBeforeBreak extends Component {
                                 additionPreviewLines.push(lastSegment);
 
                             } else if (charBeginsWithSpace === true) {
+                                // WORK IN PROGRESS
+                                
                                 // If a line DOES begin with a space, we assume that the user does not care about any rules regarding words
                                 // Therefore, we will simply move things to a new line, as long as the pointer is not at index 0
                                 if (findSpacePointer !== 0) {
@@ -246,7 +266,7 @@ class SplitLinesBeforeBreak extends Component {
 
     render() {
         const { previewToggle } = this.props;
-        const { charToSplit } = this.state;
+        const { charToSplit, errorMsg } = this.state;
         return (
             <div className="split-lines-before-break-function">
                 <div className="split-lines-before-break-card card white">
@@ -273,6 +293,7 @@ class SplitLinesBeforeBreak extends Component {
                                 />
                                 <label htmlFor="character-input"></label>
                             </div>
+                            <p className="error-msg">{errorMsg}</p>
                         </form>
 
                     </div>
