@@ -6,7 +6,8 @@
   "scripts": {
     "server-dev": "nodemon server.js",
     "client-dev": "npm start --prefix client",
-    "start-dev": "concurrently \"npm run server-dev\" \"npm run client-dev\""
+    "start-dev": "concurrently \"npm run server-dev\" \"npm run client-dev\"",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "author": "Michael McCabe",
   "license": "ISC",
