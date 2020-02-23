@@ -21,20 +21,20 @@ class DeleteEndingModuleComplete extends Component {
         console.log('delete-ending-module component mounted');
 
         const finalText = [];
-        for (let i = 0; i < outputText.length; i++) {
+        for (let inputContainerNum = 0; inputContainerNum < outputText.length; inputContainerNum++) {
 
             // begin by splitting lines into array items, and reverse those items
-            const textLines = outputText[i].text.split('\n').reverse();
+            const textLines = outputText[inputContainerNum].text.split('\n').reverse();
             let newText = [];
             let found = false;
 
             // will a deletion ever be found?
-            if (outputText[i].text.indexOf(stoppingCharacters) == -1) {
+            if (outputText[inputContainerNum].text.indexOf(stoppingCharacters) == -1) {
                 // We will never find stopping characters - output the original text
                 finalText.push({
-                    inputContainer: outputText[i].inputContainer,
-                    text: outputText[i].text,
-                    name: outputText[i].name
+                    inputContainer: outputText[inputContainerNum].inputContainer,
+                    text: outputText[inputContainerNum].text,
+                    name: outputText[inputContainerNum].name
                 })
                 continue;
             }
@@ -60,9 +60,9 @@ class DeleteEndingModuleComplete extends Component {
             const finalTextContainer = newText.reverse().join('\n');
 
             finalText.push({
-                inputContainer: outputText[i].inputContainer,
+                inputContainer: outputText[inputContainerNum].inputContainer,
                 text: finalTextContainer,
-                name: outputText[i].name
+                name: outputText[inputContainerNum].name
             })
 
         }

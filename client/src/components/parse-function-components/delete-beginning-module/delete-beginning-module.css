@@ -15,6 +15,16 @@ div.delete-beginning-user-input.insert {
     padding-left: 30px;
 }
 
+span.line-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+span.line-text-keep {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 div.delete-beginning-complete {
     margin-bottom: 30px;
 }

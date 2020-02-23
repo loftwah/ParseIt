@@ -607,45 +607,51 @@ class ParseFunctionContainer extends Component {
             // the slice takes off the 2 ending quotations and ending parenthesis off of the 2nd param
             let moduleParams = moduleCodeArr[i].code.slice(0, moduleCodeArr[i].code.length - 2)
                 .replace(moduleType + ' \"(', '').split(")\" \"(")
-            if (moduleType === "ReplaceCharacterModule") {
-                let id = moduleCodeArr[i].id;
-                // slice off the double quotes - found at the beginning and the end
-                let replaceCharacter = moduleParams[0]
-                let insertCharacter = moduleParams[1]
-                await this.handleCreateReplaceCharacterModuleComplete(id, replaceCharacter, insertCharacter);
-            }
-            else if (moduleType === "DeleteBeginningModule") {
-                let id = moduleCodeArr[i].id;
-                let stoppingCharacters = moduleParams[0];
-                await this.handleCreateDeleteBeginningModuleComplete(id, stoppingCharacters);
-            }
-            else if (moduleType === "DeleteEndingModule") {
-                let id = moduleCodeArr[i].id;
-                let stoppingCharacters = moduleParams[0];
-                await this.handleCreateDeleteEndingModuleComplete(id, stoppingCharacters);
-            }
-            else if (moduleType === "SaveTextModule") {
-                let id = moduleCodeArr[i].id;
-                let saveTextName = moduleParams[0];
-                await this.handleCreateSavedTextModuleComplete(id, saveTextName);
-            }
-            else if (moduleType === "ConcatenateModule") {
-                let id = moduleCodeArr[i].id;
-                await this.handleCreateConcatenateModuleComplete(id);
-            }
-            else if (moduleType === "RemoveBlankLinesModule") {
-                let id = moduleCodeArr[i].id;
-                await this.handleCreateRemoveBlankLinesModuleComplete(id);
-            }
-            else if (moduleType === "RemoveExcessSpacesModule") {
-                let id = moduleCodeArr[i].id;
-                await this.handleCreateRemoveExcessSpacesModuleComplete(id);
-            }
-            else if (moduleType === "SplitLinesBeforeBreak") {
-                let id = moduleCodeArr[i].id;
-                console.log('hit')
-                let charToSplit = moduleParams[0];
-                await this.handleCreateSplitLinesBeforeBreakModuleComplete(id, charToSplit);
+            let id
+            let stoppingCharacters
+
+            switch (moduleType) {
+                case "ReplaceCharacterModule":
+                    id = moduleCodeArr[i].id;
+                    // slice off the double quotes - found at the beginning and the end
+                    let replaceCharacter = moduleParams[0]
+                    let insertCharacter = moduleParams[1]
+                    await this.handleCreateReplaceCharacterModuleComplete(id, replaceCharacter, insertCharacter);
+                    break;
+                case "DeleteBeginningModule":
+                    id = moduleCodeArr[i].id;
+                    stoppingCharacters = moduleParams[0];
+                    await this.handleCreateDeleteBeginningModuleComplete(id, stoppingCharacters);
+                    break;
+                case "DeleteEndingModule":
+                    id = moduleCodeArr[i].id;
+                    stoppingCharacters = moduleParams[0];
+                    await this.handleCreateDeleteEndingModuleComplete(id, stoppingCharacters);
+                    break;
+                case "SaveTextModule":
+                    id = moduleCodeArr[i].id;
+                    let saveTextName = moduleParams[0];
+                    await this.handleCreateSavedTextModuleComplete(id, saveTextName);
+                    break;
+                case "ConcatenateModule":
+                    id = moduleCodeArr[i].id;
+                    await this.handleCreateConcatenateModuleComplete(id);
+                    break;
+                case "RemoveBlankLinesModule":
+                    id = moduleCodeArr[i].id;
+                    await this.handleCreateRemoveBlankLinesModuleComplete(id);
+                    break;
+                case "RemoveExcessSpacesModule":
+                    id = moduleCodeArr[i].id;
+                    await this.handleCreateRemoveExcessSpacesModuleComplete(id);
+                    break;
+                case "SplitLinesBeforeBreak":
+                    id = moduleCodeArr[i].id;
+                    let charToSplit = moduleParams[0];
+                    await this.handleCreateSplitLinesBeforeBreakModuleComplete(id, charToSplit);
+                    break;
+                default:
+                    console.log('that module is not found')
             }
         }
     }

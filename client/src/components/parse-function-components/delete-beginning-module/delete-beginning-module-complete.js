@@ -21,20 +21,20 @@ class DeleteBeginningModuleComplete extends Component {
         console.log('delete-beginning-module component mounted');
 
         const finalText = [];
-        for (let i = 0; i < outputText.length; i++) {
+        for (let inputContainerNum = 0; inputContainerNum < outputText.length; inputContainerNum++) {
 
             // begin by splitting lines into array items
-            const textLines = outputText[i].text.split('\n');
+            const textLines = outputText[inputContainerNum].text.split('\n');
             let newText = [];
             let found = false;
 
             // will a deletion ever be found?
-            if (outputText[i].text.indexOf(stoppingCharacters) == -1) {
+            if (outputText[inputContainerNum].text.indexOf(stoppingCharacters) == -1) {
                 // We will never find stopping characters - output the original text
                 finalText.push({
-                    inputContainer: outputText[i].inputContainer,
-                    text: outputText[i].text,
-                    name: outputText[i].name
+                    inputContainer: outputText[inputContainerNum].inputContainer,
+                    text: outputText[inputContainerNum].text,
+                    name: outputText[inputContainerNum].name
                 })
                 continue;
             }
@@ -56,9 +56,9 @@ class DeleteBeginningModuleComplete extends Component {
             const finalTextContainer = newText.join('\n');
 
             finalText.push({
-                inputContainer: outputText[i].inputContainer,
+                inputContainer: outputText[inputContainerNum].inputContainer,
                 text: finalTextContainer,
-                name: outputText[i].name
+                name: outputText[inputContainerNum].name
             })
 
         }

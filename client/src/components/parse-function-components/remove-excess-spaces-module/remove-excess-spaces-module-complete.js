@@ -32,16 +32,16 @@ class RemoveExcessSpacesComplete extends Component {
                 let strangeSpace = " ";
 
                 // Create a list of the locations of spaces that we want to delete
-                for (let i = 0; i < line.length; i++) {
-                    if (line[i] === " " || line[i] === strangeSpace) {
+                for (let idx = 0; idx < line.length; idx++) {
+                    if (line[idx] === " " || line[idx] === strangeSpace) {
                         if (spaceFound === true) {
-                            lineSpaceEnd = i;
+                            lineSpaceEnd = idx;
                         } else if (spaceFound === false) {
-                            lineSpaceBegin = i;
+                            lineSpaceBegin = idx;
                             spaceFound = true;
                         }
-                    } else if ((line[i] !== " " || line[i] !== strangeSpace) && spaceFound === true) {
-                        lineSpaceEnd = i
+                    } else if ((line[idx] !== " " || line[idx] !== strangeSpace) && spaceFound === true) {
+                        lineSpaceEnd = idx
                         spaceFound = false
                         if (lineSpaceBegin === 0) {
                             lineSpaceRemove.push({
@@ -84,21 +84,21 @@ class RemoveExcessSpacesComplete extends Component {
                     // begin output display of ONE line
                     let keepChars;
 
-                    for (let i = 0; i < lineSpaceRemove.length; i++) {
+                    for (let j = 0; j < lineSpaceRemove.length; j++) {
 
                         // Case: If there is a space to remove in the beginning
-                        if (lineSpaceRemove[0].begin === 0 && i === 0) {
+                        if (lineSpaceRemove[0].begin === 0 && j === 0) {
                             continue;
                         }
 
                         // Case: If there is no space to remove in the beginning
-                        if (lineSpaceRemove[0].begin !== 0 && i === 0) {
+                        if (lineSpaceRemove[0].begin !== 0 && j === 0) {
                             keepChars = line.slice(0, lineSpaceRemove[0].begin);
                             lineNoExcessSpaces += keepChars;
                             continue;
                         }
 
-                        keepChars = line.slice(lineSpaceRemove[i - 1].end, lineSpaceRemove[i].begin);
+                        keepChars = line.slice(lineSpaceRemove[j - 1].end, lineSpaceRemove[j].begin);
 
                         // Case: this is the first addition to lineNoExcessSpaces - do not start with spaces
                         if (lineNoExcessSpaces === '') {
