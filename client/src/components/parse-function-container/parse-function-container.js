@@ -19,10 +19,10 @@ import RemoveBlankLinesModule from '../parse-function-components/remove-blank-li
 import RemoveBlankLinesModuleComplete from '../parse-function-components/remove-blank-lines-module/remove-blank-lines-module-complete';
 import RemoveExcessSpacesModule from '../parse-function-components/remove-excess-spaces-module/remove-excess-spaces-module';
 import RemoveExcessSpacesModuleComplete from '../parse-function-components/remove-excess-spaces-module/remove-excess-spaces-module-complete';
-import SplitLinesBeforeBreakModule from '../parse-function-components/split-lines-before-break/split-lines-before-break-module';
-import SplitLinesBeforeBreakComplete from '../parse-function-components/split-lines-before-break/split-lines-before-break-module-complete';
-import SplitLinesAfterBreakModule from '../parse-function-components/split-lines-after-break/split-lines-after-break-module';
-import SplitLinesAfterBreakComplete from '../parse-function-components/split-lines-after-break/split-lines-after-break-module-complete';
+import SplitLinesBeforeWordModule from '../parse-function-components/split-lines-before-word/split-lines-before-word-module';
+import SplitLinesBeforeWordComplete from '../parse-function-components/split-lines-before-word/split-lines-before-word-module-complete';
+import SplitLinesAfterWordModule from '../parse-function-components/split-lines-after-word/split-lines-after-word-module';
+import SplitLinesAfterWordComplete from '../parse-function-components/split-lines-after-word/split-lines-after-word-module-complete';
 
 import * as actions from '../../actions';
 
@@ -536,33 +536,33 @@ class ParseFunctionContainer extends Component {
     }
 
 
-    handleCreateSplitLinesBeforeBreakModule = (e) => {
+    handleCreateSplitLinesBeforeWordModule = (e) => {
         e.preventDefault();
-        console.log('create a "split lines before break" module!');
+        console.log('create a "split lines before word" module!');
         const { moduleActiveOn } = this.props;
         moduleActiveOn();
         let id = Math.random();
-        let splitLinesBeforeBreak = {
-            moduleJSX: (<div className="split-lines-before-break-module" key={id}>
-                <SplitLinesBeforeBreakModule
+        let splitLinesBeforeWord = {
+            moduleJSX: (<div className="split-lines-before-word-module" key={id}>
+                <SplitLinesBeforeWordModule
                     id={id}
                     handleDeleteModule={this.handleDeleteModule}
                     handleModuleCode={this.handleModuleCode}
-                    completeModule={this.handleCreateSplitLinesBeforeBreakModuleComplete} />
+                    completeModule={this.handleCreateSplitLinesBeforeWordModuleComplete} />
             </div>),
             id: id
         };
 
         console.log(id);
-        let modules = [...this.state.modules, splitLinesBeforeBreak];
+        let modules = [...this.state.modules, splitLinesBeforeWord];
 
         this.setState({
             modules: modules
         })
     }
 
-    handleCreateSplitLinesBeforeBreakModuleComplete = (id, charToSplit) => {
-        console.log('create a completed "split lines before break" module!');
+    handleCreateSplitLinesBeforeWordModuleComplete = (id, charToSplit) => {
+        console.log('create a completed "split lines before word" module!');
 
         const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
 
@@ -573,9 +573,9 @@ class ParseFunctionContainer extends Component {
             return mod.id !== id
         })
 
-        let splitLinesBeforeBreak = {
-            moduleJSX: (<div className="split-lines-before-break-module-complete" key={id}>
-                <SplitLinesBeforeBreakComplete
+        let splitLinesBeforeWord = {
+            moduleJSX: (<div className="split-lines-before-word-module-complete" key={id}>
+                <SplitLinesBeforeWordComplete
                     id={id}
                     handleDeleteModule={this.handleDeleteModule}
                     charToSplit={charToSplit}
@@ -586,38 +586,38 @@ class ParseFunctionContainer extends Component {
 
         console.log(id);;
         this.setState({
-            modules: [...newModules, splitLinesBeforeBreak]
+            modules: [...newModules, splitLinesBeforeWord]
         })
 
     }
 
-    handleCreateSplitLinesAfterBreakModule = (e) => {
+    handleCreateSplitLinesAfterWordModule = (e) => {
         e.preventDefault();
-        console.log('create a "split lines after break" module!');
+        console.log('create a "split lines after word" module!');
         const { moduleActiveOn } = this.props;
         moduleActiveOn();
         let id = Math.random();
-        let splitLinesAfterBreak = {
-            moduleJSX: (<div className="split-lines-after-break-module" key={id}>
-                <SplitLinesAfterBreakModule
+        let splitLinesAfterWord = {
+            moduleJSX: (<div className="split-lines-after-word-module" key={id}>
+                <SplitLinesAfterWordModule
                     id={id}
                     handleDeleteModule={this.handleDeleteModule}
                     handleModuleCode={this.handleModuleCode}
-                    completeModule={this.handleCreateSplitLinesAfterBreakModuleComplete} />
+                    completeModule={this.handleCreateSplitLinesAfterWordModuleComplete} />
             </div>),
             id: id
         };
 
         console.log(id);
-        let modules = [...this.state.modules, splitLinesAfterBreak];
+        let modules = [...this.state.modules, splitLinesAfterWord];
 
         this.setState({
             modules: modules
         })
     }
 
-    handleCreateSplitLinesAfterBreakModuleComplete = (id, charToSplit) => {
-        console.log('create a completed "split lines after break" module!');
+    handleCreateSplitLinesAfterWordModuleComplete = (id, charToSplit) => {
+        console.log('create a completed "split lines after word" module!');
 
         const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
 
@@ -628,9 +628,9 @@ class ParseFunctionContainer extends Component {
             return mod.id !== id
         })
 
-        let splitLinesAfterBreak = {
-            moduleJSX: (<div className="split-lines-after-break-module-complete" key={id}>
-                <SplitLinesAfterBreakComplete
+        let splitLinesAfterWord = {
+            moduleJSX: (<div className="split-lines-after-word-module-complete" key={id}>
+                <SplitLinesAfterWordComplete
                     id={id}
                     handleDeleteModule={this.handleDeleteModule}
                     charToSplit={charToSplit}
@@ -641,7 +641,7 @@ class ParseFunctionContainer extends Component {
 
         console.log(id);;
         this.setState({
-            modules: [...newModules, splitLinesAfterBreak]
+            modules: [...newModules, splitLinesAfterWord]
         })
 
     }
@@ -725,15 +725,15 @@ class ParseFunctionContainer extends Component {
                     id = moduleCodeArr[i].id;
                     await this.handleCreateRemoveExcessSpacesModuleComplete(id);
                     break;
-                case "SplitLinesBeforeBreak":
+                case "SplitLinesBeforeWord":
                     id = moduleCodeArr[i].id;
                     charToSplit = moduleParams[0];
-                    await this.handleCreateSplitLinesBeforeBreakModuleComplete(id, charToSplit);
+                    await this.handleCreateSplitLinesBeforeWordModuleComplete(id, charToSplit);
                     break;
-                case "SplitLinesAfterBreak":
+                case "SplitLinesAfterWord":
                     id = moduleCodeArr[i].id;
                     charToSplit = moduleParams[0];
-                    await this.handleCreateSplitLinesAfterBreakModuleComplete(id, charToSplit);
+                    await this.handleCreateSplitLinesAfterWordModuleComplete(id, charToSplit);
                     break;
                 default:
                     console.log('that module is not found')
@@ -812,8 +812,8 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Multi-Line Modules</a>
                         <ul id='multi-line-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Add Text to the Beginning of a Multiple</button></li>
-                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Split a Multiple Into Two Lines if a Word Contains a Phrase: Before Line Break</button></li>
-                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Split a Multiple Into Two Lines if a Word Contains a Phrase: After Line Break</button></li>
+                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Split a Multiple Into Two Lines if a Word Contains a Phrase: Before Word</button></li>
+                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Split a Multiple Into Two Lines if a Word Contains a Phrase: After Word</button></li>
                             <li><button href="!#" style={{ background: "grey" }} className="dropdown-button" >Concatenate a Multiple??? (Don't think this is too helpful)</button></li>
                         </ul>
                     </div>
@@ -824,8 +824,8 @@ class ParseFunctionContainer extends Component {
                             data-target='split-line-module-dropdown'
                             disabled={moduleActiveToggle}>Split Line Modules</a>
                         <ul id='split-line-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesBeforeBreakModule}>Split Into Two Lines if a Word Contains a Phrase: Before Line Break</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesAfterBreakModule}>Split Into Two Lines if a Word Contains a Phrase: After Line Break</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesBeforeWordModule}>Split Into Two Lines if a Word Contains a Phrase: Before Word</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesAfterWordModule}>Split Into Two Lines if a Word Contains a Phrase: After Word</button></li>
                         </ul>
                     </div>
 

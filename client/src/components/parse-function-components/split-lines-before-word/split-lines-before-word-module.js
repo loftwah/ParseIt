@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import './split-lines-before-break-module.css';
+import './split-lines-before-word-module.css';
 import * as actions from '../../../actions';
 
-class SplitLinesBeforeBreak extends Component {
+class SplitLinesBeforeWord extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,7 +45,7 @@ class SplitLinesBeforeBreak extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "SplitLinesBeforeBreak" + " \"(" + charToSplit + ")\"";
+        const moduleCode = "SplitLinesBeforeWord" + " \"(" + charToSplit + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id
@@ -268,22 +268,22 @@ class SplitLinesBeforeBreak extends Component {
         const { previewToggle } = this.props;
         const { charToSplit, errorMsg } = this.state;
         return (
-            <div className="split-lines-before-break-function">
-                <div className="split-lines-before-break-card card white">
-                    <div className="split-lines-before-break-card-content card-content black-character">
+            <div className="split-lines-before-word-function">
+                <div className="split-lines-before-word-card card white">
+                    <div className="split-lines-before-word-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
                         <p className="card-title center">Module: Split Into Two Lines if a Word Contains a Phrase:</p>
-                        <p className="card-title center">Before Line Break</p>
+                        <p className="card-title center">Before Word</p>
                     </div>
                     <div className="row">
-                        <div className="split-lines-before-break-module-introduction">
+                        <div className="split-lines-before-word-module-introduction">
                             <p>If a line contains a phrase of characters, the line will be split into two</p>
                             <p>The line will be split *before* the word that contains a phrase.</p>
                             <p>Multiple phrase instances yields multiple splits.</p>
                         </div>
                         <form action="#" className="radio-button-form col s12">
                             <span>Characters:</span>
-                            <div className="split-lines-before-break-user-input-character insert input-field inline">
+                            <div className="split-lines-before-word-user-input-character insert input-field inline">
                                 <input
                                     type="text"
                                     id="character-input"
@@ -333,4 +333,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, actions)(SplitLinesBeforeBreak);
+export default connect(mapStateToProps, actions)(SplitLinesBeforeWord);

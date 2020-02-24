@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import './split-lines-after-break-module.css';
+import './split-lines-after-word-module.css';
 import * as actions from '../../../actions';
 
-class SplitLinesAfterBreakComplete extends Component {
+class SplitLinesAfterWordComplete extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,7 +18,7 @@ class SplitLinesAfterBreakComplete extends Component {
         this.setState({
             charToSplit: charToSplit,
         })
-        console.log('split-lines-after-break-module component mounted');
+        console.log('split-lines-after-word-module component mounted');
 
         const finalText = [];
         const charBeginsWithSpace = charToSplit[0] === " " ? true : false;
@@ -119,15 +119,15 @@ class SplitLinesAfterBreakComplete extends Component {
     render() {
         const { charToSplit } = this.props;
         return (
-            <div className="split-lines-after-break-function">
-                <div className="split-lines-after-break-card card white">
-                    <div className="split-lines-after-break-card-content card-content black-character">
+            <div className="split-lines-after-word-function">
+                <div className="split-lines-after-word-card card white">
+                    <div className="split-lines-after-word-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
                         <p className="card-title center">Module: Split Into Two Lines if a Word Contains a Phrase:</p>
-                        <p className="card-title center">After Line Break</p>
+                        <p className="card-title center">After Word</p>
                     </div>
                     <div className="row">
-                        <div className="split-lines-after-break-description-complete col s12">
+                        <div className="split-lines-after-word-description-complete col s12">
                             <p>Split into two lines if a word contains the characters: "{charToSplit}"</p>
                             <p>The line will be split *after* the word that contains a phrase.</p>
                             <p>Multiple phrase instances yields multiple splits.</p>
@@ -150,4 +150,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, actions)(SplitLinesAfterBreakComplete);
+export default connect(mapStateToProps, actions)(SplitLinesAfterWordComplete);

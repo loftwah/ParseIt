@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import './split-lines-before-break-module.css';
+import './split-lines-before-word-module.css';
 import * as actions from '../../../actions';
 
-class SplitLinesBeforeBreakComplete extends Component {
+class SplitLinesBeforeWordComplete extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,7 +18,7 @@ class SplitLinesBeforeBreakComplete extends Component {
         this.setState({
             charToSplit: charToSplit,
         })
-        console.log('split-lines-before-break-module component mounted');
+        console.log('split-lines-before-word-module component mounted');
 
         const finalText = [];
         const charBeginsWithSpace = charToSplit[0] === " " ? true : false;
@@ -130,15 +130,15 @@ class SplitLinesBeforeBreakComplete extends Component {
     render() {
         const { charToSplit } = this.props;
         return (
-            <div className="split-lines-before-break-function">
-                <div className="split-lines-before-break-card card white">
-                    <div className="split-lines-before-break-card-content card-content black-character">
+            <div className="split-lines-before-word-function">
+                <div className="split-lines-before-word-card card white">
+                    <div className="split-lines-before-word-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
                         <p className="card-title center">Module: Split Into Two Lines if a Word Contains a Phrase:</p>
-                        <p className="card-title center">Before Line Break</p>
+                        <p className="card-title center">Before Word</p>
                     </div>
                     <div className="row">
-                        <div className="split-lines-before-break-description-complete col s12">
+                        <div className="split-lines-before-word-description-complete col s12">
                             <p>Split into two lines if a word contains the characters: "{charToSplit}"</p>
                             <p>The line will be split *before* the word that contains a phrase.</p>
                             <p>Multiple phrase instances yields multiple splits.</p>
@@ -161,4 +161,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, actions)(SplitLinesBeforeBreakComplete);
+export default connect(mapStateToProps, actions)(SplitLinesBeforeWordComplete);

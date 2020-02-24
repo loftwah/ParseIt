@@ -7,21 +7,21 @@ export const validateCode = (moduleType, moduleParams) => {
     let charToSplit;
 
     switch (moduleType) {
-        case "SplitLinesBeforeBreak":
+        case "SplitLinesBeforeWord":
             charToSplit = moduleParams[0];
             if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
                 validationObj = {
                     valid: false,
-                    message: "SplitLinesBeforeBreak: Do not have spaces at the beginning or end of characters"
+                    message: "SplitLinesBeforeWord: Do not have spaces at the beginning or end of characters"
                 };
             }
             break
-        case "SplitLinesAfterBreak":
+        case "SplitLinesAfterWord":
             charToSplit = moduleParams[0];
             if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
                 validationObj = {
                     valid: false,
-                    message: "SplitLinesAfterBreak: Do not have spaces at the beginning or end of characters"
+                    message: "SplitLinesAfterWord: Do not have spaces at the beginning or end of characters"
                 };
             }
             break

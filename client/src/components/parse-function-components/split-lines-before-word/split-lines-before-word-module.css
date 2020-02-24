@@ -1,4 +1,4 @@
-div.split-lines-after-break-user-input {
+div.split-lines-before-word-user-input {
     padding-left: 10px;
     padding-right: 10px
 }
@@ -7,15 +7,15 @@ div.row {
     padding-left: 10px
 }
 
-div.split-lines-after-break-user-input{
+div.split-lines-before-word-user-input{
     margin: 0px;
 }
 
-div.split-lines-after-break-user-input.insert {
+div.split-lines-before-word-user-input.insert {
     padding-left: 10px
 }
 
-div.split-lines-after-break-complete {
+div.split-lines-before-word-complete {
     margin-bottom: 10px;
 }
 
@@ -24,17 +24,17 @@ input#instance-input{
     background: rgb(243, 243, 243);
 }
 
-div.split-lines-after-break-module-introduction {
+div.split-lines-before-word-module-introduction {
     padding: 10px
 }
 
 span.line-text {
     white-space: pre-wrap;
-    word-wrap: break-word;
+    word-wrap: word-word;
 }
 
 @media only screen and (max-width: 450px) {
-    div.split-lines-after-break-user-input.insert {
+    div.split-lines-before-word-user-input.insert {
         padding-left: 10px
     }
   }
