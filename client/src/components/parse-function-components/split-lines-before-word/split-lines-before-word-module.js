@@ -35,7 +35,7 @@ class SplitLinesBeforeWord extends Component {
         const { charToSplit } = this.state;
 
         // Handle errors: spaces
-        if(charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
+        if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
             this.setState({
                 errorMsg: "Do not begin or end with spaces in your set of characters"
             });
@@ -61,7 +61,7 @@ class SplitLinesBeforeWord extends Component {
         const { charToSplit } = this.state;
 
         // Handle errors: spaces
-        if(charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
+        if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
             this.setState({
                 errorMsg: "Do not begin or end with spaces in your set of characters"
             });
@@ -128,6 +128,11 @@ class SplitLinesBeforeWord extends Component {
 
                     let findSpacePointer;
 
+                    // Below var handles case for:
+                    // If the line starts with a space, followed by the affected word
+                    // Why we need this? We want to indicate that the first word should have orange highlight, and that it is NOT part of the original line (we cut off the beginning space of the line)
+                    let affectedBySpace = false;
+
                     while (lineSegment.lastIndexOf(charToSplit) !== -1) {
                         findSpacePointer = lineSegment.lastIndexOf(charToSplit);
 
@@ -136,7 +141,12 @@ class SplitLinesBeforeWord extends Component {
                                 findSpacePointer--;
                             }
                         }
-                        // If the user inputs a space to begin the input, we will not care about the locations of spaces
+                        // If the user inputs a space to begin the input, we will not care about the locations of spaces - WORK IN PROGRESS
+
+                        // if findSpacePointer is at index 0, the line is affected by a space
+                        if (findSpacePointer === 0) {
+                            affectedBySpace = true;
+                        }
 
                         // check to make sure findSpacePointer is -1, if it is LEAVE THE LOOP
                         if (findSpacePointer === -1) {
@@ -163,7 +173,7 @@ class SplitLinesBeforeWord extends Component {
 
                             } else if (charBeginsWithSpace === true) {
                                 // WORK IN PROGRESS
-                                
+
                                 // If a line DOES begin with a space, we assume that the user does not care about any rules regarding words
                                 // Therefore, we will simply move things to a new line, as long as the pointer is not at index 0
                                 if (findSpacePointer !== 0) {
@@ -207,6 +217,11 @@ class SplitLinesBeforeWord extends Component {
 
                     additionPreviewLines.reverse();
 
+                    // if additionPreviewLines.length === 1, output orange text
+
+                    // The below if statement solves the case:
+                    // We begin with a space followed by the affecting word - we would like to output orange highlight in the addition preview to indicate psuedo-movement (in reality, it eliminated a space)
+
                     const additionPreviewLinesJSX = additionPreviewLines.map((line, idx) => {
                         addIdx++;
 
@@ -224,6 +239,15 @@ class SplitLinesBeforeWord extends Component {
                                     <p className="line-text" style={{ background: "orange" }}>&#x200B;</p>
                                 </div>
                             );
+                        } else if (line !== "" && idx === 0 && affectedBySpace === true) {
+                            // Handle the case where the line starts with a space, and we end up deleting that space due to the affected word being right after the space
+                            return (
+                                <div className="line" key={addIdx}>
+                                    <span className="line-number" style={{ background: "rgb(250, 217, 155)" }}>[{addIdx}]&#160;</span>
+                                    <p className="line-text" style={{ background: "orange" }}>{line}</p>
+                                </div>
+                            );
+
                         } else if (line !== "" && idx === 0) {
                             return (
                                 <div className="line" key={addIdx}>
@@ -240,6 +264,7 @@ class SplitLinesBeforeWord extends Component {
                             );
                         }
                     })
+
 
                     createSingleAdditionPreview.push(additionPreviewLinesJSX);
 

@@ -23,6 +23,8 @@ import SplitLinesBeforeWordModule from '../parse-function-components/split-lines
 import SplitLinesBeforeWordComplete from '../parse-function-components/split-lines-before-word/split-lines-before-word-module-complete';
 import SplitLinesAfterWordModule from '../parse-function-components/split-lines-after-word/split-lines-after-word-module';
 import SplitLinesAfterWordComplete from '../parse-function-components/split-lines-after-word/split-lines-after-word-module-complete';
+import SplitMultipleBeforeWordModule from '../parse-function-components/multiple-split-lines-before-word/multiple-split-lines-before-word-module';
+import SplitMultipleBeforeWordModuleComplete from '../parse-function-components/multiple-split-lines-before-word/multiple-split-lines-before-word-module-complete';
 
 import * as actions from '../../actions';
 
@@ -646,6 +648,67 @@ class ParseFunctionContainer extends Component {
 
     }
 
+
+
+    handleCreateSplitMultipleBeforeWordModule = (e) => {
+        e.preventDefault();
+        console.log('create a "split multiple before word" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let splitMultipleBeforeWord = {
+            moduleJSX: (<div className="split-multiple-before-word-module" key={id}>
+                <SplitMultipleBeforeWordModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateSplitMultipleBeforeWordModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, splitMultipleBeforeWord];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateSplitMultipleBeforeWordModuleComplete = (id, lineNumBegin, lineMultiple, charToSplit, direction, instance) => {
+        console.log('create a completed "split multiple before word" module!');
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let splitMultipleBeforeWord = {
+            moduleJSX: (<div className="split-multiple-before-word-module-complete" key={id}>
+                <SplitMultipleBeforeWordModuleComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    lineNumBegin={lineNumBegin}
+                    lineMultiple={lineMultiple}
+                    charToSplit={charToSplit}
+                    direction={direction}
+                    instance={instance}
+                />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, splitMultipleBeforeWord]
+        })
+
+    }
+
     convertCodeArrayToText = (moduleCode) => {
         if (moduleCode.length === 0) {
             return '';
@@ -670,9 +733,7 @@ class ParseFunctionContainer extends Component {
             let moduleParams = moduleCodeArr[i].code.slice(0, moduleCodeArr[i].code.length - 2)
                 .replace(moduleType + ' \"(', '').split(")\" \"(");
 
-            let id;
-            let stoppingCharacters;
-            let charToSplit;
+            let id, stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
 
             // validate the incoming code line
             let isValidCode = validateCode(moduleType, moduleParams);
@@ -734,6 +795,15 @@ class ParseFunctionContainer extends Component {
                     id = moduleCodeArr[i].id;
                     charToSplit = moduleParams[0];
                     await this.handleCreateSplitLinesAfterWordModuleComplete(id, charToSplit);
+                    break;
+                case "MultipleSplitLinesBeforeWord":
+                    id = moduleCodeArr[i].id;
+                    lineNumBegin = moduleParams[0];
+                    lineMultiple = moduleParams[1];
+                    charToSplit = moduleParams[2];
+                    direction = moduleParams[3];
+                    instance = moduleParams[4];
+                    await this.handleCreateSplitMultipleBeforeWordModuleComplete(id, lineNumBegin, lineMultiple, charToSplit, direction, instance);
                     break;
                 default:
                     console.log('that module is not found')
@@ -798,7 +868,7 @@ class ParseFunctionContainer extends Component {
                             data-target='create-module-dropdown'
                             disabled={moduleActiveToggle}>Create Modules</a>
                         <ul id='create-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the beginning of all inputs</button></li>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the beginning of all inputs (have ability to grab name of PDF)</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of all inputs</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the beginning of the first input</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of the last input</button></li>
@@ -812,7 +882,7 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Multi-Line Modules</a>
                         <ul id='multi-line-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Add Text to the Beginning of a Multiple</button></li>
-                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Split a Multiple Into Two Lines if a Word Contains a Phrase: Before Word</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitMultipleBeforeWordModule}>Split a Multiple Into Two Lines if a Word Contains a Phrase: Before Word</button></li>
                             <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Split a Multiple Into Two Lines if a Word Contains a Phrase: After Word</button></li>
                             <li><button href="!#" style={{ background: "grey" }} className="dropdown-button" >Concatenate a Multiple??? (Don't think this is too helpful)</button></li>
                         </ul>
