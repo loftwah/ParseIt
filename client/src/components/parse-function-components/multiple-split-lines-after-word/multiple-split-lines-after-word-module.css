@@ -1,0 +1,64 @@
+div.multiple-split-lines-after-word-user-input {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+div.row {
+    padding-left: 10px
+}
+
+div.multiple-split-lines-after-word-user-input{
+    margin: 0px;
+}
+
+div.multiple-split-lines-after-word-user-input.insert {
+    padding-left: 10px
+}
+
+div.multiple-split-lines-after-word-complete {
+    margin-bottom: 10px;
+}
+
+div.multiple-split-lines-after-word-user-input-multiple-number{
+    width:20%;
+}
+
+div.multiple-split-lines-after-word-user-input-instance{
+    width:20%;
+}
+
+div.multiple-split-lines-after-word-user-input-begin-line-number{
+    width:20%;
+}
+
+div.rest-of-inputs.row{
+    margin-bottom:0px;
+}
+div.begin-at-line-number.row{
+    margin-bottom:0px;
+}
+
+input#begin-line-number-input{
+    width:100%;
+    background: rgb(243, 243, 243); 
+}
+
+input#instance-input{
+    width:100%;
+    background: rgb(243, 243, 243);
+}
+
+input#multiple-input{
+    width:100%;
+    background: rgb(243, 243, 243);
+}
+
+div.multiple-split-lines-after-word-module-introduction {
+    padding: 10px
+}
+
+@media only screen and (max-width: 450px) {
+    div.multiple-split-lines-after-word-user-input.insert {
+        padding-left: 10px
+    }
+  }
