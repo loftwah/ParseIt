@@ -27,6 +27,8 @@ import SplitMultipleBeforeWordModule from '../parse-function-components/multiple
 import SplitMultipleBeforeWordModuleComplete from '../parse-function-components/multiple-split-lines-before-word/multiple-split-lines-before-word-module-complete';
 import SplitMultipleAfterWordModule from '../parse-function-components/multiple-split-lines-after-word/multiple-split-lines-after-word-module';
 import SplitMultipleAfterWordModuleComplete from '../parse-function-components/multiple-split-lines-after-word/multiple-split-lines-after-word-module-complete';
+import MultipleAddTextToBeginning from '../parse-function-components/multiple-add-text-to-beginning/multiple-add-text-to-beginning-module';
+import MultipleAddTextToBeginningComplete from '../parse-function-components/multiple-add-text-to-beginning/multiple-add-text-to-beginning-module-complete';
 
 import * as actions from '../../actions';
 
@@ -768,6 +770,63 @@ class ParseFunctionContainer extends Component {
 
     }
 
+    handleCreateMultipleAddTextToBeginningModule = (e) => {
+        e.preventDefault();
+        console.log('create a "multiple add text to beginning" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let multipleAddTextToBeginning = {
+            moduleJSX: (<div className="multiple-add-text-to-beginning-module" key={id}>
+                <MultipleAddTextToBeginning
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateMultipleAddTextToBeginningComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, multipleAddTextToBeginning];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateMultipleAddTextToBeginningComplete = (id, lineNumBegin, lineMultiple, charToAdd) => {
+        console.log('create a completed "multiple add text to beginning" module!');
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let multipleAddTextToBeginning = {
+            moduleJSX: (<div className="multiple-add-text-to-beginning-module-complete" key={id}>
+                <MultipleAddTextToBeginningComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    lineNumBegin={lineNumBegin}
+                    lineMultiple={lineMultiple}
+                    charToAdd={charToAdd}
+                />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, multipleAddTextToBeginning]
+        })
+
+    }
+
     convertCodeArrayToText = (moduleCode) => {
         if (moduleCode.length === 0) {
             return '';
@@ -793,6 +852,7 @@ class ParseFunctionContainer extends Component {
                 .replace(moduleType + ' \"(', '').split(")\" \"(");
 
             let id, stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
+            let charToAdd;
 
             // validate the incoming code line
             let isValidCode = validateCode(moduleType, moduleParams);
@@ -873,6 +933,13 @@ class ParseFunctionContainer extends Component {
                     instance = moduleParams[4];
                     await this.handleCreateSplitMultipleAfterWordModuleComplete(id, lineNumBegin, lineMultiple, charToSplit, direction, instance);
                     break;
+                case "MultipleAddTextToBeginning":
+                    id = moduleCodeArr[i].id;
+                    lineNumBegin = moduleParams[0];
+                    lineMultiple = moduleParams[1];
+                    charToAdd = moduleParams[2];
+                    await this.handleCreateMultipleAddTextToBeginningComplete(id, lineNumBegin, lineMultiple, charToAdd);
+                    break
                 default:
                     console.log('that module is not found')
             }
@@ -953,7 +1020,7 @@ class ParseFunctionContainer extends Component {
                         <ul id='multi-line-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitMultipleBeforeWordModule}>Split a Multiple Into Two Lines if a Word Contains a Phrase: Before Word</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitMultipleAfterWordModule}>Split a Multiple Into Two Lines if a Word Contains a Phrase: After Word</button></li>
-                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Add Text to the Beginning of a Multiple</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateMultipleAddTextToBeginningModule}>Add Text to the Beginning of a Multiple</button></li>
                             <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Delete a Line Multiple</button></li>
                         </ul>
                     </div>

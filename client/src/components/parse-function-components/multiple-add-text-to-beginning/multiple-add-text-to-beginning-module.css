@@ -1,0 +1,60 @@
+div.multiple-add-text-to-beginning-user-input {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+div.row {
+    padding-left: 10px
+}
+
+div.multiple-add-text-to-beginning-user-input{
+    margin: 0px;
+}
+
+div.multiple-add-text-to-beginning-complete {
+    margin-bottom: 10px;
+}
+
+div.multiple-add-text-to-beginning-user-input-multiple-number{
+    width:10%;
+}
+
+div.multiple-add-text-to-beginning-user-input-character {
+    width: 70%
+}
+
+div.multiple-add-text-to-beginning-user-input-begin-line-number{
+    width:10%;
+}
+
+div.rest-of-inputs.row{
+    margin-bottom:0px;
+}
+div.begin-at-line-number.row{
+    margin-bottom:0px;
+}
+
+input#begin-line-number-input{
+    width:100%;
+    background: rgb(243, 243, 243); 
+}
+
+input#instance-input{
+    width:100%;
+    background: rgb(243, 243, 243);
+}
+
+input#multiple-input{
+    width:100%;
+    background: rgb(243, 243, 243);
+}
+
+div.multiple-add-text-to-beginning-module-introduction {
+    padding: 10px
+}
+
+@media only screen and (max-width: 450px) {
+    div.multiple-add-text-to-beginning-user-input.insert {
+        padding-left: 10px
+    }
+  }
