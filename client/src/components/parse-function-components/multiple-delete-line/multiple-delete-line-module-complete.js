@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import './multiple-add-text-to-beginning-module.css';
+import './multiple-delete-line-module.css';
 import * as actions from '../../../actions';
 
 class MultipleAddTextToBeginningComplete extends Component {
@@ -10,21 +10,19 @@ class MultipleAddTextToBeginningComplete extends Component {
         this.state = {
             lineNumBegin: '',
             lineMultiple: '',
-            charToAdd: '',
         };
     }
 
     componentDidMount() {
         // handle official output text and convert it in here
         const { outputText, updateOutputText } = this.props;
-        const { lineMultiple, charToAdd } = this.props;
+        const { lineMultiple } = this.props;
         let { lineNumBegin } = this.props;
         this.setState({
             lineNumBegin,
             lineMultiple,
-            charToAdd,
         })
-        console.log('multiple-add-text-to-beginning-module-complete component mounted');
+        console.log('multiple-delete-line-module-complete component mounted');
 
         // convert lineNumBegin into a number
         lineNumBegin = Number(lineNumBegin);
@@ -54,7 +52,7 @@ class MultipleAddTextToBeginningComplete extends Component {
                     // WE HAVE A SIMPLE BLANK LINE
                     switch (isAMultiple) {
                         case true:
-                            newText.push(charToAdd);
+                            // Do nothing
                             break;
                         case false:
                             newText.push('');
@@ -66,8 +64,7 @@ class MultipleAddTextToBeginningComplete extends Component {
                 } else {
                     switch (isAMultiple) {
                         case true:
-                            // Return charToAdd + the original line
-                            newText.push(`${charToAdd}${line}`)
+                            // Do nothing
                             break;
                         case false:
                             // Return the original line
@@ -99,18 +96,18 @@ class MultipleAddTextToBeginningComplete extends Component {
     }
 
     render() {
-        const { lineNumBegin, lineMultiple, charToAdd } = this.props;
+        const { lineNumBegin, lineMultiple } = this.props;
 
         return (
-            <div className="multiple-add-text-to-beginning-function">
-                <div className="multiple-add-text-to-beginning-card card white">
-                    <div className="multiple-add-text-to-beginning-card-content card-content black-character">
+            <div className="multiple-delete-line-function">
+                <div className="multiple-delete-line-card card white">
+                    <div className="multiple-delete-line-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Add Text to the Beginning of a Multiple</p>
+                        <p className="card-title center">Module: Delete a Line Multiple</p>
                     </div>
                     <div className="row">
-                        <div className="multiple-add-text-to-beginning-description-complete col s12">
-                            <p>Starting at line number <b>"{lineNumBegin}"</b>, at each line multiple of <b>"{lineMultiple}"</b>, add the characters <b>"{charToAdd}"</b> at the beginning of the specified lines.</p>
+                        <div className="multiple-delete-line-description-complete col s12">
+                            <p>Starting at line number <b>"{lineNumBegin}"</b>, delete each line multiple of <b>"{lineMultiple}"</b>.</p>
                         </div>
                     </div>
                 </div>

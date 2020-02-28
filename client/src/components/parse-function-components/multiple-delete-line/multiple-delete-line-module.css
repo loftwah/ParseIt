@@ -1,0 +1,56 @@
+div.multiple-delete-line-user-input {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+div.row {
+    padding-left: 10px
+}
+
+div.multiple-delete-line-user-input{
+    margin: 0px;
+}
+
+div.multiple-delete-line-complete {
+    margin-bottom: 10px;
+}
+
+div.multiple-delete-line-user-input-multiple-number{
+    width:10%;
+}
+
+div.multiple-delete-line-user-input-character {
+    width: 70%
+}
+
+div.multiple-delete-line-user-input-begin-line-number{
+    width:10%;
+}
+
+div.rest-of-inputs.row{
+    margin-bottom:0px;
+}
+
+div.begin-at-line-number.row{
+    margin-bottom:0px;
+}
+
+input#begin-line-number-input{
+    width:100%;
+    background: rgb(243, 243, 243); 
+}
+
+input#multiple-input{
+    width:100%;
+    background: rgb(243, 243, 243);
+}
+
+div.multiple-delete-line-module-introduction {
+    padding: 10px
+}
+
+@media only screen and (max-width: 450px) {
+    div.multiple-delete-line-user-input.insert {
+        padding-left: 10px
+    }
+  }

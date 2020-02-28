@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import './multiple-add-text-to-beginning-module.css';
+import './multiple-delete-line-module.css';
 import * as actions from '../../../actions';
 
-class MultipleAddTextToBeginning extends Component {
+class MultipleDeleteLine extends Component {
     constructor(props) {
         super(props);
         this.state = {
             lineNumBegin: '',
             lineMultiple: '',
-            charToAdd: '',
             errorMsg: '',
         };
     }
@@ -27,12 +26,6 @@ class MultipleAddTextToBeginning extends Component {
         })
     }
 
-    handleCharToSplit = e => {
-        this.setState({
-            charToAdd: e.target.value
-        })
-    }
-
     handleDelete = (e) => {
         e.preventDefault();
         const { handleDeleteModule, id, moduleActiveOff } = this.props;
@@ -40,7 +33,7 @@ class MultipleAddTextToBeginning extends Component {
         moduleActiveOff();
     }
 
-    validateUserInput = (lineNumBegin, lineMultiple, charToAdd) => {
+    validateUserInput = (lineNumBegin, lineMultiple) => {
 
         if (lineNumBegin.length === 0) {
             this.setState({
@@ -95,13 +88,6 @@ class MultipleAddTextToBeginning extends Component {
             })
             return false;
         }
-
-        if (charToAdd.length === 0) {
-            this.setState({
-                errorMsg: 'Please fill the "Text to be added before line" input'
-            })
-            return false;
-        }
         return true;
     }
 
@@ -110,9 +96,9 @@ class MultipleAddTextToBeginning extends Component {
         console.log('submitted character!');
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { lineNumBegin, lineMultiple, charToAdd } = this.state;
+        const { lineNumBegin, lineMultiple } = this.state;
 
-        const validate = this.validateUserInput(lineNumBegin, lineMultiple, charToAdd)
+        const validate = this.validateUserInput(lineNumBegin, lineMultiple)
         if (validate === false) {
             return;
         } else if (validate === true) {
@@ -124,12 +110,12 @@ class MultipleAddTextToBeginning extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "MultipleAddTextToBeginning" + " \"(" + lineNumBegin + ")\" \"(" + lineMultiple + ")\" \"(" + charToAdd + ")\"";
+        const moduleCode = "MultipleDeleteLine" + " \"(" + lineNumBegin + ")\" \"(" + lineMultiple + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id
         });
-        completeModule(id, lineNumBegin, lineMultiple, charToAdd);
+        completeModule(id, lineNumBegin, lineMultiple);
         moduleActiveOff();
     }
 
@@ -137,10 +123,10 @@ class MultipleAddTextToBeginning extends Component {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
-        const { lineMultiple, charToAdd } = this.state;
+        const { lineMultiple } = this.state;
         let { lineNumBegin } = this.state;
 
-        const validate = this.validateUserInput(lineNumBegin, lineMultiple, charToAdd);
+        const validate = this.validateUserInput(lineNumBegin, lineMultiple);
         if (validate === false) {
             return;
         } else if (validate === true) {
@@ -167,9 +153,6 @@ class MultipleAddTextToBeginning extends Component {
 
             for (let i = 0; i < containerSplitNewLine.length; i++) {
 
-                addIdx++;
-                deleteIdx++;
-
                 let line = containerSplitNewLine[i];
                 let isAMultiple = false;
 
@@ -185,18 +168,20 @@ class MultipleAddTextToBeginning extends Component {
                     // WE HAVE A SIMPLE BLANK LINE
                     switch (isAMultiple) {
                         case true:
-                            createSingleAdditionPreview.push(<div className="line" key={addIdx}>
-                                <span className="line-number" style={{ background: "yellow" }}>[{addIdx}]&#160;</span>
-                                <span className="line-text" style={{ background: "rgb(74, 255, 83)" }}><b>{charToAdd}</b></span>
-                            </div>);
+                            // Remove the blank line
+                            deleteIdx++;
 
                             createSingleDeletionPreview.push(<div className="line" key={deleteIdx}>
                                 <span className="line-number" style={{ background: "yellow" }} >[{deleteIdx}]&#160;</span>
-                                <p className="line-text">&#x200B;</p>
+                                <p className="line-text" style={{ background: "red" }}>&#x200B;</p>
                             </div>);
                             break;
 
                         case false:
+                            // Keep the blank line
+                            addIdx++;
+                            deleteIdx++;
+
                             createSingleAdditionPreview.push(<div className="line" key={addIdx}>
                                 <span className="line-number">[{addIdx}]&#160;</span>
                                 <p className="line-text">&#x200B;</p>
@@ -215,20 +200,18 @@ class MultipleAddTextToBeginning extends Component {
                 } else {
                     switch (isAMultiple) {
                         case true:
-                            // Return charToAdd + the original line
-                            createSingleAdditionPreview.push(<div className="line" key={addIdx}>
-                                <span className="line-number" style={{ background: "yellow" }}>[{addIdx}]&#160;</span>
-                                <span className="line-text" style={{ background: "rgb(74, 255, 83)" }}><b>{charToAdd}</b></span>
-                                <span className="line-text">{line}</span>
-                            </div>);
+                            // Remove this line of characters
+                            deleteIdx++;
 
                             createSingleDeletionPreview.push(<div className="line" key={deleteIdx}>
                                 <span className="line-number" style={{ background: "yellow" }}>[{deleteIdx}]&#160;</span>
-                                <p className="line-text">{line}</p>
+                                <p className="line-text" style={{ background: "red" }}> <b>{line}</b></p>
                             </div>);
                             break;
                         case false:
-                            // Return the original line
+                            // Keep this line of characters
+                            addIdx++;
+                            deleteIdx++;
                             createSingleAdditionPreview.push(<div className="line" key={addIdx}>
                                 <span className="line-number">[{addIdx}]&#160;</span>
                                 <p className="line-text">{line}</p>
@@ -257,21 +240,21 @@ class MultipleAddTextToBeginning extends Component {
     render() {
 
         const { previewToggle } = this.props;
-        const { lineNumBegin, lineMultiple, charToAdd, errorMsg } = this.state;
+        const { lineNumBegin, lineMultiple, errorMsg } = this.state;
         return (
-            <div className="multiple-add-text-to-beginning-function">
-                <div className="multiple-add-text-to-beginning-card card white">
-                    <div className="multiple-add-text-to-beginning-card-content card-content black-character">
+            <div className="multiple-delete-line-function">
+                <div className="multiple-delete-line-card card white">
+                    <div className="multiple-delete-line-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Add Text to the Beginning of a Multiple</p>
+                        <p className="card-title center">Module: Delete a Line Multiple</p>
                     </div>
                     <div className="row">
                         <form action="#" className="form-add-text-to-beginning-line-multiple col s12">
                             <div className="row line-information-input">
-                                <div className="multiple-add-text-to-beginning-line-multiple col s12 m6 l6">
+                                <div className="multiple-delete-line-line-multiple col s12 m6 l6">
                                     <h5>Begin At Line Number</h5>
                                     <span>Begin Line #:</span>
-                                    <div className="multiple-add-text-to-beginning-user-input-begin-line-number insert input-field inline">
+                                    <div className="multiple-delete-line-user-input-begin-line-number insert input-field inline">
                                         <input
                                             className="center"
                                             type="number"
@@ -284,10 +267,10 @@ class MultipleAddTextToBeginning extends Component {
                                     </div>
                                 </div>
 
-                                <div className="multiple-add-text-to-beginning-line-multiple col s12 m6 l6">
+                                <div className="multiple-delete-line-line-multiple col s12 m6 l6">
                                     <h5>Line Multiple</h5>
                                     <span>Line Multiple #:</span>
-                                    <div className="multiple-add-text-to-beginning-user-input-multiple-number insert input-field inline">
+                                    <div className="multiple-delete-line-user-input-multiple-number insert input-field inline">
                                         <input
                                             className="center"
                                             type="number"
@@ -297,23 +280,6 @@ class MultipleAddTextToBeginning extends Component {
                                             value={lineMultiple}
                                         />
                                         <label htmlFor="multiple-input"></label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="row character-line-input">
-                                <div className="multiple-add-text-to-beginning-characters col s12 m12 l12">
-                                    <h5>Text to be added before line</h5>
-                                    <span>Characters:</span>
-                                    <div className="multiple-add-text-to-beginning-user-input-character insert input-field inline">
-                                        <input
-                                            type="text"
-                                            id="character-input"
-                                            onChange={this.handleCharToSplit}
-                                            disabled={previewToggle}
-                                            value={charToAdd}
-                                        />
-                                        <label htmlFor="character-input"></label>
                                     </div>
                                 </div>
                             </div>
@@ -357,4 +323,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, actions)(MultipleAddTextToBeginning);
+export default connect(mapStateToProps, actions)(MultipleDeleteLine);

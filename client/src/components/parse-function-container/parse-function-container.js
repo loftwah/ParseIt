@@ -29,6 +29,8 @@ import SplitMultipleAfterWordModule from '../parse-function-components/multiple-
 import SplitMultipleAfterWordModuleComplete from '../parse-function-components/multiple-split-lines-after-word/multiple-split-lines-after-word-module-complete';
 import MultipleAddTextToBeginning from '../parse-function-components/multiple-add-text-to-beginning/multiple-add-text-to-beginning-module';
 import MultipleAddTextToBeginningComplete from '../parse-function-components/multiple-add-text-to-beginning/multiple-add-text-to-beginning-module-complete';
+import MultipleDeleteLine from '../parse-function-components/multiple-delete-line/multiple-delete-line-module';
+import MultipleDeleteLineComplete from '../parse-function-components/multiple-delete-line/multiple-delete-line-module-complete';
 
 import * as actions from '../../actions';
 
@@ -827,6 +829,62 @@ class ParseFunctionContainer extends Component {
 
     }
 
+    handleCreateMultipleDeleteLineModule = (e) => {
+        e.preventDefault();
+        console.log('create a "multiple delete line" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let multipleDeleteLine = {
+            moduleJSX: (<div className="multiple-delete-line-module" key={id}>
+                <MultipleDeleteLine
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateMultipleDeleteLineComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, multipleDeleteLine];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateMultipleDeleteLineComplete = (id, lineNumBegin, lineMultiple) => {
+        console.log('create a completed "multiple delete line" module!');
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let multipleDeleteLine = {
+            moduleJSX: (<div className="multiple-delete-line-module-complete" key={id}>
+                <MultipleDeleteLineComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    lineNumBegin={lineNumBegin}
+                    lineMultiple={lineMultiple}
+                />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, multipleDeleteLine]
+        })
+
+    }
+
     convertCodeArrayToText = (moduleCode) => {
         if (moduleCode.length === 0) {
             return '';
@@ -939,7 +997,13 @@ class ParseFunctionContainer extends Component {
                     lineMultiple = moduleParams[1];
                     charToAdd = moduleParams[2];
                     await this.handleCreateMultipleAddTextToBeginningComplete(id, lineNumBegin, lineMultiple, charToAdd);
-                    break
+                    break;
+                case "MultipleDeleteLine":
+                    id = moduleCodeArr[i].id;
+                    lineNumBegin = moduleParams[0];
+                    lineMultiple = moduleParams[1];
+                    await this.handleCreateMultipleDeleteLineComplete(id, lineNumBegin, lineMultiple);
+                    break;
                 default:
                     console.log('that module is not found')
             }
@@ -980,7 +1044,6 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Replace Modules</a>
                         <ul id='replace-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" onClick={this.handleCreateReplaceCharacterModule} className="dropdown-button">Replace Characters</button></li>
-                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button">Replace Words</button></li>
                         </ul>
                     </div>
 
@@ -1021,7 +1084,7 @@ class ParseFunctionContainer extends Component {
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitMultipleBeforeWordModule}>Split a Multiple Into Two Lines if a Word Contains a Phrase: Before Word</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitMultipleAfterWordModule}>Split a Multiple Into Two Lines if a Word Contains a Phrase: After Word</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateMultipleAddTextToBeginningModule}>Add Text to the Beginning of a Multiple</button></li>
-                            <li><button href="!#" style={{ background: "lightgrey" }} className="dropdown-button" >Delete a Line Multiple</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateMultipleDeleteLineModule}>Delete a Line Multiple</button></li>
                         </ul>
                     </div>
 
