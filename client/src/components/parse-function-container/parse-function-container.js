@@ -31,6 +31,8 @@ import MultipleAddTextToBeginning from '../parse-function-components/multiple-ad
 import MultipleAddTextToBeginningComplete from '../parse-function-components/multiple-add-text-to-beginning/multiple-add-text-to-beginning-module-complete';
 import MultipleDeleteLine from '../parse-function-components/multiple-delete-line/multiple-delete-line-module';
 import MultipleDeleteLineComplete from '../parse-function-components/multiple-delete-line/multiple-delete-line-module-complete';
+import DeleteSpecifiedLinesModule from '../parse-function-components/delete-specified-lines-module/delete-specified-lines-module';
+import DeleteSpecifiedLinesModuleComplete from '../parse-function-components/delete-specified-lines-module/delete-specified-lines-module-complete';
 
 import * as actions from '../../actions';
 
@@ -276,6 +278,58 @@ class ParseFunctionContainer extends Component {
         console.log(id);;
         this.setState({
             modules: [...newModules, replaceCharModule]
+        })
+    }
+
+    handleCreateDeleteSpecifiedLinesModule = (e) => {
+        e.preventDefault();
+        console.log('create a "delete specified lines" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let deleteSpecifiedLines = {
+            moduleJSX: (<div className="delete-specified-lines-module" key={id}>
+                <DeleteSpecifiedLinesModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateDeleteSpecifiedLinesModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, deleteSpecifiedLines];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateDeleteSpecifiedLinesModuleComplete = (id, linesToDelete) => {
+        console.log('create a completed "delete specified lines" module!')
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+        let deleteSpecifiedLines = {
+            moduleJSX: (<div className="delete-specified-lines-module-complete" key={id}>
+                <DeleteSpecifiedLinesModuleComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    linesToDelete={linesToDelete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, deleteSpecifiedLines]
         })
     }
 
@@ -910,7 +964,7 @@ class ParseFunctionContainer extends Component {
                 .replace(moduleType + ' \"(', '').split(")\" \"(");
 
             let id, stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
-            let charToAdd;
+            let charToAdd, linesToDelete;
 
             // validate the incoming code line
             let isValidCode = validateCode(moduleType, moduleParams);
@@ -1004,6 +1058,11 @@ class ParseFunctionContainer extends Component {
                     lineMultiple = moduleParams[1];
                     await this.handleCreateMultipleDeleteLineComplete(id, lineNumBegin, lineMultiple);
                     break;
+                case "DeleteSpecifiedLines":
+                    id = moduleCodeArr[i].id;
+                    linesToDelete = moduleParams[0];
+                    await this.handleCreateDeleteSpecifiedLinesModuleComplete(id, linesToDelete);
+                    break;
                 default:
                     console.log('that module is not found')
             }
@@ -1055,7 +1114,7 @@ class ParseFunctionContainer extends Component {
                         <ul id='delete-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBeginningModule}>Delete beginning until a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</button></li>
-                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete specified lines</button></li>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "yellow" }} onClick={this.handleCreateDeleteSpecifiedLinesModule}>Delete Specified Lines</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete everything between two sets of characters</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete a line if it contains a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete a line if it doesn't contain a set of characters</button></li>

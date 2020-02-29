@@ -1,0 +1,40 @@
+div.delete-specified-lines-user-input {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+div.row {
+    padding-left: 10px
+}
+
+div.delete-specified-lines-user-input{
+    margin: 0px;
+}
+
+div.delete-specified-lines-user-input {
+    width: 70%
+}
+
+div.delete-specified-lines-user-input.insert {
+    padding-left: 30px;
+}
+
+span.line-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+span.line-text-keep {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+div.delete-specified-lines-complete {
+    margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 450px) {
+    div.delete-specified-lines-user-input.insert {
+        padding-left: 10px
+    }
+}
