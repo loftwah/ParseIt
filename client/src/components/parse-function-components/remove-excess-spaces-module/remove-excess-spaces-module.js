@@ -56,19 +56,28 @@ class RemoveExcessSpacesModule extends Component {
                 let lineSpaceEnd = 0;
                 let spaceFound = false;
 
-                // The below is an interesting space character, different from a regular space character - found inside a few PDFs
-                let strangeSpace = " ";
+                // Some whitespace characters to go through and replace
+                // Below makes app too slow
+                // const strangeSpaceArr = [" ", "	", "\t", "​", " ", " ", " ", " ", " ", " ",
+                //     " ", " ", " ", "⠀"];
+
+                const strangeSpaceArr = [" "];
 
                 // Create a list of the locations of spaces that we want to delete
                 for (let i = 0; i < line.length; i++) {
-                    if (line[i] === " " || line[i] === strangeSpace) {
+                    // first delete all weird whitespace, and replace it with regular spaces
+                    for (let k = 0; k < strangeSpaceArr.length; k++) {
+                        line = line.replace(strangeSpaceArr[k], ' ');
+                    }
+
+                    if (line[i] === " ") {
                         if (spaceFound === true) {
                             lineSpaceEnd = i
                         } else if (spaceFound === false) {
                             lineSpaceBegin = i
                             spaceFound = true
                         }
-                    } else if ((line[i] !== " " || line[i] !== strangeSpace) && spaceFound === true) {
+                    } else if ((line[i] !== " ") && spaceFound === true) {
                         lineSpaceEnd = i
                         spaceFound = false
                         if (lineSpaceBegin === 0) {
@@ -108,9 +117,9 @@ class RemoveExcessSpacesModule extends Component {
                         <span className="line-number">[{idx}]&#160;</span>
                         <p className="line-text">&#160;</p>
                     </div>)
-                } else if(lineSpaceRemove.length > 0 && lineSpaceRemove[0].begin === 0 
-                    && lineSpaceRemove[0].end === line.length ) {
-                    
+                } else if (lineSpaceRemove.length > 0 && lineSpaceRemove[0].begin === 0
+                    && lineSpaceRemove[0].end === line.length) {
+
                     // The line is full of empty spaces
                     addIdx = addIdx + 1;
                     // addition preview
@@ -121,7 +130,7 @@ class RemoveExcessSpacesModule extends Component {
                     //deletion preview
                     return (<div className="line" key={idx}>
                         <span className="line-number">[{idx}]&#160;</span>
-                        <span className="line-text" style={{ background: "red", "whiteSpace": "pre-wrap", "wordWrap": "break-word"}}>{line}</span>
+                        <span className="line-text" style={{ background: "red", "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{line}</span>
                     </div>)
                 }
                 else if (line !== "" && lineSpaceRemove.length !== 0) {
@@ -150,7 +159,7 @@ class RemoveExcessSpacesModule extends Component {
                         if (lineSpaceRemove[0].begin === 0 && i === 0) {
                             removeCharSpace = line.slice(0, lineSpaceRemove[0].end);
                             lineJSXDeletion.push(<span className="line" key="beginning-space">
-                                <span className="line-text" style={{ background: "red", "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>{removeCharSpace}</span>
+                                <span className="line-text" style={{ background: "red", "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{removeCharSpace}</span>
                             </span>)
                             continue;
                         }
@@ -158,23 +167,23 @@ class RemoveExcessSpacesModule extends Component {
                         if (lineSpaceRemove[0].begin !== 0 && i === 0) {
                             keepChars = line.slice(0, lineSpaceRemove[0].begin)
                             lineJSXAddition.push(<span className="line" key="beginning-no-space">
-                                <span className="line-text" style={{ "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>{keepChars}</span>
+                                <span className="line-text" style={{ "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{keepChars}</span>
                             </span>)
                             lineJSXDeletion.push(<span className="line" key="beginning-no-space">
-                                <span className="line-text" style={{ "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>{keepChars}</span>
+                                <span className="line-text" style={{ "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{keepChars}</span>
                             </span>)
 
                             let deleteChars = line.slice(lineSpaceRemove[0].begin, lineSpaceRemove[0].end)
 
                             // Edge case: Do not add a space if we hit the end of the line
-                            if(lineSpaceRemove[0].end !== line.length){
+                            if (lineSpaceRemove[0].end !== line.length) {
                                 lineJSXAddition.push(<span className="line" key="beginning-no-space-first-space">
-                                    <span className="line-text" style={{ background: "rgb(74, 255, 83)", "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>&#160;</span>
+                                    <span className="line-text" style={{ background: "rgb(74, 255, 83)", "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>&#160;</span>
                                 </span>)
                             }
-                            
+
                             lineJSXDeletion.push(<span className="line" key="beginning-no-space-first-space">
-                                <span className="line-text" style={{ background: "red", "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>{deleteChars}</span>
+                                <span className="line-text" style={{ background: "red", "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{deleteChars}</span>
                             </span>)
                             continue;
                         }
@@ -182,32 +191,32 @@ class RemoveExcessSpacesModule extends Component {
                         keepChars = line.slice(lineSpaceRemove[i - 1].end, lineSpaceRemove[i].begin);
 
                         lineJSXAddition.push(<span className="line" key={`keep-${i}`}>
-                            <span className="line-text" style={{ "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>{keepChars}</span>
+                            <span className="line-text" style={{ "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{keepChars}</span>
                         </span>)
                         lineJSXDeletion.push(<span className="line" key={`keep-${i}`}>
-                            <span className="line-text" style={{ "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>{keepChars}</span>
+                            <span className="line-text" style={{ "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{keepChars}</span>
                         </span>)
 
                         removeCharSpace = line.slice(lineSpaceRemove[i].begin, lineSpaceRemove[i].end);
 
                         // Edge case: Do not add a space if we hit the end of the line
-                        if(lineSpaceRemove[i].end !== line.length){
+                        if (lineSpaceRemove[i].end !== line.length) {
                             lineJSXAddition.push(<span className="line" key={`delete-${i}`}>
-                                <span className="line-text" style={{ background: "rgb(74, 255, 83)", "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>&#160;</span>
+                                <span className="line-text" style={{ background: "rgb(74, 255, 83)", "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>&#160;</span>
                             </span>)
                         }
 
                         // create &#160; as many times as removeCharSpace number so that text can wrap itself in the addition/deletion preview text container
                         let removeChars = [];
-                        for (let i = 0; i < removeCharSpace.length; i++ ) {
+                        for (let i = 0; i < removeCharSpace.length; i++) {
                             removeChars.push(<span className="space" key={i}>
                                 &#160;
                             </span>)
                         }
-                        
-                        lineJSXDeletion.push(<span className="line" key={`delete-${i}`} style={{"wordWrap": "break-word"}}>
-                            <span className="line-text" style={{ background: "red", "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>{[...removeChars]}</span>
-                            </span>
+
+                        lineJSXDeletion.push(<span className="line" key={`delete-${i}`} style={{ "wordWrap": "break-word" }}>
+                            <span className="line-text" style={{ background: "red", "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{[...removeChars]}</span>
+                        </span>
                         )
                     }
 
@@ -217,10 +226,10 @@ class RemoveExcessSpacesModule extends Component {
                         keepChars = line.slice(lastEndSpace, line.length);
 
                         lineJSXAddition.push(<span className="line" key={`keep-${i}`}>
-                            <span className="line-text" style={{ "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>{keepChars}</span>
+                            <span className="line-text" style={{ "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{keepChars}</span>
                         </span>)
                         lineJSXDeletion.push(<span className="line" key={`keep-${i}`}>
-                            <span className="line-text" style={{ "whiteSpace": "pre-wrap","wordWrap": "break-word" }}>{keepChars}</span>
+                            <span className="line-text" style={{ "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{keepChars}</span>
                         </span>)
                     }
 

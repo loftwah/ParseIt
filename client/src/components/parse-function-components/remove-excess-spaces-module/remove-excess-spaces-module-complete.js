@@ -28,19 +28,29 @@ class RemoveExcessSpacesComplete extends Component {
                 let lineSpaceEnd = 0;
                 let spaceFound = false;
 
-                // The below is an interesting space character, different from a regular space character - found inside a few PDFs
-                let strangeSpace = " ";
+                // Some whitespace characters to go through and replace
+
+                // Below makes app too slow
+                // const strangeSpaceArr = [" ", "	", "\t", "​", " ", " ", " ", " ", " ", " ",
+                //     " ", " ", " ", "⠀"];
+
+                const strangeSpaceArr = [" "];
 
                 // Create a list of the locations of spaces that we want to delete
                 for (let idx = 0; idx < line.length; idx++) {
-                    if (line[idx] === " " || line[idx] === strangeSpace) {
+                    // first delete all weird whitespace, and replace it with regular spaces
+                    for (let k = 0; k < strangeSpaceArr.length; k++) {
+                        line = line.replace(strangeSpaceArr[k], ' ');
+                    }
+
+                    if (line[idx] === " ") {
                         if (spaceFound === true) {
                             lineSpaceEnd = idx;
                         } else if (spaceFound === false) {
                             lineSpaceBegin = idx;
                             spaceFound = true;
                         }
-                    } else if ((line[idx] !== " " || line[idx] !== strangeSpace) && spaceFound === true) {
+                    } else if ((line[idx] !== " ") && spaceFound === true) {
                         lineSpaceEnd = idx
                         spaceFound = false
                         if (lineSpaceBegin === 0) {

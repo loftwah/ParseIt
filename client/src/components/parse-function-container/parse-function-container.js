@@ -1114,8 +1114,8 @@ class ParseFunctionContainer extends Component {
                         <ul id='delete-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBeginningModule}>Delete beginning until a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</button></li>
-                            <li><button href="!#" className="dropdown-button" style={{ background: "yellow" }} onClick={this.handleCreateDeleteSpecifiedLinesModule}>Delete Specified Lines</button></li>
-                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete everything between two sets of characters</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteSpecifiedLinesModule}>Delete Specified Lines</button></li>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "yellow" }}>Delete everything between two sets of characters</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete a line if it contains a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete a line if it doesn't contain a set of characters</button></li>
                         </ul>
