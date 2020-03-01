@@ -246,12 +246,12 @@ class DeleteBetweenCharactersModule extends Component {
                                     // What is deleted is not affected by endCharacters
                                     deleteSegment = line.slice(0, affectedLineIdx);
 
-                                    deletionPreviewLineJSX.push(<span className="line" key={line.length}>
+                                    deletionPreviewLineJSX.push(<span className="line" key={`${line.length}-delete`}>
                                         <span className="line-text" style={{ background: "red" }}><b>{deleteSegment}</b></span>
                                     </span>);
 
                                     // Keep the endCharacters normal inside deletion/addition preview, we do not want to delete them
-                                    deletionPreviewLineJSX.push(<span className="line" key={line.length}>
+                                    deletionPreviewLineJSX.push(<span className="line" key={`${line.length}-keep`}>
                                         <span className="line-text">{endCharacters}</span>
                                     </span>);
 

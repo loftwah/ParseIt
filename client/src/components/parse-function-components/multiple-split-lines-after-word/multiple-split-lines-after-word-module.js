@@ -195,7 +195,7 @@ class MultipleSplitLinesAfterWord extends Component {
 
         let additionPreviews = [];
         let deletionPreviews = [];
-        let beginsWithSpace = charToSplit[0] === ' ' ? true : false;
+        let endsWithSpace = charToSplit[charToSplit.length - 1] === ' ' ? true : false;
 
         for (let inputContainer = 0; inputContainer < outputText.length; inputContainer++) {
 
@@ -238,7 +238,7 @@ class MultipleSplitLinesAfterWord extends Component {
 
                 // Find the location to split the line segment, and use it if isAMultiple is true
 
-                if (direction === "forward" && beginsWithSpace === false) {
+                if (direction === "forward" && endsWithSpace === false) {
                     // Search through the line at the particular instance where charToSplit is found
                     while (instanceIter !== 0 && found == true && idx++ < line.length) {
                         idx = line.indexOf(charToSplit, idx);
@@ -248,13 +248,16 @@ class MultipleSplitLinesAfterWord extends Component {
                             instanceIter--;
                         }
                     }
+
+                    // Add charToSplit length to the index
+                    idx += charToSplit.length
 
                     // If found is still true, we will iterate up until we find a space or the end of a line
                     while (found === true && line[idx] !== ' ' && idx !== line.length) {
                         idx++;
                     }
 
-                } else if (direction === "forward" && beginsWithSpace === true) {
+                } else if (direction === "forward" && endsWithSpace === true) {
                     // Search through the line at the particular instance where charToSplit is found
                     while (instanceIter !== 0 && found == true && idx++ < line.length) {
                         idx = line.indexOf(charToSplit, idx);
@@ -264,9 +267,12 @@ class MultipleSplitLinesAfterWord extends Component {
                             instanceIter--;
                         }
                     }
+                    // Add charToSplit length to the index
+                    idx += charToSplit.length - 1
+
                     // If the user enters a space, we will assume that the user doesn't care about word-rules
                     // use the idx from the while loop
-                } else if (direction === "backward" && beginsWithSpace === false) {
+                } else if (direction === "backward" && endsWithSpace === false) {
                     // Search through the line at the particular instance where charToSplit is found
                     while (instanceIter !== 0 && found == true && idx-- > -1) {
                         idx = line.lastIndexOf(charToSplit, idx);
@@ -276,13 +282,16 @@ class MultipleSplitLinesAfterWord extends Component {
                             instanceIter--;
                         }
                     }
+
+                    // Add charToSplit length to the index
+                    idx += charToSplit.length
 
                     // If found is still true, we will iterate back until we find a space or the end of a line
                     while (found === true && line[idx] !== ' ' && idx !== line.length) {
                         idx++;
                     }
 
-                } else if (direction === "backward" && beginsWithSpace === true) {
+                } else if (direction === "backward" && endsWithSpace === true) {
                     // Search through the line at the particular instance where charToSplit is found
                     while (instanceIter !== 0 && found == true && idx-- > -1) {
                         idx = line.lastIndexOf(charToSplit, idx);
@@ -292,6 +301,9 @@ class MultipleSplitLinesAfterWord extends Component {
                             instanceIter--;
                         }
                     }
+                    // Add charToSplit length to the index
+                    idx += charToSplit.length - 1
+
                     // If the user enters a space, we will assume that the user doesn't care about word-rules
                     // use the idx from the while loop
                 }
@@ -331,7 +343,7 @@ class MultipleSplitLinesAfterWord extends Component {
                     switch (isAMultiple) {
                         case true:
                             // We are at a line multiple, what do we do with it?
-                            if (found === true && beginsWithSpace === false && idx !== line.length) {
+                            if (found === true && endsWithSpace === false && idx !== line.length) {
 
                                 firstSegment = line.slice(0, idx);
                                 lastSegment = line.slice(idx + 1);
@@ -359,7 +371,7 @@ class MultipleSplitLinesAfterWord extends Component {
 
                             } else if (found === true && idx === line.length) {
                                 // If we are at the end of the line, simply return the line
-                                // This goes for "beginsWithSpace" true and false
+                                // This goes for "endsWithSpace" true and false
                                 createSingleAdditionPreview.push(<div className="line" key={addIdx}>
                                     <span className="line-number" style={{ background: "yellow" }}>[{addIdx}]&#160;</span>
                                     <p className="line-text">{line}</p>
@@ -370,8 +382,7 @@ class MultipleSplitLinesAfterWord extends Component {
                                     <p className="line-text">{line}</p>
                                 </div>);
 
-                            } else if (found === true && beginsWithSpace === true && idx !== line.length) {
-                                // debugger;
+                            } else if (found === true && endsWithSpace === true && idx !== line.length) {
                                 // begins with a space
                                 firstSegment = line.slice(0, idx + 1);
                                 lastSegment = line.slice(idx + 1);
