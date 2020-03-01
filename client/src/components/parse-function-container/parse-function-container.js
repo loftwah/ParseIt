@@ -33,6 +33,8 @@ import MultipleDeleteLine from '../parse-function-components/multiple-delete-lin
 import MultipleDeleteLineComplete from '../parse-function-components/multiple-delete-line/multiple-delete-line-module-complete';
 import DeleteSpecifiedLinesModule from '../parse-function-components/delete-specified-lines-module/delete-specified-lines-module';
 import DeleteSpecifiedLinesModuleComplete from '../parse-function-components/delete-specified-lines-module/delete-specified-lines-module-complete';
+import DeleteBetweenCharactersModule from '../parse-function-components/delete-between-characters-module/delete-between-characters-module';
+import DeleteBetweenCharactersModuleComplete from '../parse-function-components/delete-between-characters-module/delete-between-characters-module-complete';
 
 import * as actions from '../../actions';
 
@@ -226,6 +228,60 @@ class ParseFunctionContainer extends Component {
         console.log(id);;
         this.setState({
             modules: [...newModules, replaceCharModule]
+        })
+    }
+
+    handleCreateDeleteBetweenCharactersModule = (e) => {
+        e.preventDefault();
+        console.log('create a "delete between characters" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+
+        let id = Math.random();
+        let deleteBetweenCharacters = {
+            moduleJSX: (<div className="delete-between-characters-module" key={id}>
+                <DeleteBetweenCharactersModule
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateDeleteBetweenCharactersModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, deleteBetweenCharacters];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateDeleteBetweenCharactersModuleComplete = (id, startCharacters, endCharacters) => {
+        console.log('create a completed "delete between characters" module!');
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+        let deleteBetweenCharacters = {
+            moduleJSX: (<div className="delete-between-characters-module" key={id}>
+                <DeleteBetweenCharactersModuleComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    startCharacters={startCharacters}
+                    endCharacters={endCharacters} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, deleteBetweenCharacters]
         })
     }
 
@@ -964,7 +1020,7 @@ class ParseFunctionContainer extends Component {
                 .replace(moduleType + ' \"(', '').split(")\" \"(");
 
             let id, stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
-            let charToAdd, linesToDelete;
+            let charToAdd, linesToDelete, startCharacters, endCharacters;
 
             // validate the incoming code line
             let isValidCode = validateCode(moduleType, moduleParams);
@@ -1063,6 +1119,12 @@ class ParseFunctionContainer extends Component {
                     linesToDelete = moduleParams[0];
                     await this.handleCreateDeleteSpecifiedLinesModuleComplete(id, linesToDelete);
                     break;
+                case "DeleteBetweenCharactersModule":
+                    id = moduleCodeArr[i].id;
+                    startCharacters = moduleParams[0];
+                    endCharacters = moduleParams[1];
+                    await this.handleCreateDeleteBetweenCharactersModuleComplete(id, startCharacters, endCharacters)
+                    break;
                 default:
                     console.log('that module is not found')
             }
@@ -1115,7 +1177,7 @@ class ParseFunctionContainer extends Component {
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBeginningModule}>Delete beginning until a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteSpecifiedLinesModule}>Delete Specified Lines</button></li>
-                            <li><button href="!#" className="dropdown-button" style={{ background: "yellow" }}>Delete everything between two sets of characters</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBetweenCharactersModule}>Delete everything between two sets of characters</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete a line if it contains a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete a line if it doesn't contain a set of characters</button></li>
                         </ul>
@@ -1128,8 +1190,8 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Create Modules</a>
                         <ul id='create-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the beginning of all inputs (have ability to grab name of PDF)</button></li>
-                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of all inputs</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the beginning of the first input</button></li>
+                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of all inputs</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of the last input</button></li>
                         </ul>
                     </div>
