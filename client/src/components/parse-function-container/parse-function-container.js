@@ -35,6 +35,8 @@ import DeleteSpecifiedLinesModule from '../parse-function-components/delete-spec
 import DeleteSpecifiedLinesModuleComplete from '../parse-function-components/delete-specified-lines-module/delete-specified-lines-module-complete';
 import DeleteBetweenCharactersModule from '../parse-function-components/delete-between-characters-module/delete-between-characters-module';
 import DeleteBetweenCharactersModuleComplete from '../parse-function-components/delete-between-characters-module/delete-between-characters-module-complete';
+import DeleteLineIfHasCharacters from '../parse-function-components/delete-line-if-has-characters-module/delete-line-if-has-characters-module';
+import DeleteLineIfHasCharactersComplete from '../parse-function-components/delete-line-if-has-characters-module/delete-line-if-has-characters-module-complete';
 
 import * as actions from '../../actions';
 
@@ -334,6 +336,59 @@ class ParseFunctionContainer extends Component {
         console.log(id);;
         this.setState({
             modules: [...newModules, replaceCharModule]
+        })
+    }
+
+    handleCreateDeleteLineIfHasCharsModule = (e) => {
+        e.preventDefault();
+        console.log('create a "delete line if it has chars" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let deleteLineIfCharsModule = {
+            moduleJSX: (<div className="delete-line-if-has-chars-module" key={id}>
+                <DeleteLineIfHasCharacters
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreateDeleteLineIfHasCharsModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, deleteLineIfCharsModule];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreateDeleteLineIfHasCharsModuleComplete = (id, chars) => {
+        console.log('create a completed "delete line if it has chars" module!');
+
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props;
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+
+        let deleteLineIfCharsModule = {
+            moduleJSX: (<div className="delete-line-if-has-chars-module-complete" key={id}>
+                <DeleteLineIfHasCharactersComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    chars={chars} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        this.setState({
+            modules: [...newModules, deleteLineIfCharsModule]
         })
     }
 
@@ -1020,7 +1075,7 @@ class ParseFunctionContainer extends Component {
                 .replace(moduleType + ' \"(', '').split(")\" \"(");
 
             let id, stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
-            let charToAdd, linesToDelete, startCharacters, endCharacters;
+            let charToAdd, linesToDelete, startCharacters, endCharacters, charDeleteLine;
 
             // validate the incoming code line
             let isValidCode = validateCode(moduleType, moduleParams);
@@ -1123,8 +1178,12 @@ class ParseFunctionContainer extends Component {
                     id = moduleCodeArr[i].id;
                     startCharacters = moduleParams[0];
                     endCharacters = moduleParams[1];
-                    await this.handleCreateDeleteBetweenCharactersModuleComplete(id, startCharacters, endCharacters)
+                    await this.handleCreateDeleteBetweenCharactersModuleComplete(id, startCharacters, endCharacters);
                     break;
+                case "DeleteLineIfHasCharacters":
+                    id = moduleCodeArr[i].id;
+                    charDeleteLine = moduleParams[0];
+                    await this.handleCreateDeleteLineIfHasCharsModuleComplete(id, charDeleteLine);
                 default:
                     console.log('that module is not found')
             }
@@ -1178,7 +1237,7 @@ class ParseFunctionContainer extends Component {
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteSpecifiedLinesModule}>Delete Specified Lines</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBetweenCharactersModule}>Delete everything between two sets of characters</button></li>
-                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete a line if it contains a set of characters</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteLineIfHasCharsModule}>Delete a line if it contains a set of characters</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Delete a line if it doesn't contain a set of characters</button></li>
                         </ul>
                     </div>

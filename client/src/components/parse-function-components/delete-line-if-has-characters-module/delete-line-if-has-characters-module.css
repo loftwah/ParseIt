@@ -1,0 +1,60 @@
+div.delete-line-if-has-characters-user-input {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+div.row {
+    padding-left: 10px
+}
+
+div.delete-line-if-has-characters-user-input{
+    margin: 0px;
+}
+
+div.delete-line-if-has-characters-complete {
+    margin-bottom: 10px;
+}
+
+div.delete-line-if-has-characters-user-input-multiple-number{
+    width:10%;
+}
+
+div.delete-line-if-has-characters-user-input-character {
+    width: 70%
+}
+
+div.delete-line-if-has-characters-user-input-begin-line-number{
+    width:10%;
+}
+
+div.rest-of-inputs.row{
+    margin-bottom:0px;
+}
+div.begin-at-line-number.row{
+    margin-bottom:0px;
+}
+
+input#begin-line-number-input{
+    width:100%;
+    background: rgb(243, 243, 243); 
+}
+
+input#instance-input{
+    width:100%;
+    background: rgb(243, 243, 243);
+}
+
+input#multiple-input{
+    width:100%;
+    background: rgb(243, 243, 243);
+}
+
+div.delete-line-if-has-characters-module-introduction {
+    padding: 10px
+}
+
+@media only screen and (max-width: 450px) {
+    div.delete-line-if-has-characters-user-input.insert {
+        padding-left: 10px
+    }
+  }
