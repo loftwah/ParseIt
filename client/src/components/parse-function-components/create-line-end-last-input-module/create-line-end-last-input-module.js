@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import './create-line-beginning-first-input-module.css';
+import './create-line-end-last-input-module.css';
 import * as actions from '../../../actions';
 
-class CreateLineBeginningFirstInput extends Component {
+class CreateLineEndLastInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,7 +36,7 @@ class CreateLineBeginningFirstInput extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "CreateLineBeginningFirstInput" + " \"(" + charsToAdd + ")\"";
+        const moduleCode = "CreateLineEndLastInput" + " \"(" + charsToAdd + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id
@@ -64,9 +64,9 @@ class CreateLineBeginningFirstInput extends Component {
 
             let containerSplitNewLine = outputText[inputContainer].text.split('\n');
 
-            // Add the new line to the containerSplitNewLine array, if we are on the first input container
-            if (inputContainer === 0) {
-                containerSplitNewLine.unshift(charsToAdd);
+            // Add the new line to the end of containerSplitNewLine array, if we are on the last input container
+            if (inputContainer === outputText.length - 1) {
+                containerSplitNewLine.push(charsToAdd);
             }
 
             for (let i = 0; i < containerSplitNewLine.length; i++) {
@@ -75,8 +75,8 @@ class CreateLineBeginningFirstInput extends Component {
 
                 let line = containerSplitNewLine[i];
 
-                // We need to show that we are adding lines at index of 0 for the first input container
-                switch (i === 0 && inputContainer === 0) {
+                // We need to show that we are adding a line at the last index of the last input container
+                switch (i === containerSplitNewLine.length - 1 && inputContainer === outputText.length - 1) {
                     case true:
                         if (line === "") {
                             createSingleAdditionPreview.push(<div className="line" key={addIdx}>
@@ -143,19 +143,19 @@ class CreateLineBeginningFirstInput extends Component {
         const { charsToAdd, errorMsg } = this.state;
 
         return (
-            <div className="create-line-beginning-first-input-function">
-                <div className="create-line-beginning-first-input-card card white">
-                    <div className="create-line-beginning-first-input-card-content card-content black-character">
+            <div className="create-line-end-last-input-function">
+                <div className="create-line-end-last-input-card card white">
+                    <div className="create-line-end-last-input-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Create a line at the beginning of the first input</p>
+                        <p className="card-title center">Module: Create a line at the end of the last input</p>
                     </div>
                     <div className="row">
-                        <form action="#" className="form-add-text-to-beginning-line-multiple col s12">
+                        <form action="#" className="form-add-text-to-end-last-line-multiple col s12">
 
                             <div className="row character-line-input">
-                                <div className="create-line-beginning-first-input-characters col s12 m12 l12">
+                                <div className="create-line-end-last-input-characters col s12 m12 l12">
                                     <span>Characters:</span>
-                                    <div className="create-line-beginning-first-input-user-input-character insert input-field inline">
+                                    <div className="create-line-end-last-input-user-input-character insert input-field inline">
                                         <input
                                             type="text"
                                             id="character-input"
@@ -207,4 +207,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, actions)(CreateLineBeginningFirstInput);
+export default connect(mapStateToProps, actions)(CreateLineEndLastInput);

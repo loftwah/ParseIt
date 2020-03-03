@@ -45,6 +45,8 @@ import CreateLineBeginningFirstInput from '../parse-function-components/create-l
 import CreateLineBeginningFirstInputComplete from '../parse-function-components/create-line-beginning-first-input-module/create-line-beginning-first-input-module-complete';
 import CreateLineEndAllInputs from '../parse-function-components/create-line-end-all-inputs-module/create-line-end-all-inputs-module';
 import CreateLineEndAllInputsComplete from '../parse-function-components/create-line-end-all-inputs-module/create-line-end-all-inputs-module-complete';
+import CreateLineAtLastInput from '../parse-function-components/create-line-end-last-input-module/create-line-end-last-input-module';
+import CreateLineAtLastInputComplete from '../parse-function-components/create-line-end-last-input-module/create-line-end-last-input-module-complete';
 
 import * as actions from '../../actions';
 
@@ -706,6 +708,57 @@ class ParseFunctionContainer extends Component {
         console.log(id);;
         this.setState({
             modules: [...newModules, createLineEndAllModule]
+        })
+    }
+
+    handleCreate_CreateLineEndLastInputModule = (e) => {
+        e.preventDefault();
+        console.log('create a "create a line at end of last input" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let createLineEndLastModule = {
+            moduleJSX: (<div className="create-line-end-last-module" key={id}>
+                <CreateLineAtLastInput
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreate_CreateLineEndLastInputModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, createLineEndLastModule];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreate_CreateLineEndLastInputModuleComplete = (id, charsToAdd) => {
+        console.log('create a completed "create a line at end of last input" module!');
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+        let createLineEndLastModule = {
+            moduleJSX: (<div className="create-end-last-first-module" key={id}>
+                <CreateLineAtLastInputComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    charsToAdd={charsToAdd} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, createLineEndLastModule]
         })
     }
 
@@ -1419,6 +1472,11 @@ class ParseFunctionContainer extends Component {
                     charToAdd = moduleParams[0];
                     await this.handleCreate_CreateLineEndAllInputsModuleComplete(id, charToAdd);
                     break;
+                case "CreateLineEndLastInput":
+                    id = moduleCodeArr[i].id;
+                    charToAdd = moduleParams[0];
+                    await this.handleCreate_CreateLineEndLastInputModuleComplete(id, charToAdd);
+                    break;
                 default:
                     console.log('that module is not found');
             }
@@ -1486,7 +1544,7 @@ class ParseFunctionContainer extends Component {
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineBeginningAllInputsModule}>Create a line at the beginning of all inputs</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineBeginningFirstInputModule}>Create a line at the beginning of the first input</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineEndAllInputsModule}>Create a line at the end of all inputs</button></li>
-                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of the last input</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineEndLastInputModule}>Create a line at the end of the last input</button></li>
                         </ul>
                     </div>
 
