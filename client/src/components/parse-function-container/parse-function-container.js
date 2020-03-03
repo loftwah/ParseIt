@@ -41,6 +41,8 @@ import DeleteLineIfDoesntHaveCharacters from '../parse-function-components/delet
 import DeleteLineIfDoesntHaveCharactersComplete from '../parse-function-components/delete-line-if-doesnt-have-characters-module/delete-line-if-doesnt-have-characters-module-complete';
 import CreateLineBeginningAllInputs from '../parse-function-components/create-line-beginning-all-inputs-module/create-line-beginning-all-inputs-module';
 import CreateLineBeginningAllInputsComplete from '../parse-function-components/create-line-beginning-all-inputs-module/create-line-beginning-all-inputs-module-complete';
+import CreateLineBeginningFirstInput from '../parse-function-components/create-line-beginning-first-input-module/create-line-beginning-first-input-module';
+import CreateLineBeginningFirstInputComplete from '../parse-function-components/create-line-beginning-first-input-module/create-line-beginning-first-input-module-complete';
 
 import * as actions from '../../actions';
 
@@ -600,6 +602,57 @@ class ParseFunctionContainer extends Component {
         console.log(id);;
         this.setState({
             modules: [...newModules, createLineBeginningAllModule]
+        })
+    }
+
+    handleCreate_CreateLineBeginningFirstInputModule = (e) => {
+        e.preventDefault();
+        console.log('create a "create a line at beginning of first input" module!');
+        const { moduleActiveOn } = this.props;
+        moduleActiveOn();
+        let id = Math.random();
+        let createLineBeginningFirstModule = {
+            moduleJSX: (<div className="create-line-beginning-first-module" key={id}>
+                <CreateLineBeginningFirstInput
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    handleModuleCode={this.handleModuleCode}
+                    completeModule={this.handleCreate_CreateLineBeginningFirstInputModuleComplete} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);
+        let modules = [...this.state.modules, createLineBeginningFirstModule];
+
+        this.setState({
+            modules: modules
+        })
+    }
+
+    handleCreate_CreateLineBeginningFirstInputModuleComplete = (id, charsToAdd) => {
+        console.log('create a completed "create a line at beginning of first input" module!');
+        const { toggleSavedTextOff, toggleOutputTextOn } = this.props
+
+        toggleSavedTextOff();
+        toggleOutputTextOn();
+
+        let newModules = this.state.modules.filter(mod => {
+            return mod.id !== id
+        })
+        let createLineBeginningFirstModule = {
+            moduleJSX: (<div className="create-line-beginning-first-module" key={id}>
+                <CreateLineBeginningFirstInputComplete
+                    id={id}
+                    handleDeleteModule={this.handleDeleteModule}
+                    charsToAdd={charsToAdd} />
+            </div>),
+            id: id
+        };
+
+        console.log(id);;
+        this.setState({
+            modules: [...newModules, createLineBeginningFirstModule]
         })
     }
 
@@ -1303,6 +1356,11 @@ class ParseFunctionContainer extends Component {
                     charToAdd = moduleParams[0];
                     await this.handleCreate_CreateLineBeginningAllInputsModuleComplete(id, charToAdd);
                     break;
+                case "CreateLineBeginningFirstInput":
+                    id = moduleCodeArr[i].id;
+                    charToAdd = moduleParams[0];
+                    await this.handleCreate_CreateLineBeginningFirstInputModuleComplete(id, charToAdd);
+                    break;
                 default:
                     console.log('that module is not found');
             }
@@ -1368,7 +1426,7 @@ class ParseFunctionContainer extends Component {
                             disabled={moduleActiveToggle}>Create Modules</a>
                         <ul id='create-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineBeginningAllInputsModule}>Create a line at the beginning of all inputs</button></li>
-                            <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the beginning of the first input</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineBeginningFirstInputModule}>Create a line at the beginning of the first input</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of all inputs</button></li>
                             <li><button href="!#" className="dropdown-button" style={{ background: "lightgrey" }}>Create a line at the end of the last input</button></li>
                         </ul>
