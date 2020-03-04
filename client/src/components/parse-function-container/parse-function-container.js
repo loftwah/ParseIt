@@ -86,6 +86,20 @@ class ParseFunctionContainer extends Component {
         M.Dropdown.init(createDropdown, { coverTrigger: false });
     }
 
+    componentWillUpdate(nextProps) {
+        // Handles case: when swapping between textbox/PDF options, not only do we want to delete
+        // the input/output text, we ALSO want to delete the JSX modules and module code as well
+        // codeText becomes "" inside the input-text component, which is received inside this component
+        // emptying out this component of JSX and code
+        const { modules } = this.state;
+        if (nextProps.codeText === "" && modules.length !== 0) {
+            this.setState({
+                modules: [],
+                moduleCode: []
+            })
+        }
+    }
+
     setStateAsync = (state) => {
         return new Promise((resolve) => {
             this.setState(state, resolve)

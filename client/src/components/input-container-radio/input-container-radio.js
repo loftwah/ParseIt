@@ -158,7 +158,15 @@ class InputContainerRadio extends Component {
                         <form action="#" className="radio-button-form col s12 m12 l12">
                             <div className="input-container-toggle col s12 m12 l5 offset-l1">
                                 <h5>Display Inputs</h5>
-                                {inputContainerButtons}
+                                {inputContainerButtons.length !== 0 ? (
+                                    <div className="container-buttons">
+                                        {inputContainerButtons}
+                                    </div>
+                                ) : (
+                                        <div className="no-container-buttons">
+                                            No Inputs to Display
+                                    </div>
+                                    )}
                             </div>
 
                             {previewToggle === true ? (

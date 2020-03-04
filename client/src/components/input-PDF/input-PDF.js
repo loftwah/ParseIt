@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import './input-PDF.css';
 import * as actions from '../../actions';
-// import Header from '../header/header'
 
 class InputPDF extends Component {
     constructor(props) {
@@ -104,7 +103,7 @@ class InputPDF extends Component {
                 <button
                     className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-pdf-button"
                     onClick={this.fileUploadHandler}
-                >Upload the PDF</button>
+                >Upload PDF</button>
 
             </div>
         );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import M from 'materialize-css';
 
 import './input-text.css';
 import * as actions from '../../actions';
@@ -12,8 +13,18 @@ class InputText extends Component {
             toggleTextbox: true,
             togglePDF: false,
             textboxNumber: 2, // Development: 2, Production: 0
+            disableTextBtn: true,
+            dsiablePDFbtn: false,
         };
         this.handleTextareaChange = this.handleTextareaChange.bind(this);
+    }
+
+    componentDidMount() {
+        let modalTextConf = document.querySelectorAll('.modal-textbox');
+        M.Modal.init(modalTextConf);
+
+        let modalPdfConf = document.querySelectorAll('.modal-pdf');
+        M.Modal.init(modalPdfConf);
     }
 
     // don't need async at the moment
@@ -56,14 +67,37 @@ class InputText extends Component {
         this.setState({
             toggleTextbox: true,
             togglePDF: false,
+            disableTextBtn: true,
+            dsiablePDFbtn: false
         })
+
+        // Clear everything
+        this.props.updateInputText([]);
+        this.props.updateOutputText([]);
+        this.props.updateCodeText('');
+        this.props.updateSavedTextContainerDisplay("combine-saves")
+        this.props.updateSavedText([]);
+        this.props.toggleOutputTextOn();
+        this.props.toggleSavedTextOff();
     }
 
     handleTogglePDFOn = e => {
         this.setState({
             toggleTextbox: false,
             togglePDF: true,
+            textboxNumber: 0,
+            disableTextBtn: false,
+            dsiablePDFbtn: true
         })
+
+        // Clear everything
+        this.props.updateInputText([]);
+        this.props.updateOutputText([]);
+        this.props.updateCodeText('');
+        this.props.updateSavedTextContainerDisplay("combine-saves")
+        this.props.updateSavedText([]);
+        this.props.toggleOutputTextOn()
+        this.props.toggleSavedTextOff();
     }
 
     handleTextboxNumChange = e => {
@@ -91,7 +125,7 @@ class InputText extends Component {
     }
 
     render() {
-        let { toggleTextbox, togglePDF, textboxNumber } = this.state;
+        let { toggleTextbox, togglePDF, textboxNumber, disableTextBtn, dsiablePDFbtn } = this.state;
         const { inputText } = this.props;
 
         // Dev: Instantly view the PDF input
@@ -134,20 +168,59 @@ class InputText extends Component {
             )
         }
 
+        // only allow the user to toggle textbox from the button IF the input text is empty
+        // otherwise, toggle textbox during the modal
+        const textBtnCanToggle = inputText.length === 0 ? this.handleToggleTextboxOn : undefined
+        const PDFbtnCanToggle = inputText.length === 0 ? this.handleTogglePDFOn : undefined
+        const canTriggerModal = inputText.length === 0 ? 'no-trigger' : 'modal-trigger'
+
         return (
             <div className="input-text-container">
                 <div className="input-type">
                     <br />
                     <button
-                        className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-form-button input-text-select"
-                        onClick={this.handleToggleTextboxOn}>
+                        className={`waves-effect waves-light btn ${canTriggerModal} #42a5f5 blue lighten-1 submit-form-button input-text-select`}
+                        onClick={textBtnCanToggle}
+                        href="#modal-text-id"
+                        disabled={disableTextBtn}>
                         <i className="material-icons text-field-img">text_fields</i>
-                         Textbox</button>
+                        Textbox
+                    </button>
+
+                    <div id="modal-text-id" className="modal modal-textbox">
+                        <div className="modal-content">
+                            <h4>You Are Currently Working With Text</h4>
+                            <p>Changing to the "Textbox" option will require you to discard all PDF input and output data.</p>
+                            <p>Would you like to discard your PDF text data?</p>
+                        </div>
+                        <div className="modal-footer">
+                            <a href="#!" className="modal-close waves-effect waves-red btn-flat right">No</a>
+                            <a href="#!" className="modal-close waves-effect waves-green btn-flat left"
+                                onClick={this.handleToggleTextboxOn}>Yes</a>
+                        </div>
+                    </div>
+
                     <button
-                        className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-form-button pdf-text-select"
-                        onClick={this.handleTogglePDFOn}>
+                        className={`waves-effect waves-light btn ${canTriggerModal} #42a5f5 blue lighten-1 submit-form-button pdf-text-select`}
+                        onClick={PDFbtnCanToggle}
+                        href="#modal-pdf-id"
+                        disabled={dsiablePDFbtn}>
                         <i className="material-icons pdf-field-img">picture_as_pdf</i>
-                        PDF</button>
+                        PDF
+                    </button>
+
+                    <div id="modal-pdf-id" className="modal modal-pdf">
+                        <div className="modal-content">
+                            <h4>You Are Currently Working With Text</h4>
+                            <p>Changing to the "PDF" option will require you to discard all Textbox input and output data.</p>
+                            <p>Would you like to discard your Textbox data?</p>
+                        </div>
+                        <div className="modal-footer">
+                            <a href="#!" className="modal-close waves-effect waves-red btn-flat right">No</a>
+                            <a href="#!" className="modal-close waves-effect waves-green btn-flat left"
+                                onClick={this.handleTogglePDFOn}>Yes</a>
+                        </div>
+                    </div>
                 </div>
 
                 {toggleTextbox === true && togglePDF === false ? (
