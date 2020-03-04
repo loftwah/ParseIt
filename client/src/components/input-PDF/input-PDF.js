@@ -86,7 +86,7 @@ class InputPDF extends Component {
         const { errorMsg } = this.state;
         return (
             <div className="input-PDF-component">
-                <p>My PDF component</p>
+                <p>Upload a PDF to Parse</p>
                 <form action="#">
                     <div className="file-field input-field">
                         <div className="btn">

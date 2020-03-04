@@ -122,7 +122,8 @@ class MultipleDeleteLine extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
+            outputText, updateDeletionsPreview, updateAdditionsPreview,
+            toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { lineMultiple } = this.state;
         let { lineNumBegin } = this.state;
 
@@ -235,6 +236,11 @@ class MultipleDeleteLine extends Component {
         updateAdditionsPreview(additionPreviews); // replace this an array of ALL addition previews
 
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
+
+        if (previewToggle === true) {
+            toggleOutputTextOn();
+            toggleSavedTextOff();
+        }
     }
 
     render() {

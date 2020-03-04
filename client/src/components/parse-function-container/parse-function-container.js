@@ -1498,7 +1498,6 @@ class ParseFunctionContainer extends Component {
 
         return (
             <div className="parse-function-container">
-                <h4 className="black-text"><b>PARSE FUNCTION CONTAINER</b></h4>
                 <ParseItCode
                     parseItCode={this.parseItCode}
                     errorMsg={codeErrorMsg}
@@ -1584,7 +1583,7 @@ class ParseFunctionContainer extends Component {
                         </ul>
                     </div>
 
-                    <div className="module-dropdown save-module-dropdown col s12 m6 l3">
+                    <div className="module-dropdown save-module-dropdown col s12 m12 l6">
                         <a className='dropdown-trigger-save-module btn'
                             href='!#'
                             data-target='save-module-dropdown'

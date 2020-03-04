@@ -50,7 +50,8 @@ class DeleteBeginningModule extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
+            outputText, updateDeletionsPreview, updateAdditionsPreview,
+            toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { stoppingCharacters } = this.state;
 
         // const stringToGoIntoTheRegex = escapeRegExp(replaceCharacter);
@@ -162,6 +163,11 @@ class DeleteBeginningModule extends Component {
         updateAdditionsPreview(additionPreviews); // An array of ALL addition previews
 
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
+
+        if (previewToggle === true) {
+            toggleOutputTextOn();
+            toggleSavedTextOff();
+        }
 
     }
 

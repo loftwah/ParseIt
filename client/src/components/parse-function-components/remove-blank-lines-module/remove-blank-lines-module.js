@@ -39,7 +39,8 @@ class RemoveBlankLinesModule extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
+            outputText, updateDeletionsPreview, updateAdditionsPreview,
+            toggleOutputTextOn, toggleSavedTextOff } = this.props;
 
         let additionPreviews = [];
         let deletionPreviews = [];
@@ -98,6 +99,11 @@ class RemoveBlankLinesModule extends Component {
         updateAdditionsPreview(additionPreviews); // An array of ALL addition previews
 
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
+
+        if (previewToggle === true) {
+            toggleOutputTextOn();
+            toggleSavedTextOff();
+        }
 
     }
 

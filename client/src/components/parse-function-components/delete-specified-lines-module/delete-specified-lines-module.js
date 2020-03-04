@@ -191,7 +191,8 @@ class DeleteSpecifiedLines extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
+            outputText, updateDeletionsPreview, updateAdditionsPreview,
+            toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { linesToDelete } = this.state;
 
         const validate = this.validateUserInput(linesToDelete);
@@ -342,6 +343,11 @@ class DeleteSpecifiedLines extends Component {
         updateAdditionsPreview(additionPreviews); // replace this an array of ALL addition previews
 
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
+
+        if (previewToggle === true) {
+            toggleOutputTextOn();
+            toggleSavedTextOff();
+        }
     }
 
     render() {

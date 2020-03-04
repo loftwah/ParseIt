@@ -22,7 +22,8 @@ class Navbar extends Component {
                 <nav>
                     <div className="nav-wrapper blue darken-3">
                         <a href="#" className="brand-logo"><b>ParseIt</b></a>
-                        <a href="#" data-target="slide-out" className="sidenav-trigger right"><i className="material-icons">menu</i></a>
+                        <a href="#" data-target="slide-out" className="sidenav-trigger right">
+                            <i className="material-icons">menu</i></a>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><a href="#!">What is ParseIt?</a></li>
                             <li><a href="#!">Tutorial</a></li>

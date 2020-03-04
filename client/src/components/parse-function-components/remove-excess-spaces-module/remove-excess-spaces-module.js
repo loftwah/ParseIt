@@ -37,7 +37,8 @@ class RemoveExcessSpacesModule extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
+            outputText, updateDeletionsPreview, updateAdditionsPreview,
+            toggleOutputTextOn, toggleSavedTextOff } = this.props;
 
         let additionPreviews = [];
         let deletionPreviews = [];
@@ -265,6 +266,11 @@ class RemoveExcessSpacesModule extends Component {
         updateAdditionsPreview(additionPreviews); // an array of ALL addition previews
 
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
+
+        if (previewToggle === true) {
+            toggleOutputTextOn();
+            toggleSavedTextOff();
+        }
     }
 
     render() {

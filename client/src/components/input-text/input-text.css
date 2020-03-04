@@ -12,3 +12,13 @@ select.textbox-number-dropdown-menu {
     border-color: rgb(197, 197, 197);
     margin-bottom: 10px
 }
+
+i.text-field-img{
+    vertical-align: middle;
+    margin-right:10px
+}
+
+i.pdf-field-img{
+    vertical-align: middle;
+    margin-right:10px
+}

@@ -136,7 +136,8 @@ class MultipleAddTextToBeginning extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
+            outputText, updateDeletionsPreview, updateAdditionsPreview,
+            toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { lineMultiple, charToAdd } = this.state;
         let { lineNumBegin } = this.state;
 
@@ -252,6 +253,11 @@ class MultipleAddTextToBeginning extends Component {
         updateAdditionsPreview(additionPreviews); // replace this an array of ALL addition previews
 
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
+
+        if (previewToggle === true) {
+            toggleOutputTextOn();
+            toggleSavedTextOff();
+        }
     }
 
     render() {

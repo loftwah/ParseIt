@@ -57,7 +57,8 @@ class ReplaceCharacterModule extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
+            outputText, updateDeletionsPreview, updateAdditionsPreview, 
+            toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
 
         // preview deletion + preview addition
@@ -131,6 +132,11 @@ class ReplaceCharacterModule extends Component {
         updateAdditionsPreview(additionPreviews); // replace this an array of ALL addition previews
 
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
+
+        if (previewToggle === true) {
+            toggleOutputTextOn();
+            toggleSavedTextOff();
+        }
     }
 
     render() {

@@ -57,7 +57,8 @@ class SplitLinesBeforeWord extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview } = this.props;
+            outputText, updateDeletionsPreview, updateAdditionsPreview, 
+            toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { charToSplit } = this.state;
 
         // Handle errors: spaces
@@ -287,6 +288,11 @@ class SplitLinesBeforeWord extends Component {
         updateAdditionsPreview(additionPreviews); // array of ALL addition previews
 
         previewToggle === true ? togglePreviewOff() : togglePreviewOn();
+
+        if (previewToggle === true) {
+            toggleOutputTextOn();
+            toggleSavedTextOff();
+        }
     }
 
     render() {

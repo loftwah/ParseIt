@@ -140,12 +140,14 @@ class InputText extends Component {
                     <br />
                     <button
                         className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-form-button input-text-select"
-                        onClick={this.handleToggleTextboxOn}
-                    >Textbox</button>
+                        onClick={this.handleToggleTextboxOn}>
+                        <i className="material-icons text-field-img">text_fields</i>
+                         Textbox</button>
                     <button
                         className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-form-button pdf-text-select"
-                        onClick={this.handleTogglePDFOn}
-                    >PDF</button>
+                        onClick={this.handleTogglePDFOn}>
+                        <i className="material-icons pdf-field-img">picture_as_pdf</i>
+                        PDF</button>
                 </div>
 
                 {toggleTextbox === true && togglePDF === false ? (
