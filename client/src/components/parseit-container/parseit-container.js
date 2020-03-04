@@ -30,7 +30,6 @@ class ParseItContainer extends Component {
                     {previewToggle === false ? (<div className="no-previews"></div>) : (<PreviewsMain />)}
                     {previewToggle === false && toggleOutputText === true ? (<OutputText />) : (<div className="no-output-text"></div>)}
                     {previewToggle === false && toggleSavedText === true ? (<OutputSavedText />) : (<div className="no-saved-text"></div>)}
-
                 </div>
             </div>
         );

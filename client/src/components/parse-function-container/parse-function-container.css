@@ -1,5 +1,5 @@
 ul.dropdown-content{
-    overflow-y: visible !important;
+    overflow-y: overlay;
 }
 
 div.module-dropdown-list.row{

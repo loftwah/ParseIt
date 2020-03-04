@@ -91,8 +91,12 @@ class ParseFunctionContainer extends Component {
         // the input/output text, we ALSO want to delete the JSX modules and module code as well
         // codeText becomes "" inside the input-text component, which is received inside this component
         // emptying out this component of JSX and code
+
+        // Also: we don't want to delete the module if we are exiting preview of our first module
+        // moduleActiveToggle helps us identify if we are in "edit mode" so we won't delete the first module when finished with preview
         const { modules } = this.state;
-        if (nextProps.codeText === "" && modules.length !== 0) {
+        const { moduleActiveToggle } = this.props;
+        if (nextProps.codeText === "" && modules.length !== 0 && moduleActiveToggle === false) {
             this.setState({
                 modules: [],
                 moduleCode: []
