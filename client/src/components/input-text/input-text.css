@@ -4,8 +4,8 @@ textarea.input-text {
     height: 150px;
 }
 
-button.pdf-text-select {
-    margin-left: 10px
+button.input-pdf-text-select {
+    margin-left: 10px;
 }
 
 select.textbox-number-dropdown-menu {
@@ -21,4 +21,39 @@ i.text-field-img{
 i.pdf-field-img{
     vertical-align: middle;
     margin-right:10px
+}
+
+div.textbox-input{
+    margin-top: 13px;
+}
+
+div.input-text-container{
+    margin-bottom: 10px
+}
+
+button:disabled.input-text-select:hover,
+button:disabled.input-text-select:active,
+button:disabled.input-text-select:focus,
+button:disabled.input-text-select{
+    color: white !important;
+    background: #3949ab !important;
+}
+
+button:enabled.input-text-select{
+    color: white !important;
+    background: rgb(163, 163, 163) !important;
+}
+
+button:disabled.input-pdf-text-select:hover,
+button:disabled.input-pdf-text-select:active,
+button:disabled.input-pdf-text-select:focus,
+button:disabled.input-pdf-text-select:not(:focus),
+button:disabled.input-pdf-text-select{
+    color: white !important;
+    background: #3949ab !important;
+}
+
+button:enabled.input-pdf-text-select{
+    color: white !important;
+    background: rgb(163, 163, 163)!important;
 }

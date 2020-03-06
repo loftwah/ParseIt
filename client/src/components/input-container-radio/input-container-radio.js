@@ -172,7 +172,7 @@ class InputContainerRadio extends Component {
                             {previewToggle === true ? (
                                 <div className="display-saved-text-hidden"></div>
                             ) : (
-                                    <div className="saved-container-toggle col s12 m12 l5">
+                                    <div className="saved-container-toggle col s12 m12 l5 offset-l1">
                                         <h5>Display Saved Text</h5>
                                         {savedTextContainerButtons}
                                     </div>

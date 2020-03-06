@@ -1520,13 +1520,10 @@ class ParseFunctionContainer extends Component {
                     parseItCode={this.parseItCode}
                     errorMsg={codeErrorMsg}
                 />
-                <br />
-                <br />
-                <br />
+                <h2 className="parseit-modules-title red-text text-lighten-3">ParseIt Modules</h2>
                 {moduleList}
 
                 <div className="row module-dropdown-list">
-
                     <div className="module-dropdown replace-module-dropdown col s12 m6 l3">
                         <a className='dropdown-trigger-replace-module btn'
                             href='!#'

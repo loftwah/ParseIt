@@ -57,7 +57,7 @@ class OutputSavedText extends Component {
         createOutput = convertTextToJSX.map((textJSX, idx) => {
             return (
                 <div className="output-saved-text-box" key={idx}>
-                    <h4>{savedTextContainer[idx].name}</h4>
+                    <h5>Input: {savedTextContainer[idx].name}</h5>
                     <div className="output-saved-text">
                         {textJSX}
                     </div>
@@ -192,7 +192,7 @@ class OutputSavedText extends Component {
 
                 {typeof (savedTextContainerDisplay) === "number" ? (
                     <div className="display-user-saved-text">
-                        <h4 className="black-text"><b>OUTPUT {savedTextName}</b></h4>
+                        <h4 className="grey-text text-darken-1">Saved Text: {savedTextName}</h4>
                         {createOutput}
                     </div>) : (
                         <div className="display-no-user-saved-text"></div>
@@ -200,7 +200,7 @@ class OutputSavedText extends Component {
 
                 {savedTextContainerDisplay === "combine-saves" ? (
                     <div className="display-combine-saves">
-                        <h4 className="black-text"><b>OUTPUT "Combined Saves"</b></h4>
+                        <h4 className="grey-text text-darken-1">Combined Saves</h4>
                         <div className="output-saved-text">
                             {createOutput}
                         </div>
@@ -216,7 +216,7 @@ class OutputSavedText extends Component {
 
                 {savedTextContainerDisplay === "combine-input-then-saves" ? (
                     <div className="display-combine-input-then-saves">
-                        <h4 className="black-text"><b>OUTPUT "Combined Input, then saves"</b></h4>
+                        <h4 className="grey-text text-darken-1">Combined by Input, And Then Combined Saves</h4>
                         <div className="output-saved-text">
                             {createOutput}
                         </div>

@@ -226,10 +226,10 @@ class RemoveExcessSpacesModule extends Component {
                     if (lastEndSpace !== line.length) {
                         keepChars = line.slice(lastEndSpace, line.length);
 
-                        lineJSXAddition.push(<span className="line" key={`keep-${i}`}>
+                        lineJSXAddition.push(<span className="line" key={`keep-${i}-end`}>
                             <span className="line-text" style={{ "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{keepChars}</span>
                         </span>)
-                        lineJSXDeletion.push(<span className="line" key={`keep-${i}`}>
+                        lineJSXDeletion.push(<span className="line" key={`keep-${i}-end`}>
                             <span className="line-text" style={{ "whiteSpace": "pre-wrap", "wordWrap": "break-word" }}>{keepChars}</span>
                         </span>)
                     }

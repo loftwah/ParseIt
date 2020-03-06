@@ -37,8 +37,7 @@ class OutputText extends Component {
         return (
             // Display all possible inputContainers
             <div className="input-text-container">
-
-                <h4 className="black-text"><b>OUTPUT TEXT</b></h4>
+                <h4 className="grey-text text-darken-1">Output Text</h4>
                 <div className="output-text-box">
                     <div className="output-text">
                         {createOutput}

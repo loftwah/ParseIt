@@ -1,3 +1,14 @@
 div.pdf-error-msg p {
     color: red;
+    margin-top: 0px;
+    padding-bottom: 12px
+}
+
+i.file_upload-img{
+    vertical-align: middle;
+    margin-right:10px
+}
+
+button.submit-pdf-button{
+    margin-top:-8px
 }

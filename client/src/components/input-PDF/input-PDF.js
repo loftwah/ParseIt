@@ -53,7 +53,7 @@ class InputPDF extends Component {
         const { updateInputText, updateOutputText } = this.props;
         if (selectedFiles.length === 0) {
             this.setState({
-                errorMsg: 'Please upload a PDF.'
+                errorMsg: 'Please browse for a PDF.'
             })
             return;
         }
@@ -85,25 +85,30 @@ class InputPDF extends Component {
         const { errorMsg } = this.state;
         return (
             <div className="input-PDF-component">
-                <p>Upload a PDF to Parse</p>
                 <form action="#">
                     <div className="file-field input-field">
-                        <div className="btn">
-                            <span>File</span>
+                        <div className="btn browse-pdf-button blue-grey">
+                            <span>Browse</span>
                             <input type="file" multiple onChange={this.fileSelectedHandler} />
                         </div>
                         <div className="file-path-wrapper">
-                            <input className="file-path validate" type="text" placeholder="Upload one or more files" />
+                            <input className="file-path validate" type="text" placeholder="Upload one or more PDF files" />
                         </div>
                     </div>
-                    <div className="pdf-error-msg">
-                        <p>{errorMsg}</p>
-                    </div>
+                    {errorMsg === "" ? (
+                        <div className="no-error-msg">
+                        </div>
+                    ) : (
+                            <div className="pdf-error-msg">
+                                <p>{errorMsg}</p>
+                            </div>
+                        )}
                 </form>
                 <button
                     className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-pdf-button"
-                    onClick={this.fileUploadHandler}
-                >Upload PDF</button>
+                    onClick={this.fileUploadHandler}>
+                    <i className="material-icons file_upload-img">file_upload</i>
+                    Upload Selected PDF Files</button>
 
             </div>
         );

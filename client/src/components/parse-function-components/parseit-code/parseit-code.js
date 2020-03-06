@@ -34,7 +34,7 @@ class ParseItCode extends Component {
 
         return (
             <div className="parseit-code-component">
-                <h5>ParseIt Code</h5>
+                <h2 className="parseit-code-title red-text text-lighten-3">ParseIt Code</h2>
                 <div className="parseit-code-text" style={{ fontFamily: 'Courier' }}>
                     <TextareaAutosize
                         onChange={this.handleCodeChange}
@@ -44,8 +44,9 @@ class ParseItCode extends Component {
                 <p className="error-msg">{errorMsg}</p>
                 <button
                     className="waves-effect waves-light btn blue lighten-1 submit-parseit-code-button"
-                    onClick={this.handleSubmitCode}
-                >Submit ParseIt Code</button>
+                    onClick={this.handleSubmitCode}>
+                    <i className="material-icons right">send</i>
+                    Submit ParseIt Code</button>
             </div>
         );
     };

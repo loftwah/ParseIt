@@ -170,16 +170,18 @@ class InputText extends Component {
 
         // only allow the user to toggle textbox from the button IF the input text is empty
         // otherwise, toggle textbox during the modal
-        const textBtnCanToggle = inputText.length === 0 ? this.handleToggleTextboxOn : undefined
-        const PDFbtnCanToggle = inputText.length === 0 ? this.handleTogglePDFOn : undefined
-        const canTriggerModal = inputText.length === 0 ? 'no-trigger' : 'modal-trigger'
+        const textBtnCanToggle = inputText.length === 0 ? this.handleToggleTextboxOn : undefined;
+        const PDFbtnCanToggle = inputText.length === 0 ? this.handleTogglePDFOn : undefined;
+        const canTriggerModal = inputText.length === 0 ? 'no-trigger' : 'modal-trigger';
+        const titleScreen = toggleTextbox === true && togglePDF === false ? 'Parse: Plain Text' : 'Parse: PDF Text';
 
         return (
             <div className="input-text-container">
                 <div className="input-type">
                     <br />
+                    <h2 className="title-screen red-text text-lighten-3">{titleScreen}</h2>
                     <button
-                        className={`waves-effect waves-light btn ${canTriggerModal} #42a5f5 blue lighten-1 submit-form-button input-text-select`}
+                        className={`waves-effect waves-light btn ${canTriggerModal} submit-form-button input-text-select`}
                         onClick={textBtnCanToggle}
                         href="#modal-text-id"
                         disabled={disableTextBtn}>
@@ -201,7 +203,7 @@ class InputText extends Component {
                     </div>
 
                     <button
-                        className={`waves-effect waves-light btn ${canTriggerModal} #42a5f5 blue lighten-1 submit-form-button pdf-text-select`}
+                        className={`waves-effect waves-light btn ${canTriggerModal} #42a5f5 indigo darken-1 submit-form-button input-pdf-text-select`}
                         onClick={PDFbtnCanToggle}
                         href="#modal-pdf-id"
                         disabled={dsiablePDFbtn}>
@@ -225,7 +227,6 @@ class InputText extends Component {
 
                 {toggleTextbox === true && togglePDF === false ? (
                     <div className="textbox-input">
-                        <h4 className="black-text"><b>INPUT TEXT</b></h4>
 
                         <select className="browser-default textbox-number-dropdown-menu"
                             onChange={this.handleTextboxNumChange} defaultValue={1}>
@@ -235,8 +236,9 @@ class InputText extends Component {
                         {[...textBoxList]}
                         <button
                             className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-form-button"
-                            onClick={this.handleInputSubmit}
-                        >Start Parsing</button>
+                            onClick={this.handleInputSubmit}>
+                            <i className="material-icons right">send</i>
+                            Parse The Above Text</button>
                     </div>
                 ) : (
                         <div className="pdf-input">
