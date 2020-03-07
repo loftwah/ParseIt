@@ -178,7 +178,7 @@ class DeleteSpecifiedLines extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "DeleteSpecifiedLines" + " \"(" + linesToDelete + ")\"";
+        const moduleCode = "DeleteCertainLines" + " \"(" + linesToDelete + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

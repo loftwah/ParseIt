@@ -30,7 +30,7 @@ class SavedTextModule extends Component {
         const { handleModuleCode, id, moduleActiveOff, completeModule } = this.props;
         const { savedTextName } = this.state;
 
-        const moduleCode = "SaveTextModule" + " \"(" + savedTextName + ")\"";
+        const moduleCode = "SaveText" + " \"(" + savedTextName + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

@@ -26,7 +26,7 @@ class RemoveBlankLinesModule extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "RemoveBlankLinesModule";
+        const moduleCode = "RemoveBlankLines";
         handleModuleCode({
             code: moduleCode,
             id: id

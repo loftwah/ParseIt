@@ -36,7 +36,7 @@ class DeleteEndingModule extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "DeleteEndingModule" + " \"(" + stoppingCharacters + ")\"";
+        const moduleCode = "DeleteLastPhraseUntilEnd" + " \"(" + stoppingCharacters + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

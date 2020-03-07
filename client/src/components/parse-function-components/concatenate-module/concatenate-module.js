@@ -21,7 +21,7 @@ class ConcatenateModule extends Component {
         const { handleModuleCode, togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
 
         togglePreviewOff();
-        const moduleCode = "ConcatenateModule";
+        const moduleCode = "Concatenate";
         handleModuleCode({
             code: moduleCode,
             id: id

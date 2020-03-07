@@ -45,7 +45,7 @@ class ReplaceCharacterModule extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "ReplaceCharacterModule" + " \"(" + replaceCharacter + ")\" \"(" + insertCharacter + ")\"";
+        const moduleCode = "ReplaceCharacters" + " \"(" + replaceCharacter + ")\" \"(" + insertCharacter + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

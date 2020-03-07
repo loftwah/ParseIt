@@ -1408,37 +1408,37 @@ class ParseFunctionContainer extends Component {
             }
 
             switch (moduleType) {
-                case "ReplaceCharacterModule":
+                case "ReplaceCharacters":
                     id = moduleCodeArr[i].id;
                     // slice off the double quotes - found at the beginning and the end
                     let replaceCharacter = moduleParams[0]
                     let insertCharacter = moduleParams[1]
                     await this.handleCreateReplaceCharacterModuleComplete(id, replaceCharacter, insertCharacter);
                     break;
-                case "DeleteBeginningModule":
+                case "DeleteBeginningUntilPhrase":
                     id = moduleCodeArr[i].id;
                     stoppingCharacters = moduleParams[0];
                     await this.handleCreateDeleteBeginningModuleComplete(id, stoppingCharacters);
                     break;
-                case "DeleteEndingModule":
+                case "DeleteLastPhraseUntilEnd":
                     id = moduleCodeArr[i].id;
                     stoppingCharacters = moduleParams[0];
                     await this.handleCreateDeleteEndingModuleComplete(id, stoppingCharacters);
                     break;
-                case "SaveTextModule":
+                case "SaveText":
                     id = moduleCodeArr[i].id;
                     let saveTextName = moduleParams[0];
                     await this.handleCreateSavedTextModuleComplete(id, saveTextName);
                     break;
-                case "ConcatenateModule":
+                case "Concatenate":
                     id = moduleCodeArr[i].id;
                     await this.handleCreateConcatenateModuleComplete(id);
                     break;
-                case "RemoveBlankLinesModule":
+                case "RemoveBlankLines":
                     id = moduleCodeArr[i].id;
                     await this.handleCreateRemoveBlankLinesModuleComplete(id);
                     break;
-                case "RemoveExcessSpacesModule":
+                case "RemoveExcessSpaces":
                     id = moduleCodeArr[i].id;
                     await this.handleCreateRemoveExcessSpacesModuleComplete(id);
                     break;
@@ -1483,23 +1483,23 @@ class ParseFunctionContainer extends Component {
                     lineMultiple = moduleParams[1];
                     await this.handleCreateMultipleDeleteLineComplete(id, lineNumBegin, lineMultiple);
                     break;
-                case "DeleteSpecifiedLines":
+                case "DeleteCertainLines":
                     id = moduleCodeArr[i].id;
                     linesToDelete = moduleParams[0];
                     await this.handleCreateDeleteSpecifiedLinesModuleComplete(id, linesToDelete);
                     break;
-                case "DeleteBetweenCharactersModule":
+                case "DeleteBetweenPhrases":
                     id = moduleCodeArr[i].id;
                     startCharacters = moduleParams[0];
                     endCharacters = moduleParams[1];
                     await this.handleCreateDeleteBetweenCharactersModuleComplete(id, startCharacters, endCharacters);
                     break;
-                case "DeleteLineIfHasCharacters":
+                case "DeleteLineIfHasPhrase":
                     id = moduleCodeArr[i].id;
                     charDeleteLine = moduleParams[0];
                     await this.handleCreateDeleteLineIfHasCharsModuleComplete(id, charDeleteLine);
                     break;
-                case "DeleteLineIfDoesntHaveCharacters":
+                case "DeleteLineIfDoesntHavePhrase":
                     id = moduleCodeArr[i].id;
                     charKeepLine = moduleParams[0];
                     await this.handleCreateDeleteLineIfDoesntHaveCharsModuleComplete(id, charKeepLine);

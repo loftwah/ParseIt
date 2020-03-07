@@ -55,7 +55,7 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "DeleteLineIfDoesntHaveCharacters" + " \"(" + chars + ")\"";
+        const moduleCode = "DeleteLineIfDoesntHavePhrase" + " \"(" + chars + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

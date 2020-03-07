@@ -43,7 +43,7 @@ class DeleteBetweenCharactersModule extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "DeleteBetweenCharactersModule" + " \"(" + startCharacters + ")\" \"(" + endCharacters + ")\"";
+        const moduleCode = "DeleteBetweenPhrases" + " \"(" + startCharacters + ")\" \"(" + endCharacters + ")\"";
 
         handleModuleCode({
             code: moduleCode,
