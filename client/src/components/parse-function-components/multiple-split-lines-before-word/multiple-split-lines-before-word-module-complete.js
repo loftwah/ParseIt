@@ -227,14 +227,13 @@ class MultipleSplitLinesBeforeWordComplete extends Component {
                 <div className="multiple-split-lines-before-word-card card white">
                     <div className="multiple-split-lines-before-word-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Split a Multiple Into Two Lines if a Word Contains a Phrase:</p>
+                        <p className="card-title center">Module: Split a Multiple Into Two Lines If a Word Contains a Phrase:</p>
                         <p className="card-title center">Before Word</p>
                     </div>
                     <div className="row">
                         <div className="multiple-split-lines-before-word-description-complete col s12">
                             <p>Starting at line number <b>"{lineNumBegin}"</b>, at each line multiple of <b>"{lineMultiple}"</b>, split into two lines if a word contains the characters: <b>"{charToSplit}"</b>. Analyzing the line going <b>"{direction}"</b>, the line will be split when the characters are spotted at <b>"{instance}"</b> {instancePlural} in this direction in the line. </p>
                             <p>The line will be split *before* the word that contains a phrase.</p>
-                            <p>You may use spaces.</p>
                         </div>
                     </div>
                 </div>

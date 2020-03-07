@@ -380,7 +380,7 @@ class DeleteBetweenCharactersModule extends Component {
                 <div className="delete-between-characters-card card white">
                     <div className="delete-between-characters-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <span className="card-title center">Module: Delete Everything Between Characters</span>
+                        <span className="card-title center">Module: Delete Everything Between Two Phrases</span>
                     </div>
                     <div className="row">
                         <div className="delete-between-characters-delete col s12">

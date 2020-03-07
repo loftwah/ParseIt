@@ -173,7 +173,7 @@ class DeleteLineIfHasCharacters extends Component {
                 <div className="delete-line-if-has-characters-card card white">
                     <div className="delete-line-if-has-characters-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Delete Line if it Contains a Set of Characters</p>
+                        <p className="card-title center">Module: Delete a Line If It Contains a Phrase</p>
                     </div>
                     <div className="row">
                         <form action="#" className="form-add-text-to-beginning-line-multiple col s12">

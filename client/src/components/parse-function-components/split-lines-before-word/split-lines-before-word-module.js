@@ -308,7 +308,7 @@ class SplitLinesBeforeWord extends Component {
                     </div>
                     <div className="row">
                         <div className="split-lines-before-word-module-introduction">
-                            <p>If a line contains a phrase of characters, the line will be split into two</p>
+                            <p>If a line contains a phrase of characters, the line will be split into two.</p>
                             <p>The line will be split *before* the word that contains a phrase.</p>
                             <p>Multiple phrase instances yields multiple splits.</p>
                         </div>

@@ -56,8 +56,8 @@ class ReplaceCharacterModuleComplete extends Component {
                     </div>
                     <div className="row">
                         <div className="replace-character-complete col s12">
-                            <p>Replace the characters: "{replaceCharacter}"</p>
-                            <p>With the characters: "{insertCharacter}"</p>
+                            <p>Replace the characters: <b>"{replaceCharacter}"</b></p>
+                            <p>With the characters: <b>"{insertCharacter}"</b></p>
                         </div>
                     </div>
                 </div>

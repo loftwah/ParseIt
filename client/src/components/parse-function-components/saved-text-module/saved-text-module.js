@@ -54,7 +54,7 @@ class SavedTextModule extends Component {
                             <p>This module will combine all of your current "Inputs" into a "Saved Text" input.</p>
                             <p>This module will also update the "Inputs" to the original input, if you wish to keep parsing.</p>
                             <br />
-                            <div className="save-text-name col s12">
+                            <div className="save-text-name">
                                 <span>Saved Text Name: </span>
                                 <div className="save-text-name-user-input replace input-field inline">
                                     <input

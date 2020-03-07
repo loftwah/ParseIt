@@ -256,11 +256,11 @@ class DeleteBetweenCharactersModuleComplete extends Component {
                 <div className="delete-between-characters-card card white">
                     <div className="delete-between-characters-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <span className="card-title center">Module: Delete Everything Between Characters</span>
+                        <span className="card-title center">Module: Delete Everything Between Two Phrases</span>
                     </div>
                     <div className="row">
                         <div className="delete-between-characters-complete col s12">
-                            <p>Delete between the characters: <b>"{startCharacters}"</b> and the characters: <b>"{endCharacters}"</b></p>
+                            <p>Delete all text between the characters: <b>"{startCharacters}"</b> and the characters: <b>"{endCharacters}"</b></p>
                         </div>
                     </div>
                 </div>

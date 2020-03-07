@@ -67,7 +67,7 @@ class CreateLineBeginningAllInputsComplete extends Component {
                 <div className="create-line-beginning-all-inputs-card card white">
                     <div className="create-line-beginning-all-inputs-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Create a line at the beginning of all inputs</p>
+                        <p className="card-title center">Module: Create a Line at the Beginning of All Inputs</p>
                     </div>
                     <div className="row">
                         <div className="create-line-beginning-all-inputs-description-complete col s12">
@@ -78,7 +78,7 @@ class CreateLineBeginningAllInputsComplete extends Component {
                                 </div>
                             ) : (
                                     <div className="user-input-chars">
-                                        <p>For every input, a new line will be created at index 1 with the following characters: <b>"{charsToAdd}"</b>.
+                                        <p>For every input, a new line will be created at index 1 with the following characters: <b>"{charsToAdd}"</b>
                                     </p>
                                     </div>
                                 )}

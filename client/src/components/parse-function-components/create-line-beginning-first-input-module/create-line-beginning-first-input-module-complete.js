@@ -60,12 +60,12 @@ class CreateLineBeginningFirstInputComplete extends Component {
                 <div className="create-line-beginning-first-input-card card white">
                     <div className="create-line-beginning-first-input-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Create a line at the beginning of all inputs</p>
+                        <p className="card-title center">Module: Create a Line at the Beginning of the First Input</p>
                     </div>
                     <div className="row">
                         <div className="create-line-beginning-first-input-description-complete col s12">
                             <div className="user-input-chars">
-                                <p>For the first input, a new line will be created at index 1 with the following characters: <b>"{charsToAdd}"</b>.</p>
+                                <p>For the first input, a new line will be created at index 1 with the following characters: <b>"{charsToAdd}"</b></p>
                             </div>
                         </div>
                     </div>

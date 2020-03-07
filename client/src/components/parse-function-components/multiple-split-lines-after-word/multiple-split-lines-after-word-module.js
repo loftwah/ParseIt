@@ -480,7 +480,7 @@ class MultipleSplitLinesAfterWord extends Component {
                 <div className="multiple-split-lines-after-word-card card white">
                     <div className="multiple-split-lines-after-word-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Split a Multiple Into Two Lines if a Word Contains a Phrase:</p>
+                        <p className="card-title center">Module: Split a Multiple Into Two Lines If a Word Contains a Phrase:</p>
                         <p className="card-title center">After Word</p>
                     </div>
                     <div className="row">

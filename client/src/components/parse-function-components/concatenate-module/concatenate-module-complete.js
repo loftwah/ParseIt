@@ -53,7 +53,7 @@ class ConcatenateModuleComplete extends Component {
                     </div>
                     <div className="row">
                         <div className="concatenate-description-complete col s12">
-                            <p>This module will concatenate all lines of an input into one line.</p>
+                            <p>Concatenate all lines of an input into one line.</p>
                         </div>
                     </div>
                 </div>

@@ -284,7 +284,7 @@ class RemoveExcessSpacesModule extends Component {
                     </div>
                     <div className="row">
                         <div className="remove-excess-spaces-description col s12">
-                            <p>This module will convert multiple spaces (2 or more consecutive spaces) into one space.</p>
+                            <p>Convert multiple spaces (2 or more consecutive spaces) into one space.</p>
                             <p>All spaces at the beginning of lines will be removed.</p>
                             <p>All spaces at the end of lines will be removed.</p>
                         </div>

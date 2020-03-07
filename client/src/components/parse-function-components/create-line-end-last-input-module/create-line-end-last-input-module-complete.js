@@ -60,12 +60,12 @@ class CreateLineEndLastInputComplete extends Component {
                 <div className="create-line-end-last-input-card card white">
                     <div className="create-line-end-last-input-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Create a line at the end of the last input</p>
+                        <p className="card-title center">Module: Create a Line at the End of the Last Input</p>
                     </div>
                     <div className="row">
                         <div className="create-line-end-last-input-description-complete col s12">
                             <div className="user-input-chars">
-                                <p>For the last input, a new line will be created at the last index with the following characters: <b>"{charsToAdd}"</b>.</p>
+                                <p>For the last input, a new line will be created at the last index with the following characters: <b>"{charsToAdd}"</b></p>
                             </div>
                         </div>
                     </div>

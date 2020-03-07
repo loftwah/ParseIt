@@ -220,11 +220,11 @@ class DeleteEndingModule extends Component {
                 <div className="delete-ending-card card white">
                     <div className="delete-ending-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <span className="card-title center">Module: Delete Last Set of Characters until End</span>
+                        <span className="card-title center">Module: Delete From Last Instance of a Phrase Until End</span>
                     </div>
                     <div className="row">
                         <div className="delete-ending-delete col s12">
-                            <span>Delete text from the last set of the characters: </span>
+                            <span>Delete text from the last instance of the characters: </span>
                             <div className="delete-ending-user-input replace input-field inline">
                                 <input
                                     type="text"

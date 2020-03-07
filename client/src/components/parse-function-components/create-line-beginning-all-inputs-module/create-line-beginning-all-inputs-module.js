@@ -172,7 +172,7 @@ class CreateLineBeginningAllInputs extends Component {
                 <div className="create-line-beginning-all-inputs-card card white">
                     <div className="create-line-beginning-all-inputs-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Create a line at the beginning of all inputs</p>
+                        <p className="card-title center">Module: Create a Line at the Beginning of All Inputs</p>
                     </div>
                     <div className="row">
                         <div className="create-line-beginning-all-inputs-module-introduction">

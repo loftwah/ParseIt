@@ -69,11 +69,11 @@ class DeleteLineIfDoesntHaveCharactersComplete extends Component {
                 <div className="delete-line-if-doesnt-have-characters-card card white">
                     <div className="delete-line-if-doesnt-have-characters-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Delete Line if it Doesn't Contains a Set of Characters</p>
+                        <p className="card-title center">Module: Delete a Line If It Doesn't Contain a Phrase</p>
                     </div>
                     <div className="row">
                         <div className="delete-line-if-doesnt-have-characters-description-complete col s12">
-                            <p>Delete all lines that contain the characters: <b>"{chars}"</b>.</p>
+                            <p>Delete all lines that contain the characters: <b>"{chars}"</b></p>
                         </div>
                     </div>
                 </div>

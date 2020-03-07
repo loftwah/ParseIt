@@ -86,11 +86,11 @@ class DeleteEndingModuleComplete extends Component {
                 <div className="delete-ending-card card white">
                     <div className="delete-ending-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <span className="card-title center">Module: Delete Last Set of Characters until End</span>
+                        <span className="card-title center">Module: Delete From Last Instance of a Phrase Until End</span>
                     </div>
                     <div className="row">
                         <div className="delete-ending-complete col s12">
-                            <p>Delete text from the last set of the characters: "{stoppingCharacters}", until the end</p>
+                            <p>Delete text from the last instance of the characters: <b>"{stoppingCharacters}"</b>, until the end</p>
                         </div>
                     </div>
                 </div>

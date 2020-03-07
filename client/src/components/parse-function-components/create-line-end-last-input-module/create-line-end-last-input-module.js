@@ -153,7 +153,7 @@ class CreateLineEndLastInput extends Component {
                 <div className="create-line-end-last-input-card card white">
                     <div className="create-line-end-last-input-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Create a line at the end of the last input</p>
+                        <p className="card-title center">Module: Create a Line at the End of the Last Input</p>
                     </div>
                     <div className="row">
                         <form action="#" className="form-add-text-to-end-last-line-multiple col s12">

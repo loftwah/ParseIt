@@ -1569,12 +1569,12 @@ class ParseFunctionContainer extends Component {
                             data-target='delete-module-dropdown'
                             disabled={moduleActiveToggle}>Delete Modules</a>
                         <ul id='delete-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBeginningModule}>Delete beginning until a set of characters</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteEndingModule}>Delete everything from the end to a set of characters</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteSpecifiedLinesModule}>Delete Specified Lines</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBetweenCharactersModule}>Delete everything between two sets of characters</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteLineIfHasCharsModule}>Delete a line if it contains a set of characters</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteLineIfDoesntHaveCharsModule}>Delete a line if it doesn't contain a set of characters</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBeginningModule}>Delete Beginning Until a Phrase</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteEndingModule}>Delete From Last Instance of a Phrase Until End</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteSpecifiedLinesModule}>Delete Certain Lines</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteBetweenCharactersModule}>Delete Everything Between Two Phrases</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteLineIfHasCharsModule}>Delete a Line If It Contains a Phrase</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateDeleteLineIfDoesntHaveCharsModule}>Delete a Line If It Doesn't Contain a Phrase</button></li>
                         </ul>
                     </div>
 
@@ -1584,10 +1584,10 @@ class ParseFunctionContainer extends Component {
                             data-target='create-module-dropdown'
                             disabled={moduleActiveToggle}>Create Modules</a>
                         <ul id='create-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineBeginningAllInputsModule}>Create a line at the beginning of all inputs</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineBeginningFirstInputModule}>Create a line at the beginning of the first input</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineEndAllInputsModule}>Create a line at the end of all inputs</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineEndLastInputModule}>Create a line at the end of the last input</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineBeginningAllInputsModule}>Create a Line at the Beginning of All Inputs</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineBeginningFirstInputModule}>Create a Line at the Beginning of the First Input</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineEndAllInputsModule}>Create a Line at the End of All Inputs</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreate_CreateLineEndLastInputModule}>Create a Line at the End of the Last Input</button></li>
                         </ul>
                     </div>
 
@@ -1597,8 +1597,8 @@ class ParseFunctionContainer extends Component {
                             data-target='multi-line-module-dropdown'
                             disabled={moduleActiveToggle}>Multi-Line Modules</a>
                         <ul id='multi-line-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitMultipleBeforeWordModule}>Split a Multiple Into Two Lines if a Word Contains a Phrase: Before Word</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitMultipleAfterWordModule}>Split a Multiple Into Two Lines if a Word Contains a Phrase: After Word</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitMultipleBeforeWordModule}>Split a Multiple Into Two Lines If a Word Contains a Phrase: Before Word</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitMultipleAfterWordModule}>Split a Multiple Into Two Lines If a Word Contains a Phrase: After Word</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateMultipleAddTextToBeginningModule}>Add Text to the Beginning of a Multiple</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateMultipleDeleteLineModule}>Delete a Line Multiple</button></li>
                         </ul>
@@ -1610,8 +1610,8 @@ class ParseFunctionContainer extends Component {
                             data-target='split-line-module-dropdown'
                             disabled={moduleActiveToggle}>Split Line Modules</a>
                         <ul id='split-line-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesBeforeWordModule}>Split Into Two Lines if a Word Contains a Phrase: Before Word</button></li>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesAfterWordModule}>Split Into Two Lines if a Word Contains a Phrase: After Word</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesBeforeWordModule}>Split Into Two Lines If a Word Contains a Phrase: Before Word</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSplitLinesAfterWordModule}>Split Into Two Lines If a Word Contains a Phrase: After Word</button></li>
                         </ul>
                     </div>
 
@@ -1633,7 +1633,7 @@ class ParseFunctionContainer extends Component {
                             data-target='save-module-dropdown'
                             disabled={moduleActiveToggle}>Save Text Modules</a>
                         <ul id='save-module-dropdown' className='dropdown-content'>
-                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSavedTextModule}>Save Text and then Get Original Text</button></li>
+                            <li><button href="!#" className="dropdown-button" onClick={this.handleCreateSavedTextModule}>Save Text and Get Original Text</button></li>
                         </ul>
                     </div>
 

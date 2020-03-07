@@ -16,7 +16,7 @@ div.delete-ending-user-input.insert {
 }
 
 div.delete-ending-complete {
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 
 @media only screen and (max-width: 450px) {

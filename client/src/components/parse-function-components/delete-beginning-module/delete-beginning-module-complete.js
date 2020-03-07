@@ -82,11 +82,11 @@ class DeleteBeginningModuleComplete extends Component {
                 <div className="delete-beginning-card card white">
                     <div className="delete-beginning-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <span className="card-title center">Module: Delete Beginning Until Set of Characters</span>
+                        <span className="card-title center">Module: Delete Beginning Until a Phrase</span>
                     </div>
                     <div className="row">
                         <div className="delete-beginning-complete col s12">
-                            <p>Delete beginning until the characters: "{stoppingCharacters}"</p>
+                            <p>Delete beginning until the characters: <b>"{stoppingCharacters}"</b></p>
                         </div>
                     </div>
                 </div>

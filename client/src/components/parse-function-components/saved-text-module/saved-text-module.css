@@ -16,7 +16,7 @@ div.saved-text-user-input.insert {
 }
 
 div.saved-text-name-complete {
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 
 @media only screen and (max-width: 450px) {

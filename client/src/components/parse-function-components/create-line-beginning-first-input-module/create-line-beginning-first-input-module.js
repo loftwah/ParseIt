@@ -153,7 +153,7 @@ class CreateLineBeginningFirstInput extends Component {
                 <div className="create-line-beginning-first-input-card card white">
                     <div className="create-line-beginning-first-input-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Create a line at the beginning of the first input</p>
+                        <p className="card-title center">Module: Create a Line at the Beginning of the First Input</p>
                     </div>
                     <div className="row">
                         <form action="#" className="form-add-text-to-beginning-line-multiple col s12">

@@ -179,7 +179,7 @@ class DeleteBeginningModule extends Component {
                 <div className="delete-beginning-card card white">
                     <div className="delete-beginning-card-content card-content black-character">
                         <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
-                        <span className="card-title center">Module: Delete Beginning Until Set of Characters</span>
+                        <span className="card-title center">Module: Delete Beginning Until a Phrase</span>
                     </div>
                     <div className="row">
                         <div className="delete-beginning-delete col s12">

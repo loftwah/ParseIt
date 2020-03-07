@@ -58,12 +58,12 @@ class CreateLineEndAllInputsComplete extends Component {
                 <div className="create-line-end-all-inputs-card card white">
                     <div className="create-line-end-all-inputs-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <p className="card-title center">Module: Create a line at the end of all inputs</p>
+                        <p className="card-title center">Module: Create a Line at the End of All Inputs</p>
                     </div>
                     <div className="row">
                         <div className="create-line-end-all-inputs-description-complete col s12">
                             <div className="user-input-chars">
-                                <p>For every input, a new line will be created at the end with the following characters: <b>"{charsToAdd}"</b>.</p>
+                                <p>For every input, a new line will be created at the end with the following characters: <b>"{charsToAdd}"</b></p>
                             </div>
                         </div>
                     </div>

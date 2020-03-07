@@ -66,7 +66,7 @@ class RemoveBlankLinesComplete extends Component {
                     </div>
                     <div className="row">
                         <div className="remove-blank-lines-description-complete col s12">
-                            <p>This module will remove all blank lines.</p>
+                            <p>Remove all blank lines.</p>
                             <p>Lines only containing spaces will be removed as well.</p>
                         </div>
                     </div>

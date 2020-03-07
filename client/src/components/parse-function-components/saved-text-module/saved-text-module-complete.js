@@ -53,10 +53,10 @@ class SavedTextModuleComplete extends Component {
                     </div>
                     <div className="row">
                         <div className="saved-text-delete col s12">
-                            <p>This module will combine all of your current "Inputs" into a "Saved Text" input.</p>
-                            <p>This module will also update the "Inputs" to the original input, if you wish to keep parsing.</p>
+                            <p>Combine all "Inputs" into a "Saved Text" input.</p>
+                            <p>Update the "Inputs" to the original input.</p>
                             <br />
-                            <div className="saved-text-name-complete col s12">
+                            <div className="saved-text-name-complete">
                                 <p>Saved Text Name: "{savedTextName}"</p>
                             </div>
                         </div>

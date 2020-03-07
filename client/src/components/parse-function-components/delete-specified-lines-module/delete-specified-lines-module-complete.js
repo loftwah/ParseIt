@@ -196,7 +196,7 @@ class DeleteBeginningModuleComplete extends Component {
                 <div className="delete-specified-lines-card card white">
                     <div className="delete-specified-lines-card-content card-content black-character">
                         <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
-                        <span className="card-title center">Module: Delete Specified Lines</span>
+                        <span className="card-title center">Module: Delete Certain Lines</span>
                     </div>
                     <div className="row">
                         <div className="delete-specified-lines-complete col s12">

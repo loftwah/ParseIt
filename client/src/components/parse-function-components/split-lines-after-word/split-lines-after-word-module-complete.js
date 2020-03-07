@@ -131,7 +131,7 @@ class SplitLinesAfterWordComplete extends Component {
                     </div>
                     <div className="row">
                         <div className="split-lines-after-word-description-complete col s12">
-                            <p>Split into two lines if a word contains the characters: "{charToSplit}"</p>
+                            <p>Split into two lines if a word contains the characters: <b>"{charToSplit}"</b></p>
                             <p>The line will be split *after* the word that contains a phrase.</p>
                             <p>Multiple phrase instances yields multiple splits.</p>
                         </div>
