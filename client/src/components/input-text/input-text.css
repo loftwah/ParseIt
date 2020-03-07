@@ -10,7 +10,7 @@ button.input-pdf-text-select {
 
 select.textbox-number-dropdown-menu {
     border-color: rgb(197, 197, 197);
-    margin-bottom: 5px
+    margin-bottom: 5px;
 }
 
 i.text-field-img{
@@ -59,13 +59,15 @@ button:enabled.input-pdf-text-select{
 }
 
 div.textbox-title-input input.input{
-   margin-top:10px;
-   margin-bottom:15px;
-   border: 2px solid lightgray;
-   padding-left: 5px;
-   box-shadow: none;
-   border-radius: 5px;
-   transition-duration: 200ms
+    margin-top:10px;
+    margin-bottom:15px;
+    width : 100%; 
+    box-sizing: border-box;
+    border: 2px solid lightgray;
+    padding-left: 5px;
+    box-shadow: none;
+    border-radius: 5px;
+    transition-duration: 200ms
 }
 
 div.textbox-title-input input.input:focus{

@@ -24,7 +24,39 @@ i.module-delete-button {
   float:right;
 }
 
+i.module-delete-button-visible {
+  font-size: 2.5rem;
+  transition: 0.2s;
+  opacity: 0.54;
+  float:right;
+  cursor: pointer;
+}
+
+i.module-delete-button-visible {
+  font-size: 2.5rem;
+  transition: 0.2s;
+  opacity: 0.54;
+  float:right;
+  cursor: pointer;
+  visibility: visible;
+}
+
+i.module-delete-button-hidden {
+  font-size: 2.5rem;
+  opacity: 0;
+  transition: 0.4s;
+  float:right;
+  visibility: hidden;
+}
+
 i.module-delete-button:hover{
+  opacity: 1;
+  cursor: pointer;
+  background: rgb(240, 240, 240);
+  border-radius: .25rem;
+}
+
+i.module-delete-button-visible:hover{
   opacity: 1;
   cursor: pointer;
   background: rgb(240, 240, 240);
@@ -33,4 +65,8 @@ i.module-delete-button:hover{
 
 p.error-msg {
   color: red;
+}
+
+div.App {
+  background: rgb(252, 252, 252)
 }

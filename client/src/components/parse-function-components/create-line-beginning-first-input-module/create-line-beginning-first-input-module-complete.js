@@ -52,12 +52,14 @@ class CreateLineBeginningFirstInputComplete extends Component {
 
     render() {
         const { charsToAdd } = this.props;
+        const { moduleActiveToggle } = this.props;
+        const deleteBtnVisible = moduleActiveToggle === true ? "hidden" : "visible";
 
         return (
             <div className="create-line-beginning-first-input-function">
                 <div className="create-line-beginning-first-input-card card white">
                     <div className="create-line-beginning-first-input-card-content card-content black-character">
-                        <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
+                        <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
                         <p className="card-title center">Module: Create a line at the beginning of all inputs</p>
                     </div>
                     <div className="row">
@@ -78,6 +80,7 @@ const mapStateToProps = (state) => {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
         previewToggle: state.textRed.previewToggle,
+        moduleActiveToggle: state.textRed.moduleActiveToggle,
         deletionsPreview: state.textRed.deletionsPreview,
         additionsPreview: state.textRed.additionsPreview,
         savedText: state.textRed.savedText

@@ -70,8 +70,8 @@ const initState = {
     // outputText: [{ inputContainer: 0, text: '', name: "Textbox 1" }, { inputContainer: 1, text: '', name: "Textbox 2" }],
 
     // Initial state: Production
-    // inputText: [],
-    // outputText: [],
+    inputText: [],
+    outputText: [],
     savedText: [],
     codeText: '',
     previewToggle: false,

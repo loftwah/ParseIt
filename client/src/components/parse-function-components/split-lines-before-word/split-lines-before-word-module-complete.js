@@ -129,11 +129,14 @@ class SplitLinesBeforeWordComplete extends Component {
 
     render() {
         const { charToSplit } = this.props;
+        const { moduleActiveToggle } = this.props;
+        const deleteBtnVisible = moduleActiveToggle === true ? "hidden" : "visible";
+
         return (
             <div className="split-lines-before-word-function">
                 <div className="split-lines-before-word-card card white">
                     <div className="split-lines-before-word-card-content card-content black-character">
-                        <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
+                        <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
                         <p className="card-title center">Module: Split Into Two Lines if a Word Contains a Phrase:</p>
                         <p className="card-title center">Before Word</p>
                     </div>
@@ -155,6 +158,7 @@ const mapStateToProps = (state) => {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
         previewToggle: state.textRed.previewToggle,
+        moduleActiveToggle: state.textRed.moduleActiveToggle,
         deletionsPreview: state.textRed.deletionsPreview,
         additionsPreview: state.textRed.additionsPreview,
         savedText: state.textRed.savedText

@@ -100,12 +100,14 @@ class MultipleAddTextToBeginningComplete extends Component {
 
     render() {
         const { lineNumBegin, lineMultiple, charToAdd } = this.props;
+        const { moduleActiveToggle } = this.props;
+        const deleteBtnVisible = moduleActiveToggle === true ? "hidden" : "visible";
 
         return (
             <div className="multiple-add-text-to-beginning-function">
                 <div className="multiple-add-text-to-beginning-card card white">
                     <div className="multiple-add-text-to-beginning-card-content card-content black-character">
-                        <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
+                    <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
                         <p className="card-title center">Module: Add Text to the Beginning of a Multiple</p>
                     </div>
                     <div className="row">
@@ -124,6 +126,7 @@ const mapStateToProps = (state) => {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
         previewToggle: state.textRed.previewToggle,
+        moduleActiveToggle: state.textRed.moduleActiveToggle,
         deletionsPreview: state.textRed.deletionsPreview,
         additionsPreview: state.textRed.additionsPreview,
         savedText: state.textRed.savedText

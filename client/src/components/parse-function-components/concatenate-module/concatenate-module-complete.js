@@ -41,11 +41,14 @@ class ConcatenateModuleComplete extends Component {
     }
 
     render() {
+        const { moduleActiveToggle } = this.props;
+        const deleteBtnVisible = moduleActiveToggle === true ? "hidden" : "visible";
+
         return (
             <div className="concatenate-function">
                 <div className="concatenate-card card white">
                     <div className="concatenate-card-content card-content black-character">
-                        <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
+                        <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
                         <span className="card-title center">Module: Concatenate On One Line</span>
                     </div>
                     <div className="row">
@@ -64,6 +67,7 @@ const mapStateToProps = (state) => {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
         previewToggle: state.textRed.previewToggle,
+        moduleActiveToggle: state.textRed.moduleActiveToggle,
         deletionsPreview: state.textRed.deletionsPreview,
         additionsPreview: state.textRed.additionsPreview,
         savedText: state.textRed.savedText

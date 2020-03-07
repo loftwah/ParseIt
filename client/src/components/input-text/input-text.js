@@ -14,7 +14,9 @@ class InputText extends Component {
             togglePDF: false,
             textboxNumber: 2, // Development: 2, Production: 0
             disableTextBtn: true,
-            dsiablePDFbtn: false,
+            disablePDFbtn: false,
+            // localInputText: [], // Production
+            localInputText: [{ inputContainer: 0, text: 'hello  world, inputContainer 0\n good   stuff right      now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" }, { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }] // Development
         };
         this.handleTextareaChange = this.handleTextareaChange.bind(this);
     }
@@ -29,12 +31,12 @@ class InputText extends Component {
 
     // don't need async at the moment
     async handleTextareaChange(e) {
-        const { inputText } = this.props;
+        const { localInputText } = this.state;
 
         let textboxNum = Number(e.target.className.replace('input-text ', ''));
-        let name = inputText[textboxNum].name;
+        let name = localInputText[textboxNum].name;
 
-        // Create a new inputText state
+        // Create a new localInputText state
 
         // create a new container
         const newContainer = {
@@ -45,31 +47,37 @@ class InputText extends Component {
 
         // find the inputContainer that is being changed and replace it with a new container
         const newInputContainerList = [];
-        for (let i = 0; i < inputText.length; i++) {
-            if (inputText[i].inputContainer !== newContainer.inputContainer) {
-                newInputContainerList.push(inputText[i]);
+        for (let i = 0; i < localInputText.length; i++) {
+            if (localInputText[i].inputContainer !== newContainer.inputContainer) {
+                newInputContainerList.push(localInputText[i]);
             } else {
                 newInputContainerList.push(newContainer);
             }
         }
-        this.props.updateInputText(newInputContainerList);
-        this.props.updateOutputText(newInputContainerList);
+        this.setState({
+            localInputText: newInputContainerList
+        })
     }
 
     handleInputSubmit = e => {
         e.preventDefault();
 
         // This Submit will also submit anything in our ParseIt code reducer (in case we want to update the text)
-        const { initializeCodeToggle } = this.props;
+        const { initializeCodeToggle, updateInputText, updateOutputText, codeText } = this.props;
+        const { localInputText } = this.state;
 
-        initializeCodeToggle(true);
 
-        // update input text
-        // update output text
+        updateInputText(localInputText);
+        updateOutputText(localInputText);
+
+        // If there is no codeText, don't initialize code
+        if (codeText !== "") {
+            initializeCodeToggle(true);
+        }
     }
 
     handleTextboxTitle = e => {
-        const { inputText } = this.props;
+        const { localInputText } = this.state;
 
         // className structure: "input #"
         const inputContainer = Number(e.target.className.slice(6));
@@ -78,36 +86,40 @@ class InputText extends Component {
         // update the container
         const updateContainer = {
             inputContainer: inputContainer,
-            text: inputText[inputContainer].text,
+            text: localInputText[inputContainer].text,
             name: name
         };
 
         // find the inputContainer that is being changed and replace it with a new container
         const newInputContainerList = [];
-        for (let i = 0; i < inputText.length; i++) {
-            if (inputText[i].inputContainer !== updateContainer.inputContainer) {
-                newInputContainerList.push(inputText[i]);
+        for (let i = 0; i < localInputText.length; i++) {
+            if (localInputText[i].inputContainer !== updateContainer.inputContainer) {
+                newInputContainerList.push(localInputText[i]);
             } else {
                 newInputContainerList.push(updateContainer);
             }
         }
-        this.props.updateInputText(newInputContainerList);
-        this.props.updateOutputText(newInputContainerList);
+        this.setState({
+            localInputText: newInputContainerList
+        })
     }
 
     handleToggleTextboxOn = e => {
         this.setState({
             toggleTextbox: true,
             togglePDF: false,
+            textboxNumber: 0,
             disableTextBtn: true,
-            dsiablePDFbtn: false
+            disablePDFbtn: false,
+            localInputText: []
         })
 
         // Clear everything
         this.props.updateInputText([]);
         this.props.updateOutputText([]);
         this.props.updateCodeText('');
-        this.props.updateSavedTextContainerDisplay("combine-saves")
+        this.props.updateSavedTextContainerDisplay("combine-saves");
+        this.props.updateContainerDisplay(0);
         this.props.updateSavedText([]);
         this.props.toggleOutputTextOn();
         this.props.toggleSavedTextOff();
@@ -119,14 +131,16 @@ class InputText extends Component {
             togglePDF: true,
             textboxNumber: 0,
             disableTextBtn: false,
-            dsiablePDFbtn: true
+            disablePDFbtn: true,
+            localInputText: []
         })
 
         // Clear everything
         this.props.updateInputText([]);
         this.props.updateOutputText([]);
         this.props.updateCodeText('');
-        this.props.updateSavedTextContainerDisplay("combine-saves")
+        this.props.updateSavedTextContainerDisplay("combine-saves");
+        this.props.updateContainerDisplay(0);
         this.props.updateSavedText([]);
         this.props.toggleOutputTextOn()
         this.props.toggleSavedTextOff();
@@ -135,13 +149,17 @@ class InputText extends Component {
     handleTextboxNumChange = e => {
         // input display will default to 0
 
-        const { updateContainerDisplay, updateInputText, updateOutputText } = this.props;
+        const { updateContainerDisplay, updateInputText, updateOutputText, updateCodeText } = this.props;
         updateContainerDisplay(0);
 
         const numTextboxes = Number(e.target.value.split(' ')[0]);
         this.setState({
             textboxNumber: numTextboxes
         })
+
+        // if num textboxes is 0, delete the codeText
+        // Why? 0 hides ParseIt code, when it reappears, it makes sense for everything to be deleted
+        updateCodeText("");
 
         // create initial inputText
         let initInputText = [];
@@ -152,12 +170,13 @@ class InputText extends Component {
                 name: `Textbox ${i + 1}` // initialize the textboxes indexing at 0 for the user
             })
         }
-        updateInputText(initInputText);
-        updateOutputText(initInputText);
+        this.setState({
+            localInputText: initInputText
+        })
     }
 
     render() {
-        let { toggleTextbox, togglePDF, textboxNumber, disableTextBtn, dsiablePDFbtn } = this.state;
+        let { toggleTextbox, togglePDF, textboxNumber, disableTextBtn, disablePDFbtn, localInputText } = this.state;
         const { inputText } = this.props;
 
         // Dev: Instantly view the PDF input
@@ -166,7 +185,7 @@ class InputText extends Component {
 
         let textboxNumberSelect = [];
         const minNumber = 1;
-        const maxNumber = 5;
+        const maxNumber = 25;
         for (let i = minNumber; i <= maxNumber; i++) {
             if (i === 1) {
                 textboxNumberSelect.push(`${i} Textbox`)
@@ -204,7 +223,7 @@ class InputText extends Component {
                         <textarea className={`input-text ${i}`}
                             onChange={this.handleTextareaChange}
                             disabled={false}
-                            value={inputText[i].text}>
+                            value={localInputText[i].text}>
                         </textarea>
                     </form>
                 </div>
@@ -216,7 +235,7 @@ class InputText extends Component {
         const textBtnCanToggle = inputText.length === 0 ? this.handleToggleTextboxOn : undefined;
         const PDFbtnCanToggle = inputText.length === 0 ? this.handleTogglePDFOn : undefined;
         const canTriggerModal = inputText.length === 0 ? 'no-trigger' : 'modal-trigger';
-        const titleScreen = toggleTextbox === true && togglePDF === false ? 'Parse: Plain Text' : 'Parse: PDF Text';
+        const titleScreen = toggleTextbox === true && togglePDF === false ? 'Parse: Plain Text' : 'Parse: PDF';
 
         return (
             <div className="input-text-container">
@@ -249,7 +268,7 @@ class InputText extends Component {
                         className={`waves-effect waves-light btn ${canTriggerModal} #42a5f5 indigo darken-1 submit-form-button input-pdf-text-select`}
                         onClick={PDFbtnCanToggle}
                         href="#modal-pdf-id"
-                        disabled={dsiablePDFbtn}>
+                        disabled={disablePDFbtn}>
                         <i className="material-icons pdf-field-img">picture_as_pdf</i>
                         PDF
                     </button>
@@ -272,7 +291,9 @@ class InputText extends Component {
                     <div className="textbox-input">
 
                         <select className="browser-default textbox-number-dropdown-menu"
-                            onChange={this.handleTextboxNumChange} defaultValue={1}>
+                            onChange={this.handleTextboxNumChange}
+                            defaultValue={1}
+                        >
                             <option value=''>-- Choose Number of Textboxes --</option>
                             {sizeList}
                         </select>

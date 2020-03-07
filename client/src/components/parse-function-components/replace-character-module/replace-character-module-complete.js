@@ -44,12 +44,14 @@ class ReplaceCharacterModuleComplete extends Component {
 
     render() {
         const { insertCharacter, replaceCharacter } = this.state;
-        const { id } = this.props;
+        const { id, moduleActiveToggle } = this.props;
+        const deleteBtnVisible = moduleActiveToggle === true ? "hidden" : "visible";
+
         return (
             <div className="replace-character-function">
                 <div className="replace-character-card card white">
                     <div className="replace-character-card-content card-content black-character">
-                        <i className="module-delete-button material-icons" onClick={this.handleDelete}>delete</i>
+                        <i className={`module-delete-button-${deleteBtnVisible} material-icons `} onClick={this.handleDelete}>delete</i>
                         <span className="card-title center">Module: Replace Characters</span>
                     </div>
                     <div className="row">
@@ -69,6 +71,7 @@ const mapStateToProps = (state) => {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
         previewToggle: state.textRed.previewToggle,
+        moduleActiveToggle: state.textRed.moduleActiveToggle,
         deletionsPreview: state.textRed.deletionsPreview,
         additionsPreview: state.textRed.additionsPreview
     };
