@@ -4,6 +4,8 @@ export const updateInputText = text.updateInputText;
 export const updateOutputText = text.updateOutputText;
 export const updateSavedText = text.updateSavedText;
 
+export const initializeCodeToggle = text.initializeCodeToggle;
+
 export const updateCodeText = text.updateCodeText;
 
 export const updateContainerDisplay = text.updateContainerDisplay;

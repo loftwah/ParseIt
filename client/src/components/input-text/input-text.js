@@ -32,7 +32,7 @@ class InputText extends Component {
         const { inputText } = this.props;
 
         let textboxNum = Number(e.target.className.replace('input-text ', ''));
-        let name = "Textbox " + (textboxNum + 1); // The user would rather index at 1
+        let name = inputText[textboxNum].name;
 
         // Create a new inputText state
 
@@ -58,9 +58,41 @@ class InputText extends Component {
 
     handleInputSubmit = e => {
         e.preventDefault();
-        // Future: lock the textarea?
-        // Why? If we start writing here, it will most likely overwrite the parsing modules
-        // Therefore: we can have this button load up the parsing modules
+
+        // This Submit will also submit anything in our ParseIt code reducer (in case we want to update the text)
+        const { initializeCodeToggle } = this.props;
+
+        initializeCodeToggle(true);
+
+        // update input text
+        // update output text
+    }
+
+    handleTextboxTitle = e => {
+        const { inputText } = this.props;
+
+        // className structure: "input #"
+        const inputContainer = Number(e.target.className.slice(6));
+        const name = e.target.value;
+
+        // update the container
+        const updateContainer = {
+            inputContainer: inputContainer,
+            text: inputText[inputContainer].text,
+            name: name
+        };
+
+        // find the inputContainer that is being changed and replace it with a new container
+        const newInputContainerList = [];
+        for (let i = 0; i < inputText.length; i++) {
+            if (inputText[i].inputContainer !== updateContainer.inputContainer) {
+                newInputContainerList.push(inputText[i]);
+            } else {
+                newInputContainerList.push(updateContainer);
+            }
+        }
+        this.props.updateInputText(newInputContainerList);
+        this.props.updateOutputText(newInputContainerList);
     }
 
     handleToggleTextboxOn = e => {
@@ -157,6 +189,17 @@ class InputText extends Component {
         for (let i = 0; i < textboxNumber; i++) {
             textBoxList.push(
                 <div className={`textbox-${i}`} key={i}>
+                    <div className={`textbox-title-input ${i}`}>
+                        <input
+                            className={`input ${i}`}
+                            type="text"
+                            id={`textbox-title-input ${i}`}
+                            onChange={this.handleTextboxTitle}
+                            placeholder={`Title: Textbox ${i + 1}`}
+                        /* value={replaceCharacter} */
+                        />
+                        <label htmlFor={`textbox-title-input ${i}`}></label>
+                    </div>
                     <form onSubmit={this.handleSubmit}>
                         <textarea className={`input-text ${i}`}
                             onChange={this.handleTextareaChange}
@@ -235,7 +278,7 @@ class InputText extends Component {
                         </select>
                         {[...textBoxList]}
                         <button
-                            className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-form-button"
+                            className="waves-effect waves-light btn #42a5f5 blue lighten-1 parse-text submit-form-button"
                             onClick={this.handleInputSubmit}>
                             <i className="material-icons right">send</i>
                             Parse The Above Text</button>
@@ -255,6 +298,7 @@ const mapStateToProps = (state) => {
     return {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
+        codeText: state.textRed.codeText,
     };
 };
 

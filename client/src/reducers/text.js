@@ -2,6 +2,7 @@ import {
     UPDATE_INPUT_TEXT,
     UPDATE_OUTPUT_TEXT,
     UPDATE_SAVED_TEXT,
+    INITIALIZE_CODE_TOGGLE,
     UPDATE_CODE_TEXT,
     UPDATE_CONTAINER_DISPLAY,
     UPDATE_SAVED_TEXT_CONTAINER_DISPLAY,
@@ -63,7 +64,7 @@ const initState = {
 
     ],
     */
-    
+
     // Development: 2 Empty textboxes
     // inputText: [{ inputContainer: 0, text: '', name: "Textbox 1" }, { inputContainer: 1, text: '', name: "Textbox 2" }],
     // outputText: [{ inputContainer: 0, text: '', name: "Textbox 1" }, { inputContainer: 1, text: '', name: "Textbox 2" }],
@@ -77,6 +78,7 @@ const initState = {
     moduleActiveToggle: false,
     toggleOutputText: true,
     toggleSavedText: false,
+    initializeCode: false,
     deletionsPreview: '',
     additionsPreview: '',
     inputContainerDisplay: 0, // back to 0 when complete - controls the radio button for "Display Input"
@@ -95,14 +97,17 @@ function textReducer(state = initState, action) {
         case UPDATE_SAVED_TEXT:
             // console.log('[TextReducer] got a UPDATE_SAVED_TEXT action');
             return { ...state, savedText: action.payload };
+        case INITIALIZE_CODE_TOGGLE:
+            // console.log('[TextReducer] got a INITIALIZE_CODE action');
+            return { ...state, initializeCode: action.payload };
         case UPDATE_CODE_TEXT:
-            // console.log('[TextReducer] got a UPDATE_OUTPUT_TEXT action');
+            // console.log('[TextReducer] got a UPDATE_CODE_TEXT action');
             return { ...state, codeText: action.payload };
         case UPDATE_CONTAINER_DISPLAY:
-            // console.log('[TextReducer] got a UPDATE_OUTPUT_TEXT action');
+            // console.log('[TextReducer] got a UPDATE_CONTAINER_DISPLAY action');
             return { ...state, inputContainerDisplay: action.payload };
         case UPDATE_SAVED_TEXT_CONTAINER_DISPLAY:
-            // console.log('[TextReducer] got a UPDATE_OUTPUT_TEXT action');
+            // console.log('[TextReducer] got a UPDATE_SAVED_TEXT_CONTAINER_DISPLAY action');
             return { ...state, savedTextContainerDisplay: action.payload };
         case TOGGLE_PREVIEW_ON:
             // console.log('[TextReducer] got a TOGGLE_PREVIEW_ON action');

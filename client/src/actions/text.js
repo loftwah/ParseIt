@@ -2,6 +2,7 @@ import {
     UPDATE_INPUT_TEXT,
     UPDATE_OUTPUT_TEXT,
     UPDATE_SAVED_TEXT,
+    INITIALIZE_CODE_TOGGLE,
     UPDATE_CODE_TEXT,
     UPDATE_CONTAINER_DISPLAY,
     UPDATE_SAVED_TEXT_CONTAINER_DISPLAY,
@@ -39,6 +40,15 @@ export const updateSavedText = data => {
     return dispatch => {
         dispatch({
             type: UPDATE_SAVED_TEXT,
+            payload: data,
+        });
+    }
+}
+
+export const initializeCodeToggle = data => {
+    return dispatch => {
+        dispatch({
+            type: INITIALIZE_CODE_TOGGLE,
             payload: data,
         });
     }
