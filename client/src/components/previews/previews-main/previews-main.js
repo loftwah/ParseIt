@@ -42,24 +42,32 @@ class PreviewsMain extends Component {
 
     render() {
         const { previewUnified, previewDeletions, previewAdditions } = this.state;
+        const onBtn = "green lighten-1";
+        const offBtn = "green darken-3";
+        const unifiedBtn = previewUnified === true ? onBtn : offBtn;
+        const deletionsBtn = previewDeletions === true ? onBtn : offBtn;
+        const additionsBtn = previewAdditions === true ? onBtn : offBtn;
         return (
             <div className="preview-main-container">
                 <div className="preview-text">
                     <div className="button-layout center">
                         <button
-                            className="waves-effect waves-light btn #42a5f5 green lighten-1 submit-form-button"
-                            onClick={this.handlePreviewUnified}
-                        >Unified
+                            className={`waves-effect waves-light btn ${unifiedBtn} submit-form-button`}
+                            onClick={this.handlePreviewUnified}>
+                            <i className="material-icons unified-img">merge_type</i>
+                            Unified
                         </button>
                         <button
-                            className="waves-effect waves-light btn #42a5f5 green lighten-1 submit-form-button"
-                            onClick={this.handlePreviewDeletions}
-                        >Deletions
+                            className={`waves-effect waves-light btn ${deletionsBtn} submit-form-button`}
+                            onClick={this.handlePreviewDeletions}>
+                            <i className="material-icons deletions-img">remove_circle_outline</i>
+                            Deletions
                         </button>
                         <button
-                            className="waves-effect waves-light btn #42a5f5 green lighten-1 submit-form-button"
-                            onClick={this.handlePreviewAdditions}
-                        >Additions
+                            className={`waves-effect waves-light btn ${additionsBtn} submit-form-button`}
+                            onClick={this.handlePreviewAdditions}>
+                            <i className="material-icons additions-img">add_circle_outline</i>
+                            Additions
                         </button>
                     </div>
                     {previewUnified === true || previewDeletions === true ? (<PreviewDeletions />) : (<div className="preview-deletion-off"></div>)}
