@@ -86,24 +86,12 @@ class ParseFunctionContainer extends Component {
         M.Dropdown.init(createDropdown, { coverTrigger: false });
     }
 
-    async componentWillUpdate(nextProps) {
-        const { modules, moduleCode } = this.state;
-        const { moduleActiveToggle, updateOutputText,
-            togglePreviewOff, toggleSavedTextOff, toggleOutputTextOn, initializeCodeToggle } = this.props;
+    async getSnapshotBeforeUpdate(prevProps, prevState) {
+        const { moduleCode } = this.state;
+        const { updateOutputText, initializeCodeToggle, initializeCode,
+            togglePreviewOff, toggleSavedTextOff, toggleOutputTextOn } = this.props;
 
-        if (nextProps.codeText === "" && modules.length !== 0 && moduleActiveToggle === false) {
-            // Handles case: when swapping between textbox/PDF options, not only do we want to delete
-            // the input/output text, we ALSO want to delete the JSX modules and module code as well
-            // codeText becomes "" inside the input-text component, which is received inside this component
-            // emptying out this component of JSX and code
-
-            // Also: we don't want to delete the module if we are exiting preview of our first module
-            // moduleActiveToggle helps us identify if we are in "edit mode" so we won't delete the first module when finished with preview
-            this.setState({
-                modules: [],
-                moduleCode: []
-            })
-        } else if (nextProps.initializeCode === true) {
+        if (initializeCode === true) {
             // A component told this component to initialize all code inside ParseIt code container
             // The "text-input" container has this power - it is used if a user wants to update their text inside the textbox
             // When a user updates their text, they probably want to fire off their code as well - this code does that for them
@@ -131,6 +119,10 @@ class ParseFunctionContainer extends Component {
             // build all modules found in the moduleCode state
             this.ouptutModulesFromModuleCodeState(moduleCode);
         }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // Works with getSnapshotBeforeUpdate
     }
 
     setStateAsync = (state) => {
