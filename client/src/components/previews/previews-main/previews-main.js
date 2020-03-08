@@ -50,21 +50,21 @@ class PreviewsMain extends Component {
         return (
             <div className="preview-main-container">
                 <div className="preview-text">
-                    <div className="button-layout center">
+                    <div className="button-layout row">
                         <button
-                            className={`waves-effect waves-light btn ${unifiedBtn} submit-form-button`}
+                            className={`waves-effect waves-light btn ${unifiedBtn} submit-form-button col s12 m3 l2 offset-l3 offset-m1`}
                             onClick={this.handlePreviewUnified}>
                             <i className="material-icons unified-img">merge_type</i>
                             Unified
                         </button>
                         <button
-                            className={`waves-effect waves-light btn ${deletionsBtn} submit-form-button`}
+                            className={`waves-effect waves-light btn ${deletionsBtn} submit-form-button col s12 m3 l2`}
                             onClick={this.handlePreviewDeletions}>
                             <i className="material-icons deletions-img">remove_circle_outline</i>
                             Deletions
                         </button>
                         <button
-                            className={`waves-effect waves-light btn ${additionsBtn} submit-form-button`}
+                            className={`waves-effect waves-light btn ${additionsBtn} submit-form-button col s12 m3 l2`}
                             onClick={this.handlePreviewAdditions}>
                             <i className="material-icons additions-img">add_circle_outline</i>
                             Additions
