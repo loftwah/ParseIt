@@ -18,18 +18,15 @@ class PreviewDeletions extends Component {
     render() {
         // may get rid of "outputText " variable?
         const { inputContainerDisplay, deletionsPreview } = this.props;
-        
 
         return (
             <div className="preview-deletions-text-container">
-                <h4 className="black-text"><b>PREVIEW MODE: DELETIONS TEXT</b></h4>
+                <h4 className="grey-text text-darken-1">Preview: Deletions</h4>
                 <div className="preview-deletions-text-box"
-                    style={{ fontFamily: 'Courier' }}> 
+                    style={{ fontFamily: 'Courier' }}>
                     <div className="preview-deletions-text">
                         {deletionsPreview[inputContainerDisplay]}
-                        {/* <p>More <span style={{background: "red"}}>input</span> hi</p>
-                        <p>More <span style={{background: "rgb(74, 255, 83)"}}>input</span> hi</p> */}
-                    </div>   
+                    </div>
                 </div>
             </div>
         );

@@ -90,7 +90,7 @@ class ParseFunctionContainer extends Component {
         const { modules, moduleCode } = this.state;
         const { moduleActiveToggle, updateOutputText,
             togglePreviewOff, toggleSavedTextOff, toggleOutputTextOn, initializeCodeToggle } = this.props;
-        
+
         if (nextProps.codeText === "" && modules.length !== 0 && moduleActiveToggle === false) {
             // Handles case: when swapping between textbox/PDF options, not only do we want to delete
             // the input/output text, we ALSO want to delete the JSX modules and module code as well
@@ -1619,7 +1619,7 @@ class ParseFunctionContainer extends Component {
                         <a className='dropdown-trigger-misc-module btn'
                             href='!#'
                             data-target='misc-module-dropdown'
-                            disabled={moduleActiveToggle}>Misc Modules</a>
+                            disabled={moduleActiveToggle}>Clean Modules</a>
                         <ul id='misc-module-dropdown' className='dropdown-content'>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateConcatenateModule}>Concatenate On One Line</button></li>
                             <li><button href="!#" className="dropdown-button" onClick={this.handleCreateRemoveBlankLinesModule}>Remove Blank Lines</button></li>

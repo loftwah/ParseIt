@@ -21,14 +21,14 @@ class PreviewAdditions extends Component {
 
         return (
             <div className="preview-additions-text-container">
-                <h4 className="black-text"><b>PREVIEW MODE: ADDITIONS TEXT</b></h4>
+                <h4 className="grey-text text-darken-1">Preview: Additions</h4>
                 <div className="preview-additions-text-box"
-                    style={{ fontFamily: 'Courier' }}> 
+                    style={{ fontFamily: 'Courier' }}>
                     <div className="preview-additions-text">
                         {additionsPreview[inputContainerDisplay]}
                         {/* <p>More <span style={{background: "red"}}>input</span> hi</p>
                         <p>More <span style={{background: "rgb(74, 255, 83)"}}>input</span> hi</p> */}
-                    </div>   
+                    </div>
                 </div>
             </div>
         );

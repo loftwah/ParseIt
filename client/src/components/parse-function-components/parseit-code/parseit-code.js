@@ -45,6 +45,7 @@ class ParseItCode extends Component {
                 <button
                     className="waves-effect waves-light btn blue lighten-1 submit-parseit-code-button"
                     onClick={this.handleSubmitCode}>
+                    <i className="material-icons left">code</i>
                     <i className="material-icons right">send</i>
                     Submit ParseIt Code</button>
             </div>

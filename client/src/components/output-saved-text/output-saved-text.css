@@ -26,6 +26,17 @@ span.line-number {
     color: rgb(163, 163, 163);
 }
 
-/* span {
-    color: rgb(74, 255, 83)
-} */
+i.line-number-visible-img{
+    vertical-align: middle;
+    margin-right:10px
+}
+
+a.toggle-line-numbers.On{
+    background: #e0e0e0;
+    color:black;
+}
+
+a.toggle-line-numbers.Off{
+    background: #616161;
+    color:white;
+}

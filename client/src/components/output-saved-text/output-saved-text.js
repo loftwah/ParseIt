@@ -8,21 +8,24 @@ class OutputSavedText extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            combinedSaves: ""
+            combinedSaves: "",
+            lineNumbersVisible: true
         }
     }
 
-    handleCombineSavesCopyToClipboard = () => {
-        const { combinedSaves } = this.state
-        const el = document.createElement('textarea');
-        el.value = combinedSaves;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
+    handleToggleLineNumbers = e => {
+        e.preventDefault();
+        const { lineNumbersVisible } = this.state;
+
+        // toggle lineNumberVisibility
+        this.setState({
+            lineNumbersVisible: !lineNumbersVisible
+        });
     }
 
     handleUserSavedText = (savedText, savedTextContainerDisplay) => {
+        const { lineNumbersVisible } = this.state;
+
         // loop through all individual containers in the chosen saved container
         let createOutput = [];
         const savedTextContainer = savedText[savedTextContainerDisplay].inputContainers;
@@ -41,12 +44,20 @@ class OutputSavedText extends Component {
                 idx = idx + 1
                 if (line === "") {
                     return (<div className="line" key={idx}>
-                        <span className="line-number">[{idx}]&#160;</span>
+                        {lineNumbersVisible === true ? (
+                            <span className="line-number">[{idx}]&#160;</span>
+                        ) : (
+                                <span className="empty"></span>
+                            )}
                         <p className="line-text">&#160;</p>
                     </div>)
                 } else {
                     return (<div className="line" key={idx}>
-                        <span className="line-number">[{idx}]&#160;</span>
+                        {lineNumbersVisible === true ? (
+                            <span className="line-number">[{idx}]&#160;</span>
+                        ) : (
+                                <span className="empty"></span>
+                            )}
                         <p className="line-text">{line}</p>
                     </div>)
                 }
@@ -64,10 +75,12 @@ class OutputSavedText extends Component {
                 </div>
             )
         })
-        return createOutput
+        return createOutput;
     }
 
     handleCombineSaves = (savedText) => {
+        const { lineNumbersVisible } = this.state;
+
         let createOutput = [];
         let combineSavesText = [];
 
@@ -92,12 +105,20 @@ class OutputSavedText extends Component {
                         globalIdx = globalIdx + 1
                         if (line === "") {
                             return (<div className="line" key={globalIdx}>
-                                <span className="line-number">[{globalIdx}]&#160;</span>
+                                {lineNumbersVisible === true ? (
+                                    <span className="line-number">[{globalIdx}]&#160;</span>
+                                ) : (
+                                        <span className="empty"></span>
+                                    )}
                                 <p className="line-text">&#160;</p>
                             </div>)
                         } else {
                             return (<div className="line" key={globalIdx}>
-                                <span className="line-number">[{globalIdx}]&#160;</span>
+                                {lineNumbersVisible === true ? (
+                                    <span className="line-number">[{globalIdx}]&#160;</span>
+                                ) : (
+                                        <span className="empty"></span>
+                                    )}
                                 <p className="line-text">{line}</p>
                             </div>)
                         }
@@ -105,19 +126,16 @@ class OutputSavedText extends Component {
                 }
             }
         }
-
-        // text that the user can copy to their clipboard
-        const copyText = combineSavesText.join('\n');
-
-        // Keeping everything similar - createOutput will not be an array, but a variable to store JSX
-        return { createOutput: [...createOutput], copyText: copyText }
+        return createOutput;
     }
 
     handleCombineInputThenSaves = (savedText) => {
+        const { lineNumbersVisible } = this.state;
+
         let createOutput = [];
         let combineSavesText = [];
 
-        let globalIdx = 0
+        let globalIdx = 0;
 
         // loop through every first input on each container
         // loop through every 2nd input on each container
@@ -137,16 +155,24 @@ class OutputSavedText extends Component {
                     outputSplitNewLine = savedTextContainer[inputIdx].text.split('\n');
 
                     createOutput.push(outputSplitNewLine.map(line => {
-                        combineSavesText.push(line)
-                        globalIdx = globalIdx + 1
+                        combineSavesText.push(line);
+                        globalIdx = globalIdx + 1;
                         if (line === "") {
                             return (<div className="line" key={globalIdx}>
-                                <span className="line-number">[{globalIdx}]&#160;</span>
+                                {lineNumbersVisible === true ? (
+                                    <span className="line-number">[{globalIdx}]&#160;</span>
+                                ) : (
+                                        <span className="empty"></span>
+                                    )}
                                 <p className="line-text">&#160;</p>
                             </div>)
                         } else {
                             return (<div className="line" key={globalIdx}>
-                                <span className="line-number">[{globalIdx}]&#160;</span>
+                                {lineNumbersVisible === true ? (
+                                    <span className="line-number">[{globalIdx}]&#160;</span>
+                                ) : (
+                                        <span className="empty"></span>
+                                    )}
                                 <p className="line-text">{line}</p>
                             </div>)
                         }
@@ -156,18 +182,14 @@ class OutputSavedText extends Component {
             }
         }
 
-        // text that the user can copy to their clipboard
-        const copyText = combineSavesText.join('\n');
-
-        // Keeping everything similar - createOutput will not be an array, but a variable to store JSX
-        return { createOutput: [...createOutput], copyText: copyText }
+        return createOutput;
     }
 
     render() {
         const { savedText, savedTextContainerDisplay } = this.props;
+        const { lineNumbersVisible } = this.state;
 
         let createOutput;
-        let copyText;
         let savedTextName;
 
         // If the saved text to display is a number - we are calling for a particular "save text" the user has done
@@ -176,15 +198,15 @@ class OutputSavedText extends Component {
             savedTextName = savedText[savedTextContainerDisplay].name
 
         } else if (savedTextContainerDisplay === "combine-saves") {
-            let combinedSavesOutput = this.handleCombineSaves(savedText)
-            createOutput = combinedSavesOutput.createOutput
-            copyText = combinedSavesOutput.copyText
+            createOutput = this.handleCombineSaves(savedText);
 
         } else if (savedTextContainerDisplay === "combine-input-then-saves") {
-            let combinedInputThenSavesOutput = this.handleCombineInputThenSaves(savedText)
-            createOutput = combinedInputThenSavesOutput.createOutput
-            copyText = combinedInputThenSavesOutput.copyText
+            createOutput = this.handleCombineInputThenSaves(savedText);
         }
+
+        // Button functionality
+        const buttonText = lineNumbersVisible === true ? "On" : "Off";
+        const iconImg = lineNumbersVisible === true ? "visibility" : "visibility_off"
 
         return (
             // Display all possible inputContainers
@@ -194,6 +216,12 @@ class OutputSavedText extends Component {
                     <div className="display-user-saved-text">
                         <h4 className="grey-text text-darken-1">Saved Text: {savedTextName}</h4>
                         {createOutput}
+                        <br />
+                        <a className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
+                            onClick={this.handleToggleLineNumbers}>
+                            <i className="material-icons line-number-visible-img">{iconImg}</i>
+                            Line Numbers Visible: {buttonText}
+                        </a>
                     </div>) : (
                         <div className="display-no-user-saved-text"></div>
                     )}
@@ -204,22 +232,28 @@ class OutputSavedText extends Component {
                         <div className="output-saved-text">
                             {createOutput}
                         </div>
-
-                        <button
-                            className="waves-effect waves-light btn #42a5f5 blue lighten-1"
-                            onClick={() => { navigator.clipboard.writeText(copyText) }}
-                        >Copy Text</button>
-
+                        <br />
+                        <a className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
+                            onClick={this.handleToggleLineNumbers}>
+                            <i className="material-icons line-number-visible-img">{iconImg}</i>
+                            Line Numbers Visible: {buttonText}
+                        </a>
                     </div>) : (
                         <div className="display-no-combined-saves"></div>
                     )}
 
                 {savedTextContainerDisplay === "combine-input-then-saves" ? (
                     <div className="display-combine-input-then-saves">
-                        <h4 className="grey-text text-darken-1">Combined by Input, And Then Combined Saves</h4>
+                        <h4 className="grey-text text-darken-1">Combined by Input, and Then Combined Saves</h4>
                         <div className="output-saved-text">
                             {createOutput}
                         </div>
+                        <br />
+                        <a className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
+                            onClick={this.handleToggleLineNumbers}>
+                            <i className="material-icons line-number-visible-img">{iconImg}</i>
+                            Line Numbers Visible: {buttonText}
+                        </a>
                     </div>) : (
                         <div className="display-no-combine-input-then-saves"></div>
                     )}

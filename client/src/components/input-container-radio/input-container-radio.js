@@ -107,7 +107,7 @@ class InputContainerRadio extends Component {
                                 <input name="input-container-group"
                                     type="radio"
                                     defaultChecked={false}
-                                    onChange={this.handleRadioButtonSavedDisplayOnChange}
+                                    onClick={this.handleRadioButtonSavedDisplayOnChange}
                                     className={`saved-text-${idx}`}
                                     value={key} />
                                 <span>{savedText[idx].name}</span>
@@ -121,7 +121,7 @@ class InputContainerRadio extends Component {
                 <div className="saved-text-functions" key="saved-text-functions">
                     <p>
                         <label>
-                            <input name="input-container-group" type="radio" onChange={this.handleRadioButtonSavedDisplayOnChange}
+                            <input name="input-container-group" type="radio" onClick={this.handleRadioButtonSavedDisplayOnChange}
                                 className='combine-saves'
                                 value={"some key"} />
                             <span>Combined Saves</span>
@@ -129,10 +129,10 @@ class InputContainerRadio extends Component {
                     </p>
                     <p>
                         <label>
-                            <input name="input-container-group" type="radio" onChange={this.handleRadioButtonSavedDisplayOnChange}
+                            <input name="input-container-group" type="radio" onClick={this.handleRadioButtonSavedDisplayOnChange}
                                 className='combine-input-then-saves'
                                 value={"some key"} />
-                            <span>Combined by Input, And Then Combined Saves</span>
+                            <span>Combined by Input, and Then Combined Saves</span>
                         </label>
                     </p>
                 </div>
@@ -151,7 +151,6 @@ class InputContainerRadio extends Component {
             // Display all possible inputContainers
             <div className="input-text-container">
                 <br />
-
                 <div className="toggle-container">
                     <div className="row toggle-container card-panel white">
 

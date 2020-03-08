@@ -4,7 +4,8 @@ ul.dropdown-content{
 
 div.module-dropdown-list.row{
     padding-left: 0px !important;
-    padding-right: 10px
+    padding-right: 10px;
+    margin-bottom: 0px
 }
 
 div.module-dropdown a{

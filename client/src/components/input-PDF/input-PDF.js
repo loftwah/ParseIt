@@ -50,7 +50,7 @@ class InputPDF extends Component {
     }
     fileUploadHandler = e => {
         const { selectedFiles, selectedFileNames } = this.state;
-        const { updateInputText, updateOutputText } = this.props;
+        const { updateInputText, updateOutputText, initializeCodeToggle, codeText } = this.props;
         if (selectedFiles.length === 0) {
             this.setState({
                 errorMsg: 'Please browse for a PDF.'
@@ -77,6 +77,11 @@ class InputPDF extends Component {
                 // console.log('initInputPDF', initInputPDF[0].text)
                 updateInputText(initInputPDF);
                 updateOutputText(initInputPDF);
+
+                // If there is ParseIt code, fire it up
+                if (codeText !== "") {
+                    initializeCodeToggle(true);
+                }
             })
             .catch(err => console.log(err));
     }

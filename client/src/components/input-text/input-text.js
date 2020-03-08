@@ -147,9 +147,10 @@ class InputText extends Component {
     }
 
     handleTextboxNumChange = e => {
-        // input display will default to 0
-
+        const { localInputText } = this.state;
         const { updateContainerDisplay, updateInputText, updateOutputText, updateCodeText } = this.props;
+
+        // input display will default to 0
         updateContainerDisplay(0);
 
         const numTextboxes = Number(e.target.value.split(' ')[0]);
@@ -159,16 +160,30 @@ class InputText extends Component {
 
         // if num textboxes is 0, delete the codeText
         // Why? 0 hides ParseIt code, when it reappears, it makes sense for everything to be deleted
-        updateCodeText("");
+        if (numTextboxes === 0) {
+            updateCodeText("");
+        }
 
         // create initial inputText
         let initInputText = [];
+        let text;
+        let name;
         for (let i = 0; i < numTextboxes; i++) {
+            // if there was previously localInputText in use, use it
+            if (localInputText[i] !== undefined) {
+                text = localInputText[i].text;
+                name = localInputText[i].name;
+            } else {
+                // If not, we will make a name and text for the user
+                text = '';
+                name = `Textbox ${i + 1}`; // initialize the textboxes indexing at 1 for the user
+            }
+
             initInputText.push({
                 inputContainer: i,
-                text: '',
-                name: `Textbox ${i + 1}` // initialize the textboxes indexing at 0 for the user
-            })
+                text: text,
+                name: name
+            });
         }
         this.setState({
             localInputText: initInputText
@@ -215,7 +230,6 @@ class InputText extends Component {
                             id={`textbox-title-input ${i}`}
                             onChange={this.handleTextboxTitle}
                             placeholder={`Title: Textbox ${i + 1}`}
-                        /* value={replaceCharacter} */
                         />
                         <label htmlFor={`textbox-title-input ${i}`}></label>
                     </div>
@@ -292,8 +306,7 @@ class InputText extends Component {
 
                         <select className="browser-default textbox-number-dropdown-menu"
                             onChange={this.handleTextboxNumChange}
-                            defaultValue={1}
-                        >
+                            defaultValue={1}>
                             <option value=''>-- Choose Number of Textboxes --</option>
                             {sizeList}
                         </select>
@@ -301,6 +314,7 @@ class InputText extends Component {
                         <button
                             className="waves-effect waves-light btn #42a5f5 blue lighten-1 parse-text submit-form-button"
                             onClick={this.handleInputSubmit}>
+                            <i className="material-icons left">build</i>
                             <i className="material-icons right">send</i>
                             Parse The Above Text</button>
                     </div>
