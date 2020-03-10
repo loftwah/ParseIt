@@ -5,6 +5,7 @@ import reactStringReplace from 'react-string-replace';
 import './replace-character-module.css';
 import * as actions from '../../../actions';
 import { escapeRegExp, replaceAndInsertChar } from './replace-character-module-functions';
+import { replaceCharacterValidation } from './replace-character-module-validation';
 
 class ReplaceCharacterModule extends Component {
     constructor(props) {
@@ -12,18 +13,21 @@ class ReplaceCharacterModule extends Component {
         this.state = {
             replaceCharacter: '',
             insertCharacter: '',
+            errorMsg: '',
         };
     }
 
     handleReplaceCharacter = e => {
         this.setState({
-            replaceCharacter: e.target.value
+            replaceCharacter: e.target.value,
+            errorMsg: ''
         })
     }
 
     handleInsertCharacter = e => {
         this.setState({
-            insertCharacter: e.target.value
+            insertCharacter: e.target.value,
+            errorMsg: ''
         })
     }
 
@@ -32,6 +36,10 @@ class ReplaceCharacterModule extends Component {
         const { handleDeleteModule, id, moduleActiveOff } = this.props;
         handleDeleteModule(id);
         moduleActiveOff();
+    }
+
+    createCode = (replaceCharacter, insertCharacter) => {
+        return "ReplaceCharacters" + " \"(" + replaceCharacter + ")\" \"(" + insertCharacter + ")\"";
     }
 
     handleSubmit = e => {
@@ -45,7 +53,16 @@ class ReplaceCharacterModule extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "ReplaceCharacters" + " \"(" + replaceCharacter + ")\" \"(" + insertCharacter + ")\"";
+        const moduleCode = this.createCode(replaceCharacter, insertCharacter);
+        const validationTest = replaceCharacterValidation(replaceCharacter, insertCharacter);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
+
         handleModuleCode({
             code: moduleCode,
             id: id
@@ -57,9 +74,19 @@ class ReplaceCharacterModule extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview, 
+            outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { replaceCharacter, insertCharacter } = this.state;
+
+        // validate the inputs
+        const validationTest = replaceCharacterValidation(replaceCharacter, insertCharacter);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
 
         // preview deletion + preview addition
 
@@ -142,6 +169,15 @@ class ReplaceCharacterModule extends Component {
     render() {
         const { previewToggle } = this.props;
         const { insertCharacter, replaceCharacter } = this.state;
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
+
         return (
             <div className="replace-character-function">
                 <div className="replace-character-card card white">
@@ -174,13 +210,18 @@ class ReplaceCharacterModule extends Component {
                                 />
                                 <label htmlFor="replace-insert-input"></label>
                             </div>
+
+                            {errorMsg === "" ? (
+                                <div className="no-error-msg">
+                                </div>
+                            ) : (
+                                    <div className="error-msg">
+                                        {errorMsgJSX}
+                                    </div>
+                                )}
+
                         </div>
                     </div>
-
-                    {/* <div className="card-action instances">
-                        <span>Instances: </span>
-                        <span>Every Instance</span>
-                    </div> */}
 
                     <div className="card-action preview-submit">
                         {previewToggle === true ? (

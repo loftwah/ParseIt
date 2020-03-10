@@ -67,6 +67,10 @@ p.error-msg {
   color: red;
 }
 
+div.error-msg p {
+  color: red;
+}
+
 div.App {
   background: rgb(252, 252, 252)
 }

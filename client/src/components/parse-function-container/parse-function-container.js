@@ -1375,17 +1375,13 @@ class ParseFunctionContainer extends Component {
         // begin by deleting all savedText
         this.props.updateSavedText([]);
         for (let i = 0; i < moduleCodeArr.length; i++) {
-            let moduleType = moduleCodeArr[i].code.split(' ')[0];
-            // the slice takes off the 2 ending quotations and ending parenthesis off of the 2nd param
-            let moduleParams = moduleCodeArr[i].code.slice(0, moduleCodeArr[i].code.length - 2)
-                .replace(moduleType + ' \"(', '').split(")\" \"(");
-
-            let id, stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
-            let charToAdd, linesToDelete, startCharacters, endCharacters, charDeleteLine, charKeepLine;
 
             // validate the incoming code line
-            let isValidCode = validateCode(moduleType, moduleParams);
+            let moduleCodeLine = moduleCodeArr[i].code;
+            let currLineNum = i + 1 // reading lines should be indexed at 1
+            let isValidCode = validateCode(moduleCodeLine, currLineNum);
 
+            // Is the code valid?
             if (isValidCode.valid === false) {
                 // if invalid, log out the error and quit
                 this.setState({
@@ -1398,6 +1394,16 @@ class ParseFunctionContainer extends Component {
                     codeErrorMsg: ""
                 });
             }
+
+            // The line of code is valid, create a module 
+
+            let moduleType = moduleCodeLine.split(' ')[0];
+            // the slice takes off the 2 ending quotations and ending parenthesis off of the 2nd param
+            let moduleParams = moduleCodeLine.slice(0, moduleCodeLine.length - 2)
+                .replace(moduleType + ' \"(', '').split(")\" \"(");
+
+            let id, stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
+            let charToAdd, linesToDelete, startCharacters, endCharacters, charDeleteLine, charKeepLine;
 
             switch (moduleType) {
                 case "ReplaceCharacters":

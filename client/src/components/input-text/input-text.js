@@ -123,6 +123,8 @@ class InputText extends Component {
         this.props.updateSavedText([]);
         this.props.toggleOutputTextOn();
         this.props.toggleSavedTextOff();
+        this.props.moduleActiveOff();
+        this.props.togglePreviewOff();
     }
 
     handleTogglePDFOn = e => {
@@ -144,6 +146,8 @@ class InputText extends Component {
         this.props.updateSavedText([]);
         this.props.toggleOutputTextOn()
         this.props.toggleSavedTextOff();
+        this.props.moduleActiveOff();
+        this.props.togglePreviewOff();
     }
 
     handleTextboxNumChange = e => {

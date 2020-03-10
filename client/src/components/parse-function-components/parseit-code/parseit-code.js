@@ -29,8 +29,14 @@ class ParseItCode extends Component {
 
     render() {
         // debugger;
-        const { codeText, errorMsg } = this.props;
-        // console.log('codeText Reducer', codeText);
+        const { codeText } = this.props;
+        let { errorMsg } = this.props;
+
+        // convert errorMsg to JSX
+        errorMsg = errorMsg.split('\n');
+        const errorMsgJSX = errorMsg.map((line, idx) => {
+            return <p key={idx}>{line}</p>
+        })
 
         return (
             <div className="parseit-code-component">
@@ -41,7 +47,7 @@ class ParseItCode extends Component {
                         value={codeText}
                     />
                 </div>
-                <p className="error-msg">{errorMsg}</p>
+                <div className="error-msg">{errorMsgJSX}</div>
                 <button
                     className="waves-effect waves-light btn blue lighten-1 submit-parseit-code-button"
                     onClick={this.handleSubmitCode}>
