@@ -2,7 +2,6 @@ export const replaceCharacterValidation = (replaceCharacter, insertCharacter) =>
     // Exact string is: )" "(
     const seperatorString = ")\" \"(";
 
-    // Case is true if this validation function is being used for the module
     const replaceCharHasSep = replaceCharacter.indexOf(seperatorString) !== -1;
     const insertCharHasSep = insertCharacter.indexOf(seperatorString) !== -1;
 

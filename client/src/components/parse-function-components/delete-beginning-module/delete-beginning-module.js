@@ -3,18 +3,21 @@ import { connect } from 'react-redux';
 
 import './delete-beginning-module.css';
 import * as actions from '../../../actions';
+import { deleteBeginningValidation } from './delete-beginning-module-validation';
 
 class DeleteBeginningModule extends Component {
     constructor(props) {
         super(props);
         this.state = {
             stoppingCharacters: '',
+            errorMsg: '',
         };
     }
 
     charactersToStopAt = e => {
         this.setState({
-            stoppingCharacters: e.target.value
+            stoppingCharacters: e.target.value,
+            errorMsg: ''
         })
     }
 
@@ -38,6 +41,16 @@ class DeleteBeginningModule extends Component {
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
         const moduleCode = "DeleteBeginningUntilPhrase" + " \"(" + stoppingCharacters + ")\"";
+
+        const validationTest = deleteBeginningValidation(stoppingCharacters);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
+
         handleModuleCode({
             code: moduleCode,
             id: id
@@ -54,8 +67,15 @@ class DeleteBeginningModule extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { stoppingCharacters } = this.state;
 
-        // const stringToGoIntoTheRegex = escapeRegExp(replaceCharacter);
-        // let regexDelete = new RegExp('(' + stringToGoIntoTheRegex + ')', "g");
+        // Validate the inputs
+        const validationTest = deleteBeginningValidation(stoppingCharacters);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
 
         let additionPreviews = [];
         let deletionPreviews = [];
@@ -67,7 +87,7 @@ class DeleteBeginningModule extends Component {
             inputContainerText = outputText[i].text;
             let outputTextSplitNewLine = inputContainerText.split('\n');
             let found = false;
-            
+
             // will a deletion ever be found?
             let willBeFound;
             if (inputContainerText.indexOf(stoppingCharacters) == -1) {
@@ -174,6 +194,15 @@ class DeleteBeginningModule extends Component {
     render() {
         const { previewToggle } = this.props;
         const { stoppingCharacters } = this.state;
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
+
         return (
             <div className="delete-beginning-function">
                 <div className="delete-beginning-card card white">
@@ -194,7 +223,14 @@ class DeleteBeginningModule extends Component {
                                 />
                                 <label htmlFor="replace-delete-input"></label>
                             </div>
-                            <br />
+                            {errorMsg === "" ? (
+                                <div className="no-error-msg">
+                                </div>
+                            ) : (
+                                    <div className="error-msg">
+                                        {errorMsgJSX}
+                                    </div>
+                                )}
                         </div>
                     </div>
 

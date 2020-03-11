@@ -27,6 +27,7 @@ span.line-text-keep {
 
 div.delete-beginning-complete {
     margin-bottom: 0px;
+    white-space: pre-wrap;
 }
 
 @media only screen and (max-width: 450px) {
