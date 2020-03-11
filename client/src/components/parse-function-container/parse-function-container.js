@@ -166,20 +166,50 @@ class ParseFunctionContainer extends Component {
 
     // for additional modules
     handleModuleCode = moduleCodeText => {
+        // This function is activated from submitted modules (from edited-modules)
+        // ParseIt code submission does NOT enter here
+        
         // Example of how the "Module Code" will work:
         // Template: ReplaceCharacterModule "text" "other text"
         // the above means "create a character module and submit a replacement of "text" with "other text"
 
         const { updateCodeText } = this.props;
 
-        let moduleCode = [...this.state.moduleCode, moduleCodeText];
+        // Below handles the case where there is invalid ParseIt code that was submitted and was not corrected, and the user creates more modules via buttons
+        // The below code will show all ParseIt code, and stop at the first instance of invalid code
+
+        let { moduleCode } = this.state
+        let validCode = [];
+        let codeLineObj;
+        let codeLine;
+        let currLineNum;
+
+        // cycle through all code and until we hit one invalid line of code
+        for (let idx = 0; idx < moduleCode.length; idx++) {
+            codeLineObj = moduleCode[idx];
+            codeLine = codeLineObj.code;
+            currLineNum = idx + 1; // indexed at 1
+            let isValidCode = validateCode(codeLine, currLineNum);
+
+            // push only valid lines of code as the moduleCode
+            // break when a line of code is invalid
+            if (isValidCode.valid === false) {
+                break;
+            } else {
+                validCode.push(codeLineObj);
+            }
+        }
+
+        // push the moduleCodeText received by the submission of the edited module
+        validCode.push(moduleCodeText);
 
         this.setState({
-            moduleCode: moduleCode
+            moduleCode: validCode,
+            codeErrorMsg: ''
         }, () => console.log(this.state.moduleCode));
 
-        const codeText = this.convertCodeArrayToText(moduleCode)
-        updateCodeText(codeText)
+        const codeText = this.convertCodeArrayToText(validCode);
+        updateCodeText(codeText);
 
     }
 
@@ -1374,11 +1404,16 @@ class ParseFunctionContainer extends Component {
     async ouptutModulesFromModuleCodeState(moduleCodeArr) {
         // begin by deleting all savedText
         this.props.updateSavedText([]);
+
+        // In every case, line breaks are deleted after parseIt button is clicked
+        // If we want to show an error to the user and display the affected line at the correct number, we must count line breaks
+        let lineBreakCount = 0;
         for (let i = 0; i < moduleCodeArr.length; i++) {
 
             // validate the incoming code line
             let moduleCodeLine = moduleCodeArr[i].code;
-            let currLineNum = i + 1 // reading lines should be indexed at 1
+            // reading lines should be indexed at 1, while line breaks are taken into account
+            let currLineNum = (i + 1) - lineBreakCount;
             let isValidCode = validateCode(moduleCodeLine, currLineNum);
 
             // Is the code valid?
@@ -1522,10 +1557,17 @@ class ParseFunctionContainer extends Component {
                     charToAdd = moduleParams[0];
                     await this.handleCreate_CreateLineEndLastInputModuleComplete(id, charToAdd);
                     break;
+                case "":
+                    // allow blank lines to pass through
+                    lineBreakCount++;
+                    break;
                 default:
                     console.log('that module is not found');
             }
         }
+        this.setState({
+            codeErrorMsg: ''
+        })
     }
 
     render() {

@@ -34,6 +34,18 @@ export const validateCode = (moduleCode, lineNum) => {
                 };
             }
             break;
+        case "DeleteBeginningUntilPhrase":
+            break;
+        case "DeleteLastPhraseUntilEnd":
+            break;
+        case "SaveText":
+            break;
+        case "Concatenate":
+            break;
+        case "RemoveBlankLines":
+            break;
+        case "RemoveExcessSpaces":
+            break;
         case "SplitLinesBeforeWord":
             charToSplit = moduleParams[0];
             if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
@@ -52,8 +64,38 @@ export const validateCode = (moduleCode, lineNum) => {
                 };
             }
             break
+        case "MultipleSplitLinesAfterWord":
+            break;
+        case "MultipleSplitLinesBeforeWord":
+            break;
+        case "MultipleAddTextToBeginning":
+            break;
+        case "MultipleDeleteLine":
+            break;
+        case "DeleteCertainLines":
+            break;
+        case "DeleteBetweenPhrases":
+            break;
+        case "DeleteLineIfHasPhrase":
+            break;
+        case "DeleteLineIfDoesntHavePhrase":
+            break;
+        case "CreateLineBeginningAllInputs":
+            break;
+        case "CreateLineBeginningFirstInput":
+            break;
+        case "CreateLineEndAllInputs":
+            break;
+        case "CreateLineEndLastInput":
+            break;
+        case "":
+            break;
         default:
-            console.log("module doesn't exist at the moment");
+            console.log("module doesn't exist");
+            validationObj = {
+                valid: false,
+                message: `Error: Line Number ${lineNum}\nReason: "${moduleType}" module does not exist`
+            }
     }
 
     return validationObj;

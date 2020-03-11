@@ -20,11 +20,12 @@ class ParseItCode extends Component {
         // 1: The list of modules
         // 2: The output text
         const { codeText } = this.props; // reducer state
-        const { moduleActiveOff } = this.props; // actions
+        const { moduleActiveOff, togglePreviewOff } = this.props; // actions
         const { parseItCode } = this.props; // passed in props
 
         parseItCode(codeText);
         moduleActiveOff();
+        togglePreviewOff();
     }
 
     render() {
