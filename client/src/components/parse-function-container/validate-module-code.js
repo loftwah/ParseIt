@@ -141,19 +141,33 @@ export const validateCode = (moduleCode, lineNum) => {
             if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at SplitLinesBeforeWord\nReason: This module does not take spaces at the beginning or end of characters`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module does not take spaces at the beginning or end of characters inside Parameter #1`
                 };
             }
             break;
         case "SplitLinesAfterWord":
+            // Must only have 1 parameter
+            if (moduleParams.length !== 1) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(phrase)\"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                };
+            }
+
+            // Do not have spaces at the beginning or ending of characters
             charToSplit = moduleParams[0];
             if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at SplitLinesBeforeWord\nReason: This module does not take spaces at the beginning or end of characters`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module does not take spaces at the beginning or end of characters inside Parameter #1`
                 };
             }
-            break
+            break;
         case "MultipleSplitLinesAfterWord":
             break;
         case "MultipleSplitLinesBeforeWord":
