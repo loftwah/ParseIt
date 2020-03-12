@@ -11,8 +11,8 @@ div.multiple-add-text-to-beginning-user-input{
     margin: 0px;
 }
 
-div.multiple-add-text-to-beginning-complete {
-    margin-bottom: 10px;
+div.multiple-add-text-to-beginning-description-complete {
+    white-space: pre-wrap;
 }
 
 div.multiple-add-text-to-beginning-user-input-multiple-number{

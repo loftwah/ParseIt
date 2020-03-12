@@ -40,7 +40,7 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 1) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: DeleteBeginningUntilPhrase \"(delete beginning until these characters)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: DeleteBeginningUntilPhrase \"(phrase)\"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
@@ -50,20 +50,65 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "DeleteLastPhraseUntilEnd":
+            // Must only have 1 parameter
+            if (moduleParams.length !== 1) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: DeleteBeginningUntilPhrase \"(phrase)\"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                };
+            }
             break;
         case "SaveText":
             break;
         case "Concatenate":
-            // If 100% invalid, return out of the function
-            // If 100% valid, return out of the function
+            // Concatenate takes no params
+            // Therefore, return out of function if the moduleCode is the module
+            if (moduleCode === "Concatenate") {
+                return validationObj = {
+                    valid: true,
+                    message: undefined
+                };
+            } else {
+                return validationObj = {
+                    valid: false,
+                    message: `To use the ${moduleType} module, you must strictly write: ${moduleType}`
+                };
+            }
             break;
         case "RemoveBlankLines":
-            // If 100% invalid, return out of the function
-            // If 100% valid, return out of the function
+            // RemoveBlankLines takes no params
+            // Therefore, return out of function if the moduleCode is the module
+            if (moduleCode === "RemoveBlankLines") {
+                return validationObj = {
+                    valid: true,
+                    message: undefined
+                };
+            } else {
+                return validationObj = {
+                    valid: false,
+                    message: `To use the ${moduleType} module, you must strictly write: ${moduleType}`
+                };
+            }
             break;
         case "RemoveExcessSpaces":
-            // If 100% invalid, return out of the function
-            // If 100% valid, return out of the function
+            // RemoveExcessSpaces takes no params
+            // Therefore, return out of function if the moduleCode is the module
+            if (moduleCode === "RemoveExcessSpaces") {
+                return validationObj = {
+                    valid: true,
+                    message: undefined
+                };
+            } else {
+                return validationObj = {
+                    valid: false,
+                    message: `To use the ${moduleType} module, you must strictly write: ${moduleType}`
+                };
+            }
             break;
         case "SplitLinesBeforeWord":
             charToSplit = moduleParams[0];
@@ -132,7 +177,7 @@ export const validateCode = (moduleCode, lineNum) => {
     }
 
     // If a module has params, validate to make sure that after moduleType the correct struture is a space followed by the characters ("
-    // In the future: modules that take no parameters (ie: concatenate) should be handled and returned out of the function at this point
+    // NOTE: Modules that take no parameters (ie: concatenate) should be handled and returned out of the function at this point
     if (moduleType !== "") {
         let eliminateModType = moduleCode.slice(moduleType.length);
         let beginParamValid = eliminateModType.indexOf(' \"(') === 0 ? true : false;;

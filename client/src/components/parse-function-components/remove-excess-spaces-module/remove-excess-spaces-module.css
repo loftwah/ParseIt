@@ -17,6 +17,7 @@ div.remove-excess-spaces-user-input.insert {
 
 div.remove-excess-spaces-name-complete {
     margin-bottom: 30px;
+    white-space: pre-wrap;
 }
 
 @media only screen and (max-width: 450px) {

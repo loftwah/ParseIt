@@ -17,4 +17,5 @@ div.concatenate-user-input.insert {
 
 div.concatenate-description-complete {
     margin-bottom: 0px;
+    white-space: pre-wrap;
 }

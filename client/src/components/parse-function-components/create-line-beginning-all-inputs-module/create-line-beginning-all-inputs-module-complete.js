@@ -73,13 +73,13 @@ class CreateLineBeginningAllInputsComplete extends Component {
                         <div className="create-line-beginning-all-inputs-description-complete col s12">
                             {charsToAdd === "$$GetName$$" ? (
                                 <div className="input-name">
-                                    <p>For every input, a new line will be created at index 1 with the name of each input.
+                                    <p>For every input, a new line will be created at index 1 with <b>the name of each input</b>
                                     </p>
                                 </div>
                             ) : (
                                     <div className="user-input-chars">
                                         <p>For every input, a new line will be created at index 1 with the following characters: <b>"{charsToAdd}"</b>
-                                    </p>
+                                        </p>
                                     </div>
                                 )}
 

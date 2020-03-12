@@ -3,18 +3,21 @@ import { connect } from 'react-redux';
 
 import './delete-ending-module.css';
 import * as actions from '../../../actions';
+import { deleteEndingValidation } from './delete-ending-module-validation';
 
 class DeleteEndingModule extends Component {
     constructor(props) {
         super(props);
         this.state = {
             stoppingCharacters: '',
+            errorMsg: '',
         };
     }
 
     charactersToStopAt = e => {
         this.setState({
-            stoppingCharacters: e.target.value
+            stoppingCharacters: e.target.value,
+            errorMsg: ''
         })
     }
 
@@ -36,6 +39,16 @@ class DeleteEndingModule extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
+
+        const validationTest = deleteEndingValidation(stoppingCharacters);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
+
         const moduleCode = "DeleteLastPhraseUntilEnd" + " \"(" + stoppingCharacters + ")\"";
         handleModuleCode({
             code: moduleCode,
@@ -53,8 +66,14 @@ class DeleteEndingModule extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { stoppingCharacters } = this.state;
 
-        // const stringToGoIntoTheRegex = escapeRegExp(replaceCharacter);
-        // let regexDelete = new RegExp('(' + stringToGoIntoTheRegex + ')', "g");
+        const validationTest = deleteEndingValidation(stoppingCharacters);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
 
         let additionPreviews = [];
         let deletionPreviews = [];
@@ -135,7 +154,7 @@ class DeleteEndingModule extends Component {
                     // If found is false, and line does not contain the stopping characters:
                     // The whole line will be deleted
                     createSingleDeletionPreview.push((<div className="line" key={deleteIdx}>
-                        <span className="line-number" style={{ background: "rgb(255, 210, 217)"}}>[{deleteIdx}]&#160;</span>
+                        <span className="line-number" style={{ background: "rgb(255, 210, 217)" }}>[{deleteIdx}]&#160;</span>
                         <span className="line-text" style={{ background: "red" }}><b>{line}</b></span>
                     </div>))
                     deleteIdx--;
@@ -215,6 +234,14 @@ class DeleteEndingModule extends Component {
     render() {
         const { previewToggle } = this.props;
         const { stoppingCharacters } = this.state;
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
         return (
             <div className="delete-ending-function">
                 <div className="delete-ending-card card white">
@@ -236,7 +263,15 @@ class DeleteEndingModule extends Component {
                                 <label htmlFor="replace-delete-input"></label>
                             </div>
                             <span>until the end</span>
-                            <br />
+
+                            {errorMsg === "" ? (
+                                <div className="no-error-msg">
+                                </div>
+                            ) : (
+                                    <div className="error-msg">
+                                        {errorMsgJSX}
+                                    </div>
+                                )}
                         </div>
                     </div>
 

@@ -17,6 +17,7 @@ div.saved-text-user-input.insert {
 
 div.saved-text-name-complete {
     margin-bottom: 0px;
+    white-space: pre-wrap;
 }
 
 @media only screen and (max-width: 450px) {

@@ -15,8 +15,8 @@ div.multiple-split-lines-before-word-user-input.insert {
     padding-left: 10px
 }
 
-div.multiple-split-lines-before-word-complete {
-    margin-bottom: 10px;
+div.multiple-split-lines-before-word-description-complete {
+    white-space: pre-wrap;
 }
 
 div.multiple-split-lines-before-word-user-input-multiple-number{

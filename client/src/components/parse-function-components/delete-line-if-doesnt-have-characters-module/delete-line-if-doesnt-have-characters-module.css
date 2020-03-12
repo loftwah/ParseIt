@@ -11,8 +11,8 @@ div.delete-line-if-doesnt-have-characters-user-input{
     margin: 0px;
 }
 
-div.delete-line-if-doesnt-have-characters-complete {
-    margin-bottom: 10px;
+div.delete-line-if-has-characters-description-complete {
+    white-space: pre-wrap;
 }
 
 div.delete-line-if-doesnt-have-characters-user-input-multiple-number{

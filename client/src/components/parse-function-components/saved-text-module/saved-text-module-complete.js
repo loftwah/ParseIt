@@ -57,7 +57,7 @@ class SavedTextModuleComplete extends Component {
                             <p>Update the "Inputs" to the original input.</p>
                             <br />
                             <div className="saved-text-name-complete">
-                                <p>Saved Text Name: "{savedTextName}"</p>
+                                <p>Saved Text Name: <b>"{savedTextName}"</b></p>
                             </div>
                         </div>
                     </div>

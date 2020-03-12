@@ -11,8 +11,8 @@ div.create-line-beginning-all-inputs-user-input{
     margin: 0px;
 }
 
-div.create-line-beginning-all-inputs-complete {
-    margin-bottom: 10px;
+div.create-line-beginning-all-inputs-description-complete {
+    white-space: pre-wrap;
 }
 
 div.create-line-beginning-all-inputs-user-input-multiple-number{

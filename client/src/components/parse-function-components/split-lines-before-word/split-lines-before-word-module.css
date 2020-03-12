@@ -15,8 +15,8 @@ div.split-lines-before-word-user-input.insert {
     padding-left: 10px
 }
 
-div.split-lines-before-word-complete {
-    margin-bottom: 10px;
+div.split-lines-before-word-description-complete {
+    white-space: pre-wrap;
 }
 
 input#instance-input{

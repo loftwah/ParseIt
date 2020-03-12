@@ -17,6 +17,7 @@ div.remove-blank-lines-user-input.insert {
 
 div.remove-blank-lines-complete {
     margin-bottom: 30px;
+    white-space: pre-wrap;
 }
 
 @media only screen and (max-width: 450px) {
