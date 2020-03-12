@@ -3,18 +3,21 @@ import { connect } from 'react-redux';
 
 import './saved-text-module.css';
 import * as actions from '../../../actions';
+import { savedTextValidation } from './saved-text-module-validation';
 
 class SavedTextModule extends Component {
     constructor(props) {
         super(props);
         this.state = {
             savedTextName: '',
+            errorMsg: '',
         };
     }
 
     handleSavedTextName = e => {
         this.setState({
-            savedTextName: e.target.value
+            savedTextName: e.target.value,
+            errorMsg: ''
         })
     }
 
@@ -31,6 +34,16 @@ class SavedTextModule extends Component {
         const { savedTextName } = this.state;
 
         const moduleCode = "SaveText" + " \"(" + savedTextName + ")\"";
+
+        const validationTest = savedTextValidation(savedTextName);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
+
         handleModuleCode({
             code: moduleCode,
             id: id
@@ -42,6 +55,14 @@ class SavedTextModule extends Component {
 
     render() {
         const { savedTextName } = this.state;
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
         return (
             <div className="saved-text-function">
                 <div className="saved-text-card card white">
@@ -65,6 +86,14 @@ class SavedTextModule extends Component {
                                     />
                                     <label htmlFor="save-text-name-input"></label>
                                 </div>
+                                {errorMsg === "" ? (
+                                    <div className="no-error-msg">
+                                    </div>
+                                ) : (
+                                        <div className="error-msg">
+                                            {errorMsgJSX}
+                                        </div>
+                                    )}
                             </div>
                         </div>
                     </div>

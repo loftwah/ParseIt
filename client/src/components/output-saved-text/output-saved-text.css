@@ -40,3 +40,7 @@ a.toggle-line-numbers.Off{
     background: #616161;
     color:white;
 }
+
+div.display-user-saved-text {
+    white-space: pre-wrap;
+}

@@ -26,7 +26,7 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 2) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 2 parameters\nStructure: ReplaceCharacters \"(replace characters)\" \"(insert characters)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 2 parameters\nStructure: ${moduleType} \"(replace characters)\" \"(insert characters)\"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
@@ -40,7 +40,7 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 1) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: DeleteBeginningUntilPhrase \"(phrase)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(phrase)\"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
@@ -54,7 +54,7 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 1) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: DeleteBeginningUntilPhrase \"(phrase)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(phrase)\"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
@@ -64,6 +64,18 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "SaveText":
+            // Must only have 1 parameter
+            if (moduleParams.length !== 1) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(name of save)\"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                };
+            }
             break;
         case "Concatenate":
             // Concatenate takes no params
