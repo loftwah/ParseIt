@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './split-lines-before-word-module.css';
 import * as actions from '../../../actions';
+import { splitBeforeWordValidation } from './split-lines-before-word-module-validation';
 
 class SplitLinesBeforeWord extends Component {
     constructor(props) {
@@ -34,17 +35,19 @@ class SplitLinesBeforeWord extends Component {
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
         const { charToSplit } = this.state;
 
-        // Handle errors: spaces
-        if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
+        // Output text gets updated on the "complete" module
+        // "complete" module is also where ParseIt code updates 
+        togglePreviewOff();
+
+        const validationTest = splitBeforeWordValidation(charToSplit);
+        if (validationTest.valid === false) {
+            // create error message and return out
             this.setState({
-                errorMsg: "Do not begin or end with spaces in your set of characters"
+                errorMsg: validationTest.error
             });
             return;
         }
 
-        // Output text gets updated on the "complete" module
-        // "complete" module is also where ParseIt code updates 
-        togglePreviewOff();
         const moduleCode = "SplitLinesBeforeWord" + " \"(" + charToSplit + ")\"";
         handleModuleCode({
             code: moduleCode,
@@ -57,14 +60,15 @@ class SplitLinesBeforeWord extends Component {
     handlePreview = e => {
         e.preventDefault();
         const { previewToggle, togglePreviewOn, togglePreviewOff,
-            outputText, updateDeletionsPreview, updateAdditionsPreview, 
+            outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { charToSplit } = this.state;
 
-        // Handle errors: spaces
-        if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
+        const validationTest = splitBeforeWordValidation(charToSplit);
+        if (validationTest.valid === false) {
+            // create error message and return out
             this.setState({
-                errorMsg: "Do not begin or end with spaces in your set of characters"
+                errorMsg: validationTest.error
             });
             return;
         }
@@ -297,7 +301,16 @@ class SplitLinesBeforeWord extends Component {
 
     render() {
         const { previewToggle } = this.props;
-        const { charToSplit, errorMsg } = this.state;
+        const { charToSplit } = this.state;
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
+
         return (
             <div className="split-lines-before-word-function">
                 <div className="split-lines-before-word-card card white">
@@ -324,7 +337,16 @@ class SplitLinesBeforeWord extends Component {
                                 />
                                 <label htmlFor="character-input"></label>
                             </div>
-                            <p className="error-msg">{errorMsg}</p>
+
+                            {errorMsg === "" ? (
+                                <div className="no-error-msg">
+                                </div>
+                            ) : (
+                                    <div className="error-msg">
+                                        {errorMsgJSX}
+                                    </div>
+                                )}
+
                         </form>
 
                     </div>

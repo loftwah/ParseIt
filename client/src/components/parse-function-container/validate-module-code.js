@@ -123,6 +123,20 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "SplitLinesBeforeWord":
+            // Must only have 1 parameter
+            if (moduleParams.length !== 1) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(phrase)\"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                };
+            }
+
+            // Do not have spaces at the beginning or ending of characters
             charToSplit = moduleParams[0];
             if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
                 return validationObj = {
