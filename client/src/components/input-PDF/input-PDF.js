@@ -12,7 +12,10 @@ class InputPDF extends Component {
             selectedFiles: [],
             selectedFileNames: [],
             errorMsg: '',
+            uploadProgress: '',
+            uploadBusy: false
         };
+        this.fileUploadHandler = this.fileUploadHandler.bind(this);
     }
 
     validatePDF = (file) => {
@@ -48,7 +51,25 @@ class InputPDF extends Component {
             })
         }
     }
-    fileUploadHandler = e => {
+
+    async uploadFiles(dataForm, inputName, idx) {
+        return new Promise((resolve, reject) => {
+            axios.post('/read-pdf', dataForm)
+                .then(res => {
+                    const textArrRes = res.data.PDFtext;
+                    const singleInput = {
+                        inputContainer: idx,
+                        text: textArrRes[0],
+                        name: inputName
+                    };
+                    resolve(singleInput);
+
+                })
+                .catch(err => console.log(err));
+        })
+    }
+
+    async fileUploadHandler() {
         const { selectedFiles, selectedFileNames } = this.state;
         const { updateInputText, updateOutputText, initializeCodeToggle, codeText } = this.props;
         if (selectedFiles.length === 0) {
@@ -58,36 +79,43 @@ class InputPDF extends Component {
             return;
         }
 
-        const dataForm = new FormData();
+        // uploading is now in progress
+        this.setState({
+            uploadBusy: true,
+            uploadProgress: `Progress: uploaded 0 out of ${selectedFiles.length} PDFs`
+        })
+
+        let initInputPDF = [];
+        // upload each PDF, one by one
         for (let i = 0; i < selectedFiles.length; i++) {
+            let inputName = selectedFileNames[i];
+            let dataForm = new FormData();
             dataForm.append('file', selectedFiles[i]);
+            let singlePDF = await this.uploadFiles(dataForm, inputName, i);
+            initInputPDF.push(singlePDF);
+            this.setState({
+                uploadProgress: `Progress: uploaded ${i + 1} out of ${selectedFiles.length} PDFs`
+            });
         }
 
-        axios.post('/read-pdf', dataForm)
-            .then(res => {
-                const textArrRes = res.data.PDFtext
-                let initInputPDF = [];
-                for (let i = 0; i < textArrRes.length; i++) {
-                    initInputPDF.push({
-                        inputContainer: i,
-                        text: textArrRes[i],
-                        name: selectedFileNames[i]
-                    })
-                }
-                // console.log('initInputPDF', initInputPDF[0].text)
-                updateInputText(initInputPDF);
-                updateOutputText(initInputPDF);
+        this.setState({
+            uploadBusy: false,
+            uploadProgress: `${selectedFiles.length} out of ${selectedFiles.length} PDFs have been uploaded`
+        });
 
-                // If there is ParseIt code, fire it up
-                if (codeText !== "") {
-                    initializeCodeToggle(true);
-                }
-            })
-            .catch(err => console.log(err));
+        updateInputText(initInputPDF);
+        updateOutputText(initInputPDF);
+
+        // If there is ParseIt code, fire it up
+        if (codeText !== "") {
+            initializeCodeToggle(true);
+        }
+
     }
 
     render() {
-        const { errorMsg } = this.state;
+        const { errorMsg, uploadBusy, uploadProgress } = this.state;
+
         return (
             <div className="input-PDF-component">
                 <form action="#">
@@ -109,11 +137,43 @@ class InputPDF extends Component {
                             </div>
                         )}
                 </form>
-                <button
-                    className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-pdf-button"
-                    onClick={this.fileUploadHandler}>
-                    <i className="material-icons file_upload-img">file_upload</i>
-                    Upload Selected PDF Files</button>
+
+                <div className="button-pdf-selector">
+                    <button
+                        className="waves-effect waves-light btn #42a5f5 blue lighten-1 submit-pdf-button"
+                        onClick={this.fileUploadHandler}>
+                        <i className="material-icons file_upload-img">file_upload</i>
+                        Upload Selected PDF Files
+                    </button>
+                </div>
+
+                <div className="progress-line">
+                    {uploadBusy === true ? (
+                        <div className="pdf-upload-progress-circle">
+                            <div className="preloader-wrapper active ">
+                                <div className="spinner-layer spinner-blue-only">
+                                    <div className="circle-clipper left">
+                                        <div className="circle"></div>
+                                    </div><div className="gap-patch">
+                                        <div className="circle"></div>
+                                    </div><div className="circle-clipper right">
+                                        <div className="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                            <div className="inactive-progress-circle"></div>
+                        )}
+
+                    {uploadProgress !== "" ? (
+                        <div className={`upload-progress-${uploadBusy}`}>
+                            <h5>{uploadProgress}</h5>
+                        </div>
+                    ) : (
+                            <div className="upload-not-in-progress"></div>
+                        )}
+                </div>
 
             </div>
         );

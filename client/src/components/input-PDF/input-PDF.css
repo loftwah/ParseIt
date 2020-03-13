@@ -9,6 +9,22 @@ i.file_upload-img{
     margin-right:10px
 }
 
-button.submit-pdf-button{
+button.submit-pdf-button {
     margin-top:-8px
+}
+
+div.pdf-upload-progress-circle {
+    float:left;
+    padding-right: 20px;
+}
+
+div.progress-line {
+    padding-top: 20px;
+}
+
+div.upload-progress-false {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .6s;
+    transition-delay: 4s;
 }
