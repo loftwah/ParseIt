@@ -361,9 +361,52 @@ export const validateCode = (moduleCode, lineNum) => {
             if (charToAdd.length === 0) {
                 return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #3 Text to Be Added Before Line: Please fill the inputt` };
             }
-
             break;
         case "MultipleDeleteLine":
+            // Must have 2 parameters
+            // Example: MultipleDeleteLine "(3)" "(2)"
+            if (moduleParams.length !== 2) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 2 parameters\nStructure: ${moduleType} "(number: line begin)" "(number: line multiple)"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
+                };
+            }
+
+            lineNumBegin = moduleParams[0];
+            lineMultiple = moduleParams[1];
+
+            if (lineNumBegin.length === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Please fill the input` };
+            } else if (isNaN(Number(lineNumBegin))) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Input must be a number` };
+            } else if (Number(lineNumBegin) === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Number cannot be zero` };
+            } else if (Number(lineNumBegin) < 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Number cannot be negative` };
+            } else if (lineNumBegin.indexOf('e') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: The letter "e" is not valid` };
+            } else if (lineNumBegin.indexOf('.') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: The decimal symbol "." is not valid` };
+            }
+
+            if (lineMultiple.length === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Please fill the input` };
+            } else if (isNaN(Number(lineMultiple))) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Input must be a number` };
+            } else if (Number(lineMultiple) === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Number cannot be zero` };
+            } else if (Number(lineMultiple) < 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Number cannot be negative` };
+            } else if (lineMultiple.indexOf('e') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: The letter "e" is not valid` };
+            } else if (lineMultiple.indexOf('.') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: The decimal symbol "." is not valid` };
+            }
             break;
         case "DeleteCertainLines":
             break;
