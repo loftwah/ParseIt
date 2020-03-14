@@ -17,7 +17,8 @@ export const validateCode = (moduleCode, lineNum) => {
         valid: true
     };
 
-    let charToSplit;
+    let stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
+    let charToAdd, linesToDelete, startCharacters, endCharacters, charDeleteLine, charKeepLine;
 
     // If a module has no parameters, return out of this function
     switch (moduleType) {
@@ -169,6 +170,75 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "MultipleSplitLinesAfterWord":
+            // Must have 5 parameters
+            // Example: MultipleSplitLinesAfterWord "(1)" "(1)" "(a)" "(forward)" "(1)"
+            if (moduleParams.length !== 5) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 5 parameters\nStructure: ${moduleType} \"(number: line begin)\" \"(number: line multiple)\" \"(phrase)\" \"(direction: forward/backward)\" \"(number: instance)\"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                };
+            }
+
+            lineNumBegin = moduleParams[0];
+            lineMultiple = moduleParams[1];
+            charToSplit = moduleParams[2];
+            direction = moduleParams[3];
+            instance = moduleParams[4];
+
+            if (lineNumBegin.length === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Please fill the input` };
+            } else if (isNaN(Number(lineNumBegin))) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Input must be a number` };
+            } else if (Number(lineNumBegin) === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Number cannot be zero` };
+            } else if (Number(lineNumBegin) < 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Number cannot be negative` };
+            } else if (lineNumBegin.indexOf('e') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: The letter "e" is not valid` };
+            } else if (lineNumBegin.indexOf('.') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: The decimal symbol "." is not valid` };
+            }
+
+            if (lineMultiple.length === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Please fill the input` };
+            } else if (isNaN(Number(lineMultiple))) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Input must be a number` };
+            } else if (Number(lineMultiple) === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Number cannot be zero` };
+            } else if (Number(lineMultiple) < 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Number cannot be negative` };
+            } else if (lineMultiple.indexOf('e') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: The letter "e" is not valid` };
+            } else if (lineMultiple.indexOf('.') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: The decimal symbol "." is not valid` };
+            }
+
+            if (charToSplit.length === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #3 Split After Characters: Please fill the input` };
+            }
+
+            if (direction !== "forward" && direction !== "backward") {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #4 Direction: Direction must either be forward or backward` };
+            }
+
+            if (instance.length === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #5 Instance: Please fill the input` };
+            } else if (isNaN(Number(instance))) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #5 Instance: Input must be a number` };
+            } else if (Number(instance) === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #5 Instance: Number cannot be zero` };
+            } else if (Number(instance) < 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #5 Instance: Number cannot be negative` };
+            } else if (instance.indexOf('e') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #5 Instance: The letter "e" is not valid` };
+            } else if (instance.indexOf('.') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #5 Instance: The decimal symbol "." is not valid` };
+            }
             break;
         case "MultipleSplitLinesBeforeWord":
             break;
