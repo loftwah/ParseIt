@@ -27,12 +27,12 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 2) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 2 parameters\nStructure: ${moduleType} \"(replace characters)\" \"(insert characters)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 2 parameters\nStructure: ${moduleType} "(replace characters)" "(insert characters)"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
                 };
             }
             break;
@@ -41,12 +41,12 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 1) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(phrase)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} "(phrase)"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
                 };
             }
             break;
@@ -55,12 +55,12 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 1) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(phrase)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} "(phrase)"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
                 };
             }
             break;
@@ -69,12 +69,12 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 1) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(name of save)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} "(name of save)"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
                 };
             }
             break;
@@ -128,12 +128,12 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 1) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(phrase)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} "(phrase)"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
                 };
             }
 
@@ -151,12 +151,12 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 1) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} \"(phrase)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} "(phrase)"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
                 };
             }
 
@@ -175,12 +175,12 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 5) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 5 parameters\nStructure: ${moduleType} \"(number: line begin)\" \"(number: line multiple)\" \"(phrase)\" \"(direction: forward/backward)\" \"(number: instance)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 5 parameters\nStructure: ${moduleType} "(number: line begin)" "(number: line multiple)" "(phrase)" "(direction: forward/backward)" "(number: instance)"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
                 };
             }
 
@@ -246,12 +246,12 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 5) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 5 parameters\nStructure: ${moduleType} \"(number: line begin)\" \"(number: line multiple)\" \"(phrase)\" \"(direction: forward/backward)\" \"(number: instance)\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 5 parameters\nStructure: ${moduleType} "(number: line begin)" "(number: line multiple)" "(phrase)" "(direction: forward/backward)" "(number: instance)"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )\"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
                 };
             }
 
@@ -312,6 +312,56 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "MultipleAddTextToBeginning":
+            // Must have 3 parameters
+            // Example: MultipleAddTextToBeginning "(1)" "(2)" "(a)"
+            if (moduleParams.length !== 3) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 3 parameters\nStructure: ${moduleType} "(number: line begin)" "(number: line multiple)" "(phrase to add)"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
+                };
+            }
+
+            lineNumBegin = moduleParams[0];
+            lineMultiple = moduleParams[1];
+            charToAdd = moduleParams[2];
+
+            if (lineNumBegin.length === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Please fill the input` };
+            } else if (isNaN(Number(lineNumBegin))) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Input must be a number` };
+            } else if (Number(lineNumBegin) === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Number cannot be zero` };
+            } else if (Number(lineNumBegin) < 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: Number cannot be negative` };
+            } else if (lineNumBegin.indexOf('e') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: The letter "e" is not valid` };
+            } else if (lineNumBegin.indexOf('.') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #1 Begin At Line Number: The decimal symbol "." is not valid` };
+            }
+
+            if (lineMultiple.length === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Please fill the input` };
+            } else if (isNaN(Number(lineMultiple))) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Input must be a number` };
+            } else if (Number(lineMultiple) === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Number cannot be zero` };
+            } else if (Number(lineMultiple) < 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: Number cannot be negative` };
+            } else if (lineMultiple.indexOf('e') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: The letter "e" is not valid` };
+            } else if (lineMultiple.indexOf('.') !== -1) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #2 Line Multiple: The decimal symbol "." is not valid` };
+            }
+
+            if (charToAdd.length === 0) {
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #3 Text to Be Added Before Line: Please fill the inputt` };
+            }
+
             break;
         case "MultipleDeleteLine":
             break;
@@ -363,7 +413,7 @@ export const validateCode = (moduleCode, lineNum) => {
         if (beginParamValid === false) {
             validationObj = {
                 valid: false,
-                message: `Error: Line Number ${lineNum}\nReason: "Following the module name should be a space and the characters \"(`
+                message: `Error: Line Number ${lineNum}\nReason: "Following the module name should be a space and the characters "(`
             };
         }
     }

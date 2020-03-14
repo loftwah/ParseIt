@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './multiple-add-text-to-beginning-module.css';
 import * as actions from '../../../actions';
+import { multipleAddTextToBeginningValidation } from './multiple-add-text-to-beginning-module-validation';
 
 class MultipleAddTextToBeginning extends Component {
     constructor(props) {
@@ -17,19 +18,22 @@ class MultipleAddTextToBeginning extends Component {
 
     handleLineNumberBegin = e => {
         this.setState({
-            lineNumBegin: e.target.value
+            lineNumBegin: e.target.value,
+            errorMsg: ''
         })
     }
 
     handleLineMultiple = e => {
         this.setState({
-            lineMultiple: e.target.value
+            lineMultiple: e.target.value,
+            errorMsg: ''
         })
     }
 
     handleCharToSplit = e => {
         this.setState({
-            charToAdd: e.target.value
+            charToAdd: e.target.value,
+            errorMsg: ''
         })
     }
 
@@ -40,71 +44,6 @@ class MultipleAddTextToBeginning extends Component {
         moduleActiveOff();
     }
 
-    validateUserInput = (lineNumBegin, lineMultiple, charToAdd) => {
-
-        if (lineNumBegin.length === 0) {
-            this.setState({
-                errorMsg: 'Please fill the Begin At Line Number input'
-            })
-            return false;
-        } else if (Number(lineNumBegin) === 0) {
-            this.setState({
-                errorMsg: "Begin At Line Number cannot be zero "
-            })
-            return false;
-        } else if (Number(lineNumBegin) < 0) {
-            this.setState({
-                errorMsg: "Begin At Line Number cannot be negative"
-            })
-            return false;
-        } else if (lineNumBegin.indexOf('e') !== -1) {
-            this.setState({
-                errorMsg: 'The letter "e" is not valid'
-            })
-            return false;
-        } else if (lineNumBegin.indexOf('.') !== -1) {
-            this.setState({
-                errorMsg: 'The decimal symbol "." is not valid'
-            })
-            return false;
-        }
-
-        if (lineMultiple.length === 0) {
-            this.setState({
-                errorMsg: 'Please fill the Line Multiple input'
-            })
-            return false;
-        } else if (Number(lineMultiple) === 0) {
-            this.setState({
-                errorMsg: "Line Multiple number cannot be zero "
-            })
-            return false;
-        } else if (Number(lineMultiple) < 0) {
-            this.setState({
-                errorMsg: "Line Multiple number cannot be negative"
-            })
-            return false;
-        } else if (lineMultiple.indexOf('e') !== -1) {
-            this.setState({
-                errorMsg: 'The letter "e" is not valid'
-            })
-            return false;
-        } else if (lineMultiple.indexOf('.') !== -1) {
-            this.setState({
-                errorMsg: 'The decimal symbol "." is not valid'
-            })
-            return false;
-        }
-
-        if (charToAdd.length === 0) {
-            this.setState({
-                errorMsg: 'Please fill the "Text to be added before line" input'
-            })
-            return false;
-        }
-        return true;
-    }
-
     handleSubmit = e => {
         e.preventDefault();
         console.log('submitted character!');
@@ -112,13 +51,13 @@ class MultipleAddTextToBeginning extends Component {
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
         const { lineNumBegin, lineMultiple, charToAdd } = this.state;
 
-        const validate = this.validateUserInput(lineNumBegin, lineMultiple, charToAdd)
-        if (validate === false) {
-            return;
-        } else if (validate === true) {
+        const validationTest = multipleAddTextToBeginningValidation(lineNumBegin, lineMultiple, charToAdd);
+        if (validationTest.valid === false) {
+            // create error message and return out
             this.setState({
-                errorMsg: ""
+                errorMsg: validationTest.error
             });
+            return;
         }
 
         // Output text gets updated on the "complete" module
@@ -141,13 +80,13 @@ class MultipleAddTextToBeginning extends Component {
         const { lineMultiple, charToAdd } = this.state;
         let { lineNumBegin } = this.state;
 
-        const validate = this.validateUserInput(lineNumBegin, lineMultiple, charToAdd);
-        if (validate === false) {
-            return;
-        } else if (validate === true) {
+        const validationTest = multipleAddTextToBeginningValidation(lineNumBegin, lineMultiple, charToAdd);
+        if (validationTest.valid === false) {
+            // create error message and return out
             this.setState({
-                errorMsg: ""
+                errorMsg: validationTest.error
             });
+            return;
         }
 
         // convert lineNumBegin into a number
@@ -263,7 +202,17 @@ class MultipleAddTextToBeginning extends Component {
     render() {
 
         const { previewToggle } = this.props;
-        const { lineNumBegin, lineMultiple, charToAdd, errorMsg } = this.state;
+        const { lineNumBegin, lineMultiple, charToAdd } = this.state;
+
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
+
         return (
             <div className="multiple-add-text-to-beginning-function">
                 <div className="multiple-add-text-to-beginning-card card white">
@@ -309,7 +258,7 @@ class MultipleAddTextToBeginning extends Component {
 
                             <div className="row character-line-input">
                                 <div className="multiple-add-text-to-beginning-characters col s12 m12 l12">
-                                    <h5>Text to be added before line</h5>
+                                    <h5>Text to Be Added Before Line</h5>
                                     <span>Characters:</span>
                                     <div className="multiple-add-text-to-beginning-user-input-character insert input-field inline">
                                         <input
@@ -324,8 +273,16 @@ class MultipleAddTextToBeginning extends Component {
                                 </div>
                             </div>
 
+                            {errorMsg === "" ? (
+                                <div className="no-error-msg">
+                                </div>
+                            ) : (
+                                    <div className="error-msg">
+                                        {errorMsgJSX}
+                                    </div>
+                                )}
+
                         </form>
-                        <p className="error-msg">{errorMsg}</p>
                     </div>
 
                     <div className="card-action preview-submit">
@@ -339,7 +296,7 @@ class MultipleAddTextToBeginning extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"
