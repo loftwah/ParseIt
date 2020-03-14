@@ -32,12 +32,12 @@ i.line-number-visible-img{
     margin-right:10px
 }
 
-a.toggle-line-numbers.On{
+button.toggle-line-numbers.On{
     background: #e0e0e0;
     color:black;
 }
 
-a.toggle-line-numbers.Off{
+button.toggle-line-numbers.Off{
     background: #616161;
     color:white;
 }

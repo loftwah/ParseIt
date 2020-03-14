@@ -26,16 +26,13 @@ class Navbar extends Component {
                             <i className="material-icons">menu</i></a>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li><a href="#!">What is ParseIt?</a></li>
-                            <li><a href="#!">Tutorial</a></li>
                             <li><a href="#!">ParseIt Code</a></li>
                         </ul>
                     </div>
                 </nav>
 
                 <ul id="slide-out" className="sidenav">
-
                     <li><a href="#!" className="waves-effect">What is ParseIt?</a></li>
-                    <li><a href="#!" className="waves-effect">Tutorial</a></li>
                     <li><a className="waves-effect" href="#!">ParseIt Code</a></li>
                 </ul>
             </div>

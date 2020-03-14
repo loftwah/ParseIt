@@ -217,11 +217,11 @@ class OutputSavedText extends Component {
                         <h4 className="grey-text text-darken-1">Saved Text: {savedTextName}</h4>
                         {createOutput}
                         <br />
-                        <a className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
+                        <button className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
                             onClick={this.handleToggleLineNumbers}>
                             <i className="material-icons line-number-visible-img">{iconImg}</i>
                             Line Numbers Visible: {buttonText}
-                        </a>
+                        </button>
                     </div>) : (
                         <div className="display-no-user-saved-text"></div>
                     )}
@@ -233,11 +233,11 @@ class OutputSavedText extends Component {
                             {createOutput}
                         </div>
                         <br />
-                        <a className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
+                        <button className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
                             onClick={this.handleToggleLineNumbers}>
                             <i className="material-icons line-number-visible-img">{iconImg}</i>
                             Line Numbers Visible: {buttonText}
-                        </a>
+                        </button>
                     </div>) : (
                         <div className="display-no-combined-saves"></div>
                     )}
@@ -249,11 +249,11 @@ class OutputSavedText extends Component {
                             {createOutput}
                         </div>
                         <br />
-                        <a className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
+                        <button className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
                             onClick={this.handleToggleLineNumbers}>
                             <i className="material-icons line-number-visible-img">{iconImg}</i>
                             Line Numbers Visible: {buttonText}
-                        </a>
+                        </button>
                     </div>) : (
                         <div className="display-no-combine-input-then-saves"></div>
                     )}

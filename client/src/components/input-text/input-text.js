@@ -305,9 +305,9 @@ class InputText extends Component {
                             <p>Would you like to discard your PDF text data?</p>
                         </div>
                         <div className="modal-footer">
-                            <a href="#!" className="modal-close waves-effect waves-red btn-flat right">No</a>
-                            <a href="#!" className="modal-close waves-effect waves-green btn-flat left"
-                                onClick={this.handleToggleTextboxOn}>Yes</a>
+                            <button className="modal-close waves-effect waves-red btn-flat right">No</button>
+                            <button className="modal-close waves-effect waves-green btn-flat left"
+                                onClick={this.handleToggleTextboxOn}>Yes</button>
                         </div>
                     </div>
 
@@ -327,23 +327,22 @@ class InputText extends Component {
                             <p>Would you like to discard your Textbox data?</p>
                         </div>
                         <div className="modal-footer">
-                            <a href="#!" className="modal-close waves-effect waves-red btn-flat right">No</a>
-                            <a href="#!" className="modal-close waves-effect waves-green btn-flat left"
-                                onClick={this.handleTogglePDFOn}>Yes</a>
+                            <button className="modal-close waves-effect waves-red btn-flat right">No</button>
+                            <button className="modal-close waves-effect waves-green btn-flat left"
+                                onClick={this.handleTogglePDFOn}>Yes</button>
                         </div>
                     </div>
                 </div>
 
                 {toggleTextbox === true && togglePDF === false ? (
                     <div className="textbox-input">
-                        <a className="waves-effect waves-light btn dummy-text-button deep-purple darken-1"
+                        <button className="waves-effect waves-light btn dummy-text-button deep-purple darken-1"
                             onClick={this.handleDummyText}>
                             Click for dummy text
-                        </a>
+                        </button>
                         <select className="browser-default textbox-number-dropdown-menu"
                             value={textBoxVal}
-                            onChange={this.handleTextboxNumChange}
-                            defaultValue=''>
+                            onChange={this.handleTextboxNumChange}>
                             <option value=''>-- Choose Number of Textboxes --</option>
                             {sizeList}
                         </select>

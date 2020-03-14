@@ -71,12 +71,12 @@ class OutputText extends Component {
                 </div>
                 <br />
 
-                <a className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
+                <button className={`waves-effect waves-light btn toggle-line-numbers ${buttonText}`}
                     onClick={this.handleToggleLineNumbers}
                 >
                     <i className="material-icons line-number-visible-img">{iconImg}</i>
                     Line Numbers Visible: {buttonText}
-                </a>
+                </button>
             </div>
         );
     };
