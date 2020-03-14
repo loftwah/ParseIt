@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './multiple-split-lines-before-word-module.css';
 import * as actions from '../../../actions';
+import { multipleSplitLinesBeforeWordValidation } from './multiple-split-lines-before-word-module-validation';
 
 class MultipleSplitLinesBeforeWord extends Component {
     constructor(props) {
@@ -19,31 +20,36 @@ class MultipleSplitLinesBeforeWord extends Component {
 
     handleLineNumberBegin = e => {
         this.setState({
-            lineNumBegin: e.target.value
+            lineNumBegin: e.target.value,
+            errorMsg: ''
         })
     }
 
     handleLineMultiple = e => {
         this.setState({
-            lineMultiple: e.target.value
+            lineMultiple: e.target.value,
+            errorMsg: ''
         })
     }
 
     handleCharToSplit = e => {
         this.setState({
-            charToSplit: e.target.value
+            charToSplit: e.target.value,
+            errorMsg: ''
         })
     }
 
     handleDirection = e => {
         this.setState({
-            direction: e.target.value
+            direction: e.target.value,
+            errorMsg: ''
         })
     }
 
     handleInstance = e => {
         this.setState({
-            instance: e.target.value
+            instance: e.target.value,
+            errorMsg: ''
         })
     }
 
@@ -54,98 +60,6 @@ class MultipleSplitLinesBeforeWord extends Component {
         moduleActiveOff();
     }
 
-    validateUserInput = (lineNumBegin, lineMultiple, charToSplit, instance) => {
-
-        if (lineNumBegin.length === 0) {
-            this.setState({
-                errorMsg: 'Please fill the Begin At Line Number input'
-            })
-            return false;
-        } else if (Number(lineNumBegin) === 0) {
-            this.setState({
-                errorMsg: "Begin At Line Number cannot be zero "
-            })
-            return false;
-        } else if (Number(lineNumBegin) < 0) {
-            this.setState({
-                errorMsg: "Begin At Line Number cannot be negative"
-            })
-            return false;
-        } else if (lineNumBegin.indexOf('e') !== -1) {
-            this.setState({
-                errorMsg: 'The letter "e" is not valid'
-            })
-            return false;
-        } else if (lineNumBegin.indexOf('.') !== -1) {
-            this.setState({
-                errorMsg: 'The decimal symbol "." is not valid'
-            })
-            return false;
-        }
-
-        if (lineMultiple.length === 0) {
-            this.setState({
-                errorMsg: 'Please fill the Line Multiple input'
-            })
-            return false;
-        } else if (Number(lineMultiple) === 0) {
-            this.setState({
-                errorMsg: "Line Multiple number cannot be zero "
-            })
-            return false;
-        } else if (Number(lineMultiple) < 0) {
-            this.setState({
-                errorMsg: "Line Multiple number cannot be negative"
-            })
-            return false;
-        } else if (lineMultiple.indexOf('e') !== -1) {
-            this.setState({
-                errorMsg: 'The letter "e" is not valid'
-            })
-            return false;
-        } else if (lineMultiple.indexOf('.') !== -1) {
-            this.setState({
-                errorMsg: 'The decimal symbol "." is not valid'
-            })
-            return false;
-        }
-
-        if (charToSplit.length === 0) {
-            this.setState({
-                errorMsg: 'Please fill the Split Before Characters input'
-            })
-            return false;
-        }
-
-        if (instance.length === 0) {
-            this.setState({
-                errorMsg: 'Please fill the Instance input'
-            })
-            return false;
-        } else if (Number(instance) === 0) {
-            this.setState({
-                errorMsg: "Instance number cannot be zero "
-            })
-            return false;
-        } else if (Number(instance) < 0) {
-            this.setState({
-                errorMsg: "Instance number cannot be negative"
-            })
-            return false;
-        } else if (instance.indexOf('e') !== -1) {
-            this.setState({
-                errorMsg: 'The letter "e" is not valid'
-            })
-            return false;
-        } else if (instance.indexOf('.') !== -1) {
-            this.setState({
-                errorMsg: 'The decimal symbol "." is not valid'
-            })
-            return false;
-        }
-        return true;
-    }
-
     handleSubmit = e => {
         e.preventDefault();
         console.log('submitted character!');
@@ -154,13 +68,14 @@ class MultipleSplitLinesBeforeWord extends Component {
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
         const { lineNumBegin, lineMultiple, charToSplit, direction, instance } = this.state;
 
-        const validate = this.validateUserInput(lineNumBegin, lineMultiple, charToSplit, instance)
-        if (validate === false) {
-            return;
-        } else if (validate === true) {
+        const validationTest = multipleSplitLinesBeforeWordValidation(lineNumBegin, lineMultiple, charToSplit, instance);
+
+        if (validationTest.valid === false) {
+            // create error message and return out
             this.setState({
-                errorMsg: ""
+                errorMsg: validationTest.error
             });
+            return;
         }
 
         // Output text gets updated on the "complete" module
@@ -183,13 +98,14 @@ class MultipleSplitLinesBeforeWord extends Component {
         const { lineMultiple, charToSplit, direction } = this.state;
         let { instance, lineNumBegin } = this.state;
 
-        const validate = this.validateUserInput(lineNumBegin, lineMultiple, charToSplit, instance);
-        if (validate === false) {
-            return;
-        } else if (validate === true) {
+        const validationTest = multipleSplitLinesBeforeWordValidation(lineNumBegin, lineMultiple, charToSplit, instance);
+
+        if (validationTest.valid === false) {
+            // create error message and return out
             this.setState({
-                errorMsg: ""
+                errorMsg: validationTest.error
             });
+            return;
         }
 
         // convert lineNumBegin into a number
@@ -223,7 +139,7 @@ class MultipleSplitLinesBeforeWord extends Component {
 
                 // if the charToSplit instance was found
                 let found = true;
-                
+
                 let line = containerSplitNewLine[i];
                 let isAMultiple = false;
 
@@ -461,7 +377,15 @@ class MultipleSplitLinesBeforeWord extends Component {
     render() {
 
         const { previewToggle } = this.props;
-        const { lineNumBegin, lineMultiple, charToSplit, instance, errorMsg } = this.state;
+        const { lineNumBegin, lineMultiple, charToSplit, instance } = this.state;
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
 
         return (
             <div className="multiple-split-lines-before-word-function">
@@ -569,8 +493,16 @@ class MultipleSplitLinesBeforeWord extends Component {
                                 </div>
                             </div>
 
+                            {errorMsg === "" ? (
+                                <div className="no-error-msg">
+                                </div>
+                            ) : (
+                                    <div className="error-msg">
+                                        {errorMsgJSX}
+                                    </div>
+                                )}
+
                         </form>
-                        <p className="error-msg">{errorMsg}</p>
                     </div>
 
                     <div className="card-action preview-submit">
@@ -584,7 +516,7 @@ class MultipleSplitLinesBeforeWord extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"
