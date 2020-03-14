@@ -409,6 +409,149 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "DeleteCertainLines":
+            // Must have 1 parameter
+            // Example:
+            if (moduleParams.length !== 1) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} "(1-5, 8, 11-13)"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
+                };
+            }
+
+            linesToDelete = moduleParams[0];
+
+            // check to see if the interval of lines is valid
+
+            const isRangeValid = (linesToDelete) => {
+
+                function Interval(left, right) {
+                    this.left = left;
+                    this.right = right
+                }
+
+                // Check if input is empty
+                if (linesToDelete.length === 0) {
+                    return false;
+                }
+
+                // Check to see if user input correct symbols
+                // analyze the linesToDelete for numbers, spaces, commas and dashes
+                // Everything else: throw an error
+                const validSymbolHash = {
+                    '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
+                    '-': 10, ' ': 11, ',': 12
+                };
+
+                for (let idx = 0; idx < linesToDelete.length; idx++) {
+                    let checkChar = linesToDelete[idx]
+                    if (validSymbolHash[checkChar] === undefined) {
+                        return false;
+                    }
+                }
+
+                // Check to see if all ranges are valid
+
+                const splitOnCommaArr = linesToDelete.split(',');
+
+                // If user input passes all range tests, the below array will be filled with user ranges
+                let userRanges = [];
+
+                for (let j = 0; j < splitOnCommaArr.length; j++) {
+                    let range = splitOnCommaArr[j];
+
+                    // test to see if a user input a number, then a space, then a number = BAD
+                    let splitOnHyphenValidation = range.split('-');
+                    for (let k = 0; k < splitOnHyphenValidation.length; k++) {
+                        let param = splitOnHyphenValidation[k]
+                        // remove all spaces in the beginning
+                        while (param[0] === ' ') {
+                            param = param.slice(1);
+                        }
+
+                        // range CANNOT start with "-"
+                        if (param === "") {
+                            return false;
+                        }
+
+                        // remove all spaces in the end
+                        while (param[param.length - 1] === ' ') {
+                            param = param.slice(0, param.length - 1);
+                        }
+
+                        // Check to see if spaces still exist
+                        // If spaces still exist, the user input a number, a space, and a number = error
+                        if (param.indexOf(' ') !== -1) {
+                            return false;
+                        }
+                    }
+
+                    // Remove all spaces entirely
+                    while (linesToDelete.indexOf(' ') !== -1) {
+                        linesToDelete = linesToDelete.replace(' ', '')
+                    }
+
+                    if (range.length === 0) {
+                        // No input between 2 commas
+                        return false;
+                    }
+
+                    let rangeSplitOnHyphen = range.split('-');
+                    let firstNum = rangeSplitOnHyphen[0];
+                    let lastNum;
+                    if (rangeSplitOnHyphen.length === 2) {
+                        // If there are hyphens, enter in the last Num
+                        lastNum = rangeSplitOnHyphen[1];
+
+                    } else {
+                        // otherwise lastNum will be the firstNum
+                        lastNum = firstNum;
+                    }
+
+                    if (rangeSplitOnHyphen.length >= 3) {
+                        // too many hyphens
+                        return false;
+                    }
+                    if (isNaN(firstNum) === true || isNaN(lastNum) === true) {
+                        // the beginning or ending characters must only be numbers
+                        return false;
+                    }
+
+                    // It is safe to convert the firstNum and lastNum into actual numbers
+                    firstNum = Number(firstNum);
+                    lastNum = Number(lastNum);
+
+                    if (firstNum > lastNum) {
+                        // first character should not be greater than the last 
+                        return false;
+                    }
+
+                    // This particular interval passes the test
+                    if (rangeSplitOnHyphen.length === 1) {
+                        // The user did not add a hyphen for this range
+                        let interval = new Interval(Number(rangeSplitOnHyphen[0]), Number(rangeSplitOnHyphen[0]))
+                        userRanges.push(interval)
+                    } else if (rangeSplitOnHyphen.length === 2) {
+                        // The user DID add a hyphen for this range
+                        let interval = new Interval(Number(rangeSplitOnHyphen[0]), Number(rangeSplitOnHyphen[1]))
+                        userRanges.push(interval)
+                    }
+                }
+                return true;
+            }
+
+            const areIntervalsValid = isRangeValid(linesToDelete)
+
+            if (areIntervalsValid === false) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Invalid Number Range, use e.g. 1-5, 8, 11-13`
+                };
+            }
             break;
         case "DeleteBetweenPhrases":
             break;

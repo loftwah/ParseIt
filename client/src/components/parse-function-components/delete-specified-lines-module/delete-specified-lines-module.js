@@ -84,6 +84,12 @@ class DeleteSpecifiedLines extends Component {
                     param = param.slice(1);
                 }
 
+                // range CANNOT start with "-"
+                if (param === "") {
+                    sendRangeErrorMessage();
+                    return false;
+                }
+
                 // remove all spaces in the end
                 while (param[param.length - 1] === ' ') {
                     param = param.slice(0, param.length - 1);
@@ -352,7 +358,17 @@ class DeleteSpecifiedLines extends Component {
 
     render() {
         const { previewToggle } = this.props;
-        const { linesToDelete, errorMsg } = this.state;
+        const { linesToDelete } = this.state;
+
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
+
         return (
             <div className="delete-specified-lines-function">
                 <div className="delete-specified-lines-card card white">
@@ -374,9 +390,16 @@ class DeleteSpecifiedLines extends Component {
                                 />
                                 <label htmlFor="delete-specified-input"></label>
                             </div>
-                            <br />
                         </div>
-                        <p className="error-msg">{errorMsg}</p>
+
+                        {errorMsg === "" ? (
+                            <div className="no-error-msg">
+                            </div>
+                        ) : (
+                                <div className="error-msg">
+                                    {errorMsgJSX}
+                                </div>
+                            )}
                     </div>
 
                     <div className="card-action preview-submit">
@@ -390,7 +413,7 @@ class DeleteSpecifiedLines extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"
