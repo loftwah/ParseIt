@@ -26,6 +26,6 @@ span.line-number {
     color: rgb(163, 163, 163);
 }
 
-/* span {
-    color: rgb(74, 255, 83)
-} */
+div.additions-preview-empty span{
+    color: rgb(163, 163, 163);
+}

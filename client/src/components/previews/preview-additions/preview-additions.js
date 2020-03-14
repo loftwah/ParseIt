@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import './preview-additions.css';
 import * as actions from '../../../actions';
@@ -9,15 +10,10 @@ class PreviewAdditions extends Component {
         super(props);
     }
 
-    // When component updates, turn output text into input text?
-    componentDidUpdate() {
-        const { updateInputText, outputText } = this.props
-        // updateInputText(outputText)
-    }
-
     render() {
-        // may get rid of "outputText " variable?
         const { inputContainerDisplay, additionsPreview } = this.props;
+
+        const isPreviewEmpty = _.isEmpty(additionsPreview[inputContainerDisplay]);
 
         return (
             <div className="preview-additions-text-container">
@@ -25,9 +21,17 @@ class PreviewAdditions extends Component {
                 <div className="preview-additions-text-box"
                     style={{ fontFamily: 'Courier' }}>
                     <div className="preview-additions-text">
-                        {additionsPreview[inputContainerDisplay]}
-                        {/* <p>More <span style={{background: "red"}}>input</span> hi</p>
-                        <p>More <span style={{background: "rgb(74, 255, 83)"}}>input</span> hi</p> */}
+                        {isPreviewEmpty === true ? (
+                            <div className="additions-preview-empty">
+                                <span>[1] [every line is deleted]</span>
+
+                            </div>
+                        ) : (
+                                <div className="additions-preview-not-empty">
+                                    {additionsPreview[inputContainerDisplay]}
+                                </div>
+
+                            )}
                     </div>
                 </div>
             </div>

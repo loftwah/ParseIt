@@ -63,14 +63,18 @@ class InputText extends Component {
         e.preventDefault();
 
         // This Submit will also submit anything in our ParseIt code reducer (in case we want to update the text)
-        const { initializeCodeToggle, updateInputText, updateOutputText, codeText } = this.props;
+        const { initializeCodeToggle, moduleActiveOff, updateInputText, updateOutputText,
+            togglePreviewOff, codeText } = this.props;
         const { localInputText } = this.state;
-
 
         updateInputText(localInputText);
         updateOutputText(localInputText);
 
+        moduleActiveOff();
+        togglePreviewOff();
+
         // If there is no codeText, don't initialize code
+        // Only initialize if there's codeText
         if (codeText !== "") {
             initializeCodeToggle(true);
         }
@@ -152,7 +156,7 @@ class InputText extends Component {
 
     handleTextboxNumChange = e => {
         const { localInputText } = this.state;
-        const { updateContainerDisplay, updateInputText, updateOutputText, updateCodeText } = this.props;
+        const { updateContainerDisplay, updateCodeText } = this.props;
 
         // input display will default to 0
         updateContainerDisplay(0);
@@ -194,6 +198,30 @@ class InputText extends Component {
         })
     }
 
+    handleDummyText = e => {
+        e.preventDefault();
+        const { updateContainerDisplay } = this.props;
+
+        const text1 = "Lorem Ipsum is simply dummy text of\nthe printing and typesetting industry.\nLorem Ipsum has been the industry's\nstandard dummy text ever since the 1500s, when an unknown\nprinter took a galley of type and scrambled it to make a type specimen book. It has\nsurvived not only five centuries,\nbut also the leap into electronic typesetting,\nremaining essentially unchanged. It was popularised in the 1960s with the release of Letraset\nsheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker\nincluding versions of Lorem Ipsum.";
+
+        const text2 = "It is a long established fact\nthat a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum\nis that it\n\nhas a more-or-less normal distribution of letters, as\nopposed to using 'Content here, content here', making it look like readable English.\nMany desktop publishing packages and web page editors\nnow use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will\nuncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident,\nsometimes on purpose (injected humour and the like).";
+
+        const text3 = "Contrary to popular belief, Lorem Ipsum is not simply random text. \nIt has roots in a piece of classical Latin literature from 45 BC, \nmaking it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure\nLatin words, consectetur,       from a Lorem   Ipsum           passage, and going through\nthe cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes\nfrom sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum\net Malorum\" (The Extremes of Good and Evil)\nby Cicero,\nwritten in 45 BC. This book is a treatise on the theory of ethics,\nvery popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\n'0123456789😀abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&\'()*+,-./:;?@[\\]^_`{|}~'";
+
+        let initInputText = [];
+
+        initInputText.push({ inputContainer: 0, text: text1, name: "Textbox #1" });
+        initInputText.push({ inputContainer: 1, text: text2, name: "Textbox #2" });
+        initInputText.push({ inputContainer: 2, text: text3, name: "Textbox #3" });
+
+        this.setState({
+            textboxNumber: 3,
+            localInputText: initInputText
+        });
+
+        updateContainerDisplay(0);
+    }
+
     render() {
         let { toggleTextbox, togglePDF, textboxNumber, disableTextBtn, disablePDFbtn, localInputText } = this.state;
         const { inputText } = this.props;
@@ -202,6 +230,7 @@ class InputText extends Component {
         // toggleTextbox = false;
         // togglePDF = true;
 
+        let textBoxVal = textboxNumber === 1 ? (`${textboxNumber} Textbox`) : (`${textboxNumber} Textboxes`);
         let textboxNumberSelect = [];
         const minNumber = 1;
         const maxNumber = 25;
@@ -307,10 +336,14 @@ class InputText extends Component {
 
                 {toggleTextbox === true && togglePDF === false ? (
                     <div className="textbox-input">
-
+                        <a className="waves-effect waves-light btn dummy-text-button deep-purple darken-1"
+                            onClick={this.handleDummyText}>
+                            Click for dummy text
+                        </a>
                         <select className="browser-default textbox-number-dropdown-menu"
+                            value={textBoxVal}
                             onChange={this.handleTextboxNumChange}
-                            defaultValue={1}>
+                            defaultValue=''>
                             <option value=''>-- Choose Number of Textboxes --</option>
                             {sizeList}
                         </select>

@@ -85,3 +85,7 @@ div.textbox-title-input input.input:focus{
  button.parse-text.submit-form-button{
      margin-top: 12px
  }
+
+a.dummy-text-button {
+    margin-bottom: 18px
+ }
