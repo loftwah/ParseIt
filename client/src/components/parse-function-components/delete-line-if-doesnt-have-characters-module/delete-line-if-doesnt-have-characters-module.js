@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './delete-line-if-doesnt-have-characters-module.css';
 import * as actions from '../../../actions';
+import { deleteLineIfDoesntHaveCharsValidation } from './delete-line-if-doesnt-have-characters-module-validation';
 
 class DeleteLineIfDoesntHaveCharacters extends Component {
     constructor(props) {
@@ -15,7 +16,8 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
 
     handleCharLineDelete = e => {
         this.setState({
-            chars: e.target.value
+            chars: e.target.value,
+            errorMsg: ''
         })
     }
 
@@ -26,16 +28,6 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
         moduleActiveOff();
     }
 
-    validateUserInput = (chars) => {
-        if (chars.length === 0) {
-            this.setState({
-                errorMsg: 'Please fill the "Text to be added before line" input'
-            })
-            return false;
-        }
-        return true;
-    }
-
     handleSubmit = e => {
         e.preventDefault();
         console.log('submitted character!');
@@ -43,13 +35,13 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
         const { chars } = this.state;
 
-        const validate = this.validateUserInput(chars)
-        if (validate === false) {
-            return;
-        } else if (validate === true) {
+        const validationTest = deleteLineIfDoesntHaveCharsValidation(chars);
+        if (validationTest.valid === false) {
+            // create error message and return out
             this.setState({
-                errorMsg: ""
+                errorMsg: validationTest.error
             });
+            return;
         }
 
         // Output text gets updated on the "complete" module
@@ -71,14 +63,15 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { chars } = this.state;
 
-        const validate = this.validateUserInput(chars);
-        if (validate === false) {
-            return;
-        } else if (validate === true) {
+        const validationTest = deleteLineIfDoesntHaveCharsValidation(chars);
+        if (validationTest.valid === false) {
+            // create error message and return out
             this.setState({
-                errorMsg: ""
+                errorMsg: validationTest.error
             });
+            return;
         }
+
         let additionPreviews = [];
         let deletionPreviews = [];
         let found;
@@ -165,9 +158,17 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
     }
 
     render() {
-
         const { previewToggle } = this.props;
-        const { chars, errorMsg } = this.state;
+        const { chars } = this.state;
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
+
         return (
             <div className="delete-line-if-doesnt-have-characters-function">
                 <div className="delete-line-if-doesnt-have-characters-card card white">
@@ -194,8 +195,16 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
                                 </div>
                             </div>
 
+                            {errorMsg === "" ? (
+                                <div className="no-error-msg">
+                                </div>
+                            ) : (
+                                    <div className="error-msg">
+                                        {errorMsgJSX}
+                                    </div>
+                                )}
+
                         </form>
-                        <p className="error-msg">{errorMsg}</p>
                     </div>
 
                     <div className="card-action preview-submit">
@@ -209,7 +218,7 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"

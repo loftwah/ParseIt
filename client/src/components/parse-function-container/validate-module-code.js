@@ -606,6 +606,27 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "DeleteLineIfDoesntHavePhrase":
+            // Must only have 1 parameter
+            if (moduleParams.length !== 1) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} "(phrase)"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
+                };
+            }
+
+            charDeleteLine = moduleParams[0];
+
+            if (charDeleteLine === "") {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: The phrase parameter cannot be blank`
+                };
+            }
             break;
         case "CreateLineBeginningAllInputs":
             break;
