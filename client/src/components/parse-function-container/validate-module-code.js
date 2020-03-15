@@ -671,6 +671,18 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "CreateLineEndLastInput":
+            // Must only have 1 parameter
+            if (moduleParams.length !== 1) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} "(phrase)"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
+                };
+            }
             break;
         case "":
             if (moduleCode !== "") {
