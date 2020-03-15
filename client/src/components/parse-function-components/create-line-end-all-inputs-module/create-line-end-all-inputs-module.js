@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './create-line-end-all-inputs-module.css';
 import * as actions from '../../../actions';
+import { createLineEndAllInputsValidation } from './create-line-end-all-inputs-module-validation';
 
 class CreateLineEndAllInputs extends Component {
     constructor(props) {
@@ -15,7 +16,8 @@ class CreateLineEndAllInputs extends Component {
 
     handleCharLineDelete = e => {
         this.setState({
-            charsToAdd: e.target.value
+            charsToAdd: e.target.value,
+            errorMsg: ''
         })
     }
 
@@ -36,6 +38,16 @@ class CreateLineEndAllInputs extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
+
+        const validationTest = createLineEndAllInputsValidation(charsToAdd);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
+
         const moduleCode = "CreateLineEndAllInputs" + " \"(" + charsToAdd + ")\"";
         handleModuleCode({
             code: moduleCode,
@@ -51,6 +63,15 @@ class CreateLineEndAllInputs extends Component {
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { charsToAdd } = this.state;
+
+        const validationTest = createLineEndAllInputsValidation(charsToAdd);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
 
         let additionPreviews = [];
         let deletionPreviews = [];
@@ -142,9 +163,16 @@ class CreateLineEndAllInputs extends Component {
     }
 
     render() {
-
         const { previewToggle } = this.props;
-        const { charsToAdd, errorMsg } = this.state;
+        const { charsToAdd } = this.state;
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
 
         return (
             <div className="create-line-end-all-inputs-function">
@@ -169,11 +197,20 @@ class CreateLineEndAllInputs extends Component {
                                         />
                                         <label htmlFor="character-input"></label>
                                     </div>
+
+                                    {errorMsg === "" ? (
+                                        <div className="no-error-msg">
+                                        </div>
+                                    ) : (
+                                            <div className="error-msg">
+                                                {errorMsgJSX}
+                                            </div>
+                                        )}
+
                                 </div>
                             </div>
 
                         </form>
-                        <p className="error-msg">{errorMsg}</p>
                     </div>
 
                     <div className="card-action preview-submit">
@@ -187,7 +224,7 @@ class CreateLineEndAllInputs extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"
