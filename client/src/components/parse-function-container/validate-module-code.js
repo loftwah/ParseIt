@@ -359,7 +359,7 @@ export const validateCode = (moduleCode, lineNum) => {
             }
 
             if (charToAdd.length === 0) {
-                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #3 Text to Be Added Before Line: Please fill the inputt` };
+                return { valid: false, message: `Error: Line Number ${lineNum} at ${moduleType}\nParam #3 Text to Be Added Before Line: Please fill the input` };
             }
             break;
         case "MultipleDeleteLine":

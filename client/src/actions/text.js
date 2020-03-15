@@ -6,6 +6,7 @@ import {
     UPDATE_CODE_TEXT,
     UPDATE_CONTAINER_DISPLAY,
     UPDATE_SAVED_TEXT_CONTAINER_DISPLAY,
+    UPDATE_LOCAL_INPUT_TEXT,
     TOGGLE_PREVIEW_ON,
     TOGGLE_PREVIEW_OFF,
     TOGGLE_OUTPUT_TEXT_ON,
@@ -14,6 +15,10 @@ import {
     TOGGLE_SAVED_TEXT_OFF,
     TOGGLE_MODULE_ACTIVE_ON,
     TOGGLE_MODULE_ACTIVE_OFF,
+    TOGGLE_TEXTBOX_ON,
+    TOGGLE_TEXTBOX_OFF,
+    TOGGLE_PDF_ON,
+    TOGGLE_PDF_OFF,
     UPDATE_DELETIONS_PREVIEW,
     UPDATE_ADDITIONS_PREVIEW
 } from './types';
@@ -153,6 +158,42 @@ export const moduleActiveOff = () => {
     }
 }
 
+export const toggleTextboxOn = () => {
+    return dispatch => {
+        dispatch({
+            type: TOGGLE_TEXTBOX_ON,
+            payload: true,
+        });
+    }
+}
+
+export const toggleTextboxOff = () => {
+    return dispatch => {
+        dispatch({
+            type: TOGGLE_TEXTBOX_OFF,
+            payload: false,
+        });
+    }
+}
+
+export const togglePdfOn = () => {
+    return dispatch => {
+        dispatch({
+            type: TOGGLE_PDF_ON,
+            payload: true,
+        });
+    }
+}
+
+export const togglePdfOff = () => {
+    return dispatch => {
+        dispatch({
+            type: TOGGLE_PDF_OFF,
+            payload: false,
+        });
+    }
+}
+
 export const updateDeletionsPreview = data => {
     return dispatch => {
         dispatch({
@@ -166,6 +207,15 @@ export const updateAdditionsPreview = data => {
     return dispatch => {
         dispatch({
             type: UPDATE_ADDITIONS_PREVIEW,
+            payload: data,
+        });
+    }
+}
+
+export const updateLocalText = data => {
+    return dispatch => {
+        dispatch({
+            type: UPDATE_LOCAL_INPUT_TEXT,
             payload: data,
         });
     }

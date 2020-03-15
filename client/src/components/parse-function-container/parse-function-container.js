@@ -64,6 +64,8 @@ class ParseFunctionContainer extends Component {
     }
 
     componentDidMount() {
+        const { codeText, updateOutputText, inputText } = this.props;
+
         let miscDropdown = document.querySelectorAll('.dropdown-trigger-misc-module');
         M.Dropdown.init(miscDropdown, { coverTrigger: false });
 
@@ -84,6 +86,34 @@ class ParseFunctionContainer extends Component {
 
         let createDropdown = document.querySelectorAll('.dropdown-trigger-create-module');
         M.Dropdown.init(createDropdown, { coverTrigger: false });
+
+        // component has mounted with code text (this happens when a user returns from a nav item) - run parseIt code to build the JSX of all modules
+        // We need to build the modules from scratch, rather than store the JSX inside the redux state, for the case where a user wants to delete a module
+        if (codeText !== '') {
+            // Bring back the input text
+            updateOutputText(inputText);
+
+            // create moduleCode structured like the state
+            let moduleCode = [];
+            const codeArr = codeText.split('\n');
+
+            let randId;
+            for (let i = 0; i < codeArr.length; i++) {
+                randId = Math.random();
+                moduleCode.push({
+                    code: codeArr[i],
+                    id: randId
+                })
+            }
+
+            // update the state with moduleCode
+            this.setState({
+                moduleCode
+            });
+
+            // build all modules found in the moduleCode state
+            this.ouptutModulesFromModuleCodeState(moduleCode);
+        }
     }
 
     async getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -168,7 +198,7 @@ class ParseFunctionContainer extends Component {
     handleModuleCode = moduleCodeText => {
         // This function is activated from submitted modules (from edited-modules)
         // ParseIt code submission does NOT enter here
-        
+
         // Example of how the "Module Code" will work:
         // Template: ReplaceCharacterModule "text" "other text"
         // the above means "create a character module and submit a replacement of "text" with "other text"

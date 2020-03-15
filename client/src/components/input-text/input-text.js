@@ -12,26 +12,78 @@ class InputText extends Component {
         this.state = {
             toggleTextbox: true,
             togglePDF: false,
-            textboxNumber: 2, // Development: 2, Production: 0
+            textboxNumber: 0,
             disableTextBtn: true,
             disablePDFbtn: false,
-            // localInputText: [], // Production
-            localInputText: [{ inputContainer: 0, text: 'hello  world, inputContainer 0\n good   stuff right      now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" }, { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }] // Development
+            localInputText: []
         };
         this.handleTextareaChange = this.handleTextareaChange.bind(this);
     }
 
     componentDidMount() {
+        const { initializeCodeToggle, moduleActiveOff, togglePreviewOff, inputText,
+            toggleTextboxReducer, togglePdfReducer, localInputTextReducer } = this.props;
+
         let modalTextConf = document.querySelectorAll('.modal-textbox');
         M.Modal.init(modalTextConf);
 
         let modalPdfConf = document.querySelectorAll('.modal-pdf');
         M.Modal.init(modalPdfConf);
+
+        // Case: user goes to navbar, and then back to the home page
+        // We need to update the visual states of this component and parse-it code component
+
+        // Show either PDF or Plain text page - whatever the user was working on previously
+        switch (toggleTextboxReducer) {
+            case (true):
+                this.setState({
+                    toggleTextbox: true,
+                    togglePDF: false,
+                    disableTextBtn: true,
+                    disablePDFbtn: false,
+
+                });
+                break;
+            case (false):
+                this.setState({
+                    toggleTextbox: false,
+                    togglePDF: true,
+                    disableTextBtn: false,
+                    disablePDFbtn: true,
+                });
+                break;
+            default:
+                console.log("toggleTextboxReducer is not defined")
+        }
+
+        // If there is input text found inside the reducer, set the state here to match the text
+        if (inputText.length !== 0) {
+            this.setState({
+                textboxNumber: inputText.length,
+                localInputText: inputText
+            });
+            moduleActiveOff();
+            togglePreviewOff();
+        } else if (localInputTextReducer.length !== 0) {
+            // otherwise, insert the reducer's localInputText
+            this.setState({
+                textboxNumber: localInputTextReducer.length,
+                localInputText: localInputTextReducer
+            });
+        } else {
+            // Development dummy text - delete if production
+            this.setState({
+                localInputText: [{ inputContainer: 0, text: 'hello  world, inputContainer 0\n good   stuff right      now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" }, { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
+                textboxNumber: 2
+            })
+        }
+
     }
 
     // don't need async at the moment
     async handleTextareaChange(e) {
         const { localInputText } = this.state;
+        const { updateLocalText } = this.props;
 
         let textboxNum = Number(e.target.className.replace('input-text ', ''));
         let name = localInputText[textboxNum].name;
@@ -57,18 +109,20 @@ class InputText extends Component {
         this.setState({
             localInputText: newInputContainerList
         })
+        updateLocalText(newInputContainerList);
     }
 
     handleInputSubmit = e => {
         e.preventDefault();
 
         // This Submit will also submit anything in our ParseIt code reducer (in case we want to update the text)
-        const { initializeCodeToggle, moduleActiveOff, updateInputText, updateOutputText,
+        const { initializeCodeToggle, moduleActiveOff, updateInputText, updateOutputText, updateLocalText,
             togglePreviewOff, codeText } = this.props;
         const { localInputText } = this.state;
 
         updateInputText(localInputText);
         updateOutputText(localInputText);
+        updateLocalText(localInputText);
 
         moduleActiveOff();
         togglePreviewOff();
@@ -82,6 +136,7 @@ class InputText extends Component {
 
     handleTextboxTitle = e => {
         const { localInputText } = this.state;
+        const { updateLocalText } = this.props;
 
         // className structure: "input #"
         const inputContainer = Number(e.target.className.slice(6));
@@ -106,6 +161,7 @@ class InputText extends Component {
         this.setState({
             localInputText: newInputContainerList
         })
+        updateLocalText(newInputContainerList);
     }
 
     handleToggleTextboxOn = e => {
@@ -129,6 +185,10 @@ class InputText extends Component {
         this.props.toggleSavedTextOff();
         this.props.moduleActiveOff();
         this.props.togglePreviewOff();
+
+        // Let the reducer know that we are working inside the Plain Text component
+        this.props.toggleTextboxOn();
+        this.props.togglePdfOff();
     }
 
     handleTogglePDFOn = e => {
@@ -152,11 +212,15 @@ class InputText extends Component {
         this.props.toggleSavedTextOff();
         this.props.moduleActiveOff();
         this.props.togglePreviewOff();
+
+        // Let the reducer know we are using the PDF component
+        this.props.togglePdfOn();
+        this.props.toggleTextboxOff();
     }
 
     handleTextboxNumChange = e => {
         const { localInputText } = this.state;
-        const { updateContainerDisplay, updateCodeText } = this.props;
+        const { updateContainerDisplay, updateCodeText, updateLocalText } = this.props;
 
         // input display will default to 0
         updateContainerDisplay(0);
@@ -196,11 +260,13 @@ class InputText extends Component {
         this.setState({
             localInputText: initInputText
         })
+
+        updateLocalText(initInputText);
     }
 
     handleDummyText = e => {
         e.preventDefault();
-        const { updateContainerDisplay } = this.props;
+        const { updateContainerDisplay, updateLocalText } = this.props;
 
         const text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.\nLorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.\nIt was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker   including versions of Lorem Ipsum.";
 
@@ -210,15 +276,16 @@ class InputText extends Component {
 
         let initInputText = [];
 
-        initInputText.push({ inputContainer: 0, text: text1, name: "Textbox #1" });
-        initInputText.push({ inputContainer: 1, text: text2, name: "Textbox #2" });
-        initInputText.push({ inputContainer: 2, text: text3, name: "Textbox #3" });
+        initInputText.push({ inputContainer: 0, text: text1, name: "Lorem Ipsum Text #1" });
+        initInputText.push({ inputContainer: 1, text: text2, name: "Lorem Ipsum Text #2" });
+        initInputText.push({ inputContainer: 2, text: text3, name: "Lorem Ipsum Text #3" });
 
         this.setState({
             textboxNumber: 3,
             localInputText: initInputText
         });
 
+        updateLocalText(initInputText);
         updateContainerDisplay(0);
     }
 
@@ -262,7 +329,7 @@ class InputText extends Component {
                             type="text"
                             id={`textbox-title-input ${i}`}
                             onChange={this.handleTextboxTitle}
-                            placeholder={`Title: Textbox ${i + 1}`}
+                            value={localInputText[i].name}
                         />
                         <label htmlFor={`textbox-title-input ${i}`}></label>
                     </div>
@@ -370,6 +437,9 @@ const mapStateToProps = (state) => {
         inputText: state.textRed.inputText,
         outputText: state.textRed.outputText,
         codeText: state.textRed.codeText,
+        toggleTextboxReducer: state.textRed.toggleTextbox,
+        togglePdfReducer: state.textRed.togglePDF,
+        localInputTextReducer: state.textRed.localInputText
     };
 };
 
