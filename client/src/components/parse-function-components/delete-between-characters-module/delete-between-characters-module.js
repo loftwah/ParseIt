@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './delete-between-characters-module.css';
 import * as actions from '../../../actions';
+import { deleteBetweenCharsValidation } from './delete-between-characters-module-validation';
 
 class DeleteBetweenCharactersModule extends Component {
     constructor(props) {
@@ -10,18 +11,21 @@ class DeleteBetweenCharactersModule extends Component {
         this.state = {
             startCharacters: '',
             endCharacters: '',
+            errorMsg: '',
         };
     }
 
     handleDeleteBetweenCharacters = e => {
         this.setState({
-            startCharacters: e.target.value
+            startCharacters: e.target.value,
+            errorMsg: ''
         })
     }
 
     handleInsertCharacter = e => {
         this.setState({
-            endCharacters: e.target.value
+            endCharacters: e.target.value,
+            errorMsg: ''
         })
     }
 
@@ -43,6 +47,16 @@ class DeleteBetweenCharactersModule extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
+
+        const validationTest = deleteBetweenCharsValidation(startCharacters, endCharacters);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
+
         const moduleCode = "DeleteBetweenPhrases" + " \"(" + startCharacters + ")\" \"(" + endCharacters + ")\"";
 
         handleModuleCode({
@@ -59,6 +73,15 @@ class DeleteBetweenCharactersModule extends Component {
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         const { startCharacters, endCharacters } = this.state;
+
+        const validationTest = deleteBetweenCharsValidation(startCharacters, endCharacters);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
 
         let additionPreviews = [];
         let deletionPreviews = [];
@@ -317,8 +340,9 @@ class DeleteBetweenCharactersModule extends Component {
                             // put the addIdx back to its original index number
                             addIdx--;
                         } else {
+                            // The key will be deleteIdx, because deleting over blank lines cause addIdx to be the same
                             createSingleAdditionPreview.push(
-                                <div className="line" key={addIdx}>
+                                <div className="line" key={deleteIdx}>
                                     {[...additionPreviewLineJSX]}
                                 </div>
                             );
@@ -375,6 +399,16 @@ class DeleteBetweenCharactersModule extends Component {
     render() {
         const { previewToggle } = this.props;
         const { endCharacters, startCharacters } = this.state;
+
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
+
         return (
             <div className="delete-between-characters-function">
                 <div className="delete-between-characters-card card white">
@@ -410,6 +444,17 @@ class DeleteBetweenCharactersModule extends Component {
                         </div>
                     </div>
 
+                    <div className="error-column">
+                        {errorMsg === "" ? (
+                            <div className="no-error-msg">
+                            </div>
+                        ) : (
+                                <div className="error-msg">
+                                    {errorMsgJSX}
+                                </div>
+                            )}
+                    </div>
+
                     <div className="card-action preview-submit">
                         {previewToggle === true ? (
                             <a
@@ -421,7 +466,7 @@ class DeleteBetweenCharactersModule extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"

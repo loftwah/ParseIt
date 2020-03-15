@@ -554,6 +554,34 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "DeleteBetweenPhrases":
+            // Must only have 2 parameters
+            if (moduleParams.length !== 2) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 2 parameters\nStructure: ${moduleType} "(phrase)" "(phrase)"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
+                };
+            }
+
+            startCharacters = moduleParams[0];
+            endCharacters = moduleParams[1];
+
+            if (startCharacters === "") {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: The first phrase cannot be blank`
+                };
+            } else if (endCharacters === "") {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: The second phrase cannot be blank`
+                };
+            }
+
             break;
         case "DeleteLineIfHasPhrase":
             break;

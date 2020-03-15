@@ -20,6 +20,10 @@ div.delete-between-characters-complete {
     white-space: pre-wrap;
 }
 
+div.error-column{
+    padding-left: 20px
+}
+
 @media only screen and (max-width: 450px) {
     div.delete-between-characters-user-input.insert {
         padding-left: 10px
