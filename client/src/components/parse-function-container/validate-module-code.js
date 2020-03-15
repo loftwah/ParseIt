@@ -596,9 +596,9 @@ export const validateCode = (moduleCode, lineNum) => {
                 };
             }
 
-            charDeleteLine = moduleParams[0];
+            charKeepLine = moduleParams[0];
 
-            if (charDeleteLine === "") {
+            if (charKeepLine === "") {
                 return validationObj = {
                     valid: false,
                     message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: The phrase parameter cannot be blank`
@@ -629,6 +629,18 @@ export const validateCode = (moduleCode, lineNum) => {
             }
             break;
         case "CreateLineBeginningAllInputs":
+            // Must only have 1 parameter
+            if (moduleParams.length !== 1) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes only 1 parameter\nStructure: ${moduleType} "(phrase)"`
+                };
+            } else if (validParamEnding !== true) {
+                return validationObj = {
+                    valid: false,
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: Code must end with )"`
+                };
+            }
             break;
         case "CreateLineBeginningFirstInput":
             break;

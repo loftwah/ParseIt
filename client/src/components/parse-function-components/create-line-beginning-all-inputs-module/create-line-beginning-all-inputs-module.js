@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './create-line-beginning-all-inputs-module.css';
 import * as actions from '../../../actions';
+import { createLineBeginningAllInputsValidation } from './create-line-beginning-all-inputs-module-validation';
 
 class CreateLineBeginningAllInputs extends Component {
     constructor(props) {
@@ -16,13 +17,15 @@ class CreateLineBeginningAllInputs extends Component {
 
     handleCharLineDelete = e => {
         this.setState({
-            charsToAdd: e.target.value
+            charsToAdd: e.target.value,
+            errorMsg: ''
         })
     }
 
     handleGetNameToggle = e => {
         this.setState({
-            getNameToggle: !this.state.getNameToggle
+            getNameToggle: !this.state.getNameToggle,
+            errorMsg: ''
         })
     }
 
@@ -45,6 +48,16 @@ class CreateLineBeginningAllInputs extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
+
+        const validationTest = createLineBeginningAllInputsValidation(finalizedChars, getNameToggle);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
+
         const moduleCode = "CreateLineBeginningAllInputs" + " \"(" + finalizedChars + ")\"";
         handleModuleCode({
             code: moduleCode,
@@ -68,6 +81,15 @@ class CreateLineBeginningAllInputs extends Component {
         // The user input: charsToAdd, or the name of the input, which is noted as "$$GetName$$"?
 
         const finalizedChars = getNameToggle === true ? "$$GetName$$" : charsToAdd;
+
+        const validationTest = createLineBeginningAllInputsValidation(finalizedChars, getNameToggle);
+        if (validationTest.valid === false) {
+            // create error message and return out
+            this.setState({
+                errorMsg: validationTest.error
+            });
+            return;
+        }
 
         for (let inputContainer = 0; inputContainer < outputText.length; inputContainer++) {
 
@@ -160,9 +182,16 @@ class CreateLineBeginningAllInputs extends Component {
     }
 
     render() {
-
         const { previewToggle } = this.props;
-        const { charsToAdd, getNameToggle, errorMsg } = this.state;
+        const { charsToAdd, getNameToggle } = this.state;
+        let { errorMsg } = this.state;
+        let errorMsgJSX;
+        if (errorMsg !== "") {
+            errorMsg = errorMsg.split('\n');
+            errorMsgJSX = errorMsg.map((errLine, idx) => {
+                return <p key={idx}>{errLine}</p>
+            });
+        }
 
         // Display -- disabled -- inside char input if getNameToggle is true
         const charInputValue = getNameToggle === true ? "-- disabled --" : charsToAdd;
@@ -203,9 +232,15 @@ class CreateLineBeginningAllInputs extends Component {
                                     </p>
                                 </div>
                             </div>
-
+                            {errorMsg === "" ? (
+                                <div className="no-error-msg">
+                                </div>
+                            ) : (
+                                    <div className="error-msg">
+                                        {errorMsgJSX}
+                                    </div>
+                                )}
                         </form>
-                        <p className="error-msg">{errorMsg}</p>
                     </div>
 
                     <div className="card-action preview-submit">
@@ -219,7 +254,7 @@ class CreateLineBeginningAllInputs extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"
