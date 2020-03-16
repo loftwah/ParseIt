@@ -28,6 +28,7 @@ class Navbar extends Component {
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li> <NavLink to='/what-is-parseit'>What is ParseIt?</NavLink> </li>
                             <li> <NavLink to='/'>ParseIt Code</NavLink></li>
+                            <li> <NavLink to='/'>ParseIt Tricks</NavLink></li>
                         </ul>
                     </div>
                 </nav>

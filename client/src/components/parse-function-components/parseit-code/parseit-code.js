@@ -19,9 +19,18 @@ class ParseItCode extends Component {
         // notify the container that we would like to update:
         // 1: The list of modules
         // 2: The output text
-        const { codeText } = this.props; // reducer state
+        let { codeText } = this.props; // reducer state
         const { moduleActiveOff, togglePreviewOff } = this.props; // actions
         const { parseItCode } = this.props; // passed in props
+
+        // clean quotes
+        while(codeText.indexOf("”") !== -1) {
+            codeText = codeText.replace("”","\"");
+        }
+
+        while(codeText.indexOf("“")!== -1){
+            codeText = codeText.replace("“","\"");
+        }
 
         parseItCode(codeText);
         moduleActiveOff();
