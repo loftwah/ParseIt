@@ -279,7 +279,7 @@ class ParseFunctionContainer extends Component {
 
     async parseItCode(codeStr) {
         const { updateCodeText, updateOutputText, updateContainerDisplay,
-            toggleSavedTextOff, toggleOutputTextOn, inputText } = this.props
+            toggleSavedTextOff, toggleOutputTextOn, inputText } = this.props;
 
         updateContainerDisplay(0);
         toggleSavedTextOff()
@@ -1485,8 +1485,13 @@ class ParseFunctionContainer extends Component {
                 // if invalid, log out the error and quit
                 this.setState({
                     codeErrorMsg: isValidCode.message,
-                    isProgressLoaderBusy: false
                 });
+                // Show the progress loader for an extra 1/2 second
+                setTimeout(() => {
+                    this.setState({
+                        isProgressLoaderBusy: false
+                    });
+                }, 500)
                 return;
             } else if (isValidCode.valid === true && i === moduleCodeArr.length - 1) {
                 // if the last module code is valid, display no error messgaes
@@ -1632,8 +1637,15 @@ class ParseFunctionContainer extends Component {
         }
         this.setState({
             codeErrorMsg: '',
-            isProgressLoaderBusy: false,
+            isModuleLoaderBusy: false
         })
+
+        // Show the progress loader for an extra 1/2 second
+        setTimeout(() => {
+            this.setState({
+                isProgressLoaderBusy: false
+            });
+        }, 500)
     }
 
     render() {

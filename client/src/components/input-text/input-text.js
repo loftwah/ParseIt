@@ -72,9 +72,14 @@ class InputText extends Component {
             });
         } else {
             // Development dummy text - delete if production
+            // this.setState({
+            //     localInputText: [{ inputContainer: 0, text: 'hello  world, inputContainer 0\n good   stuff right      now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" }, { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
+            //     textboxNumber: 2
+            // })
+
             this.setState({
-                localInputText: [{ inputContainer: 0, text: 'hello  world, inputContainer 0\n good   stuff right      now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 1" }, { inputContainer: 1, text: 'hello world, THIS IS inputContainer 1\ngood stuff right now\n\n    It is very good\n\nIt is good good good and stuff', name: "Textbox 2" }],
-                textboxNumber: 2
+                localInputText: [{ inputContainer: 0, text: '', name: "Textbox 1" }],
+                textboxNumber: 1
             })
         }
 
@@ -368,6 +373,7 @@ class InputText extends Component {
                         <textarea className={`input-text ${i}`}
                             onChange={this.handleTextareaChange}
                             disabled={false}
+                            placeholder="Write some text here"
                             value={localInputText[i].text}>
                         </textarea>
                     </form>
