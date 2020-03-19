@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './multiple-split-lines-before-word-module.css';
 import * as actions from '../../../actions';
 import { multipleSplitLinesBeforeWordValidation } from './multiple-split-lines-before-word-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class MultipleSplitLinesBeforeWord extends Component {
     constructor(props) {
@@ -66,8 +67,10 @@ class MultipleSplitLinesBeforeWord extends Component {
         // Future: be able to delete a certain number of instances?
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { lineNumBegin, lineMultiple, charToSplit, direction, instance } = this.state;
+        const { lineNumBegin, lineMultiple, direction, instance } = this.state;
+        let { charToSplit } = this.state;
 
+        charToSplit = cleanDoubleQuotes(charToSplit);
         const validationTest = multipleSplitLinesBeforeWordValidation(lineNumBegin, lineMultiple, charToSplit, instance);
 
         if (validationTest.valid === false) {
@@ -95,9 +98,10 @@ class MultipleSplitLinesBeforeWord extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { lineMultiple, charToSplit, direction } = this.state;
-        let { instance, lineNumBegin } = this.state;
+        const { lineMultiple, direction, instance } = this.state;
+        let { charToSplit, lineNumBegin } = this.state;
 
+        charToSplit = cleanDoubleQuotes(charToSplit);
         const validationTest = multipleSplitLinesBeforeWordValidation(lineNumBegin, lineMultiple, charToSplit, instance);
 
         if (validationTest.valid === false) {

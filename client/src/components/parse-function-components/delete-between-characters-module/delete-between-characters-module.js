@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './delete-between-characters-module.css';
 import * as actions from '../../../actions';
 import { deleteBetweenCharsValidation } from './delete-between-characters-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class DeleteBetweenCharactersModule extends Component {
     constructor(props) {
@@ -42,11 +43,14 @@ class DeleteBetweenCharactersModule extends Component {
         // Future: be able to delete a certain number of instances?
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { startCharacters, endCharacters } = this.state;
+        let { startCharacters, endCharacters } = this.state;
 
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
+
+        startCharacters = cleanDoubleQuotes(startCharacters);
+        endCharacters = cleanDoubleQuotes(endCharacters);
 
         const validationTest = deleteBetweenCharsValidation(startCharacters, endCharacters);
         if (validationTest.valid === false) {
@@ -72,7 +76,10 @@ class DeleteBetweenCharactersModule extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { startCharacters, endCharacters } = this.state;
+        let { startCharacters, endCharacters } = this.state;
+
+        startCharacters = cleanDoubleQuotes(startCharacters);
+        endCharacters = cleanDoubleQuotes(endCharacters);
 
         const validationTest = deleteBetweenCharsValidation(startCharacters, endCharacters);
         if (validationTest.valid === false) {

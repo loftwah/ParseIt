@@ -26,9 +26,9 @@ class Navbar extends Component {
                         <a href="/" data-target="slide-out" className="sidenav-trigger right">
                             <i className="material-icons">menu</i></a>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
-                            <li> <NavLink to='/what-is-parseit'>What is ParseIt?</NavLink> </li>
-                            <li> <NavLink to='/'>ParseIt Code</NavLink></li>
-                            <li> <NavLink to='/'>ParseIt Tricks</NavLink></li>
+                            <li> <NavLink to='/what-is-parseit'><b>What is ParseIt?</b></NavLink> </li>
+                            <li> <NavLink to='/'><b>ParseIt Code</b></NavLink></li>
+                            <li> <NavLink to='/'><b>ParseIt Tricks</b></NavLink></li>
                         </ul>
                     </div>
                 </nav>
@@ -36,6 +36,7 @@ class Navbar extends Component {
                 <ul id="slide-out" className="sidenav">
                     <li><NavLink to='/what-is-parseit'>What is ParseIt?</NavLink> </li>
                     <li><NavLink to='/'>ParseIt Code</NavLink></li>
+                    <li><NavLink to='/'>ParseIt Tricks</NavLink></li>
                 </ul>
             </div>
         );

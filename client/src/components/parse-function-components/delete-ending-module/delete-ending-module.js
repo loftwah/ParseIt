@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './delete-ending-module.css';
 import * as actions from '../../../actions';
 import { deleteEndingValidation } from './delete-ending-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class DeleteEndingModule extends Component {
     constructor(props) {
@@ -34,12 +35,13 @@ class DeleteEndingModule extends Component {
         // Future: be able to delete a certain number of instances?
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { stoppingCharacters } = this.state;
+        let { stoppingCharacters } = this.state;
 
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
+        stoppingCharacters = cleanDoubleQuotes(stoppingCharacters);
         const validationTest = deleteEndingValidation(stoppingCharacters);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -64,8 +66,9 @@ class DeleteEndingModule extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { stoppingCharacters } = this.state;
+        let { stoppingCharacters } = this.state;
 
+        stoppingCharacters = cleanDoubleQuotes(stoppingCharacters);
         const validationTest = deleteEndingValidation(stoppingCharacters);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -286,7 +289,7 @@ class DeleteEndingModule extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"

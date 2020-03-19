@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './multiple-add-text-to-beginning-module.css';
 import * as actions from '../../../actions';
 import { multipleAddTextToBeginningValidation } from './multiple-add-text-to-beginning-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class MultipleAddTextToBeginning extends Component {
     constructor(props) {
@@ -49,8 +50,10 @@ class MultipleAddTextToBeginning extends Component {
         console.log('submitted character!');
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { lineNumBegin, lineMultiple, charToAdd } = this.state;
+        const { lineNumBegin, lineMultiple } = this.state;
+        let { charToAdd } = this.state;
 
+        charToAdd = cleanDoubleQuotes(charToAdd);
         const validationTest = multipleAddTextToBeginningValidation(lineNumBegin, lineMultiple, charToAdd);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -77,9 +80,10 @@ class MultipleAddTextToBeginning extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { lineMultiple, charToAdd } = this.state;
-        let { lineNumBegin } = this.state;
+        const { lineMultiple } = this.state;
+        let { charToAdd, lineNumBegin } = this.state;
 
+        charToAdd = cleanDoubleQuotes(charToAdd);
         const validationTest = multipleAddTextToBeginningValidation(lineNumBegin, lineMultiple, charToAdd);
         if (validationTest.valid === false) {
             // create error message and return out

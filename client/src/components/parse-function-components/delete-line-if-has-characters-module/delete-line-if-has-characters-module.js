@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './delete-line-if-has-characters-module.css';
 import * as actions from '../../../actions';
 import { deleteLineIfCharsValidation } from './delete-line-if-has-characters-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class DeleteLineIfHasCharacters extends Component {
     constructor(props) {
@@ -33,8 +34,9 @@ class DeleteLineIfHasCharacters extends Component {
         console.log('submitted character!');
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { chars } = this.state;
+        let { chars } = this.state;
 
+        chars = cleanDoubleQuotes(chars);
         const validationTest = deleteLineIfCharsValidation(chars);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -61,8 +63,9 @@ class DeleteLineIfHasCharacters extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { chars } = this.state;
+        let { chars } = this.state;
 
+        chars = cleanDoubleQuotes(chars);
         const validationTest = deleteLineIfCharsValidation(chars);
         if (validationTest.valid === false) {
             // create error message and return out

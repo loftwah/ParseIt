@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import './parseit-code.css';
 import * as actions from '../../../actions';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class ParseItCode extends Component {
     constructor(props) {
@@ -24,13 +25,7 @@ class ParseItCode extends Component {
         const { parseItCode } = this.props; // passed in props
 
         // clean quotes
-        while(codeText.indexOf("”") !== -1) {
-            codeText = codeText.replace("”","\"");
-        }
-
-        while(codeText.indexOf("“")!== -1){
-            codeText = codeText.replace("“","\"");
-        }
+        codeText = cleanDoubleQuotes(codeText);
 
         parseItCode(codeText);
         moduleActiveOff();
@@ -63,7 +58,8 @@ class ParseItCode extends Component {
                     onClick={this.handleSubmitCode}>
                     <i className="material-icons left">code</i>
                     <i className="material-icons right">send</i>
-                    Submit ParseIt Code</button>
+                    Submit ParseIt Code
+                </button>
             </div>
         );
     };

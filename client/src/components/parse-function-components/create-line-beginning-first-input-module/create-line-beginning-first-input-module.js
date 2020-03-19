@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './create-line-beginning-first-input-module.css';
 import * as actions from '../../../actions';
 import { createLineBeginningFirstInputValidation } from './create-line-beginning-first-input-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class CreateLineBeginningFirstInput extends Component {
     constructor(props) {
@@ -33,12 +34,13 @@ class CreateLineBeginningFirstInput extends Component {
         console.log('submitted character!');
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { charsToAdd } = this.state;
+        let { charsToAdd } = this.state;
 
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
+        charsToAdd = cleanDoubleQuotes(charsToAdd);
         const validationTest = createLineBeginningFirstInputValidation(charsToAdd);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -62,8 +64,9 @@ class CreateLineBeginningFirstInput extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { charsToAdd } = this.state;
+        let { charsToAdd } = this.state;
 
+        charsToAdd = cleanDoubleQuotes(charsToAdd);
         const validationTest = createLineBeginningFirstInputValidation(charsToAdd);
         if (validationTest.valid === false) {
             // create error message and return out

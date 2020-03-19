@@ -120,9 +120,40 @@ class InputText extends Component {
             togglePreviewOff, codeText } = this.props;
         const { localInputText } = this.state;
 
-        updateInputText(localInputText);
-        updateOutputText(localInputText);
-        updateLocalText(localInputText);
+        // Before submitting, clean up all "odd" double-spaces inside text and name
+        let cleanedLocalInput = [];
+        for (let containerIdx = 0; containerIdx < localInputText.length; containerIdx++) {
+            let container = localInputText[containerIdx];
+            let containerText = container.text;
+            let containerName = container.name;
+            while (containerText.indexOf("”") !== -1) {
+                containerText = containerText.replace("”", "\"");
+            }
+
+            while (containerText.indexOf("“") !== -1) {
+                containerText = containerText.replace("“", "\"");
+            }
+
+            while (containerName.indexOf("”") !== -1) {
+                containerName = containerName.replace("”", "\"");
+            }
+
+            while (containerName.indexOf("“") !== -1) {
+                containerName = containerName.replace("“", "\"");
+            }
+
+            container.text = containerText;
+            container.name = containerName;
+            cleanedLocalInput.push(container)
+        }
+
+        this.setState({
+            cleanedLocalInput
+        });
+
+        updateInputText(cleanedLocalInput);
+        updateOutputText(cleanedLocalInput);
+        updateLocalText(cleanedLocalInput);
 
         moduleActiveOff();
         togglePreviewOff();

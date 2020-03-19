@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './split-lines-after-word-module.css';
 import * as actions from '../../../actions';
 import { splitAfterWordValidation } from './split-lines-after-word-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class SplitLinesAfterWord extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class SplitLinesAfterWord extends Component {
         console.log('submitted character!');
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { charToSplit } = this.state;
+        let { charToSplit } = this.state;
 
         // Handle errors: spaces
         if (charToSplit[0] === " " || charToSplit[charToSplit.length - 1] === " ") {
@@ -47,6 +48,7 @@ class SplitLinesAfterWord extends Component {
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
+        charToSplit = cleanDoubleQuotes(charToSplit);
         const validationTest = splitAfterWordValidation(charToSplit);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -70,8 +72,9 @@ class SplitLinesAfterWord extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { charToSplit } = this.state;
+        let { charToSplit } = this.state;
 
+        charToSplit = cleanDoubleQuotes(charToSplit);
         const validationTest = splitAfterWordValidation(charToSplit);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -433,7 +436,7 @@ class SplitLinesAfterWord extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"

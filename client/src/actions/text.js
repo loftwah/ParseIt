@@ -7,6 +7,7 @@ import {
     UPDATE_CONTAINER_DISPLAY,
     UPDATE_SAVED_TEXT_CONTAINER_DISPLAY,
     UPDATE_LOCAL_INPUT_TEXT,
+    UPDATE_FROM_NAVBAR_ITEM,
     TOGGLE_PREVIEW_ON,
     TOGGLE_PREVIEW_OFF,
     TOGGLE_OUTPUT_TEXT_ON,
@@ -216,6 +217,15 @@ export const updateLocalText = data => {
     return dispatch => {
         dispatch({
             type: UPDATE_LOCAL_INPUT_TEXT,
+            payload: data,
+        });
+    }
+}
+
+export const updateFromNavbarItem = data => {
+    return dispatch => {
+        dispatch({
+            type: UPDATE_FROM_NAVBAR_ITEM,
             payload: data,
         });
     }

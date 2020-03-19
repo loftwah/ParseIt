@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './split-lines-before-word-module.css';
 import * as actions from '../../../actions';
 import { splitBeforeWordValidation } from './split-lines-before-word-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class SplitLinesBeforeWord extends Component {
     constructor(props) {
@@ -33,12 +34,13 @@ class SplitLinesBeforeWord extends Component {
         console.log('submitted character!');
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { charToSplit } = this.state;
+        let { charToSplit } = this.state;
 
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
+        charToSplit = cleanDoubleQuotes(charToSplit);
         const validationTest = splitBeforeWordValidation(charToSplit);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -62,8 +64,9 @@ class SplitLinesBeforeWord extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { charToSplit } = this.state;
+        let { charToSplit } = this.state;
 
+        charToSplit = cleanDoubleQuotes(charToSplit);
         const validationTest = splitBeforeWordValidation(charToSplit);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -362,7 +365,7 @@ class SplitLinesBeforeWord extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"

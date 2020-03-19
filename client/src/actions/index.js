@@ -10,6 +10,8 @@ export const updateCodeText = text.updateCodeText;
 
 export const updateContainerDisplay = text.updateContainerDisplay;
 
+export const updateFromNavbarItem = text.updateFromNavbarItem;
+
 export const updateSavedTextContainerDisplay = text.updateSavedTextContainerDisplay;
 export const updateLocalText = text.updateLocalText;
 

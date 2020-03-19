@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './create-line-beginning-all-inputs-module.css';
 import * as actions from '../../../actions';
 import { createLineBeginningAllInputsValidation } from './create-line-beginning-all-inputs-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class CreateLineBeginningAllInputs extends Component {
     constructor(props) {
@@ -41,14 +42,15 @@ class CreateLineBeginningAllInputs extends Component {
         console.log('submitted character!');
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { charsToAdd, getNameToggle } = this.state;
+        const { getNameToggle, charsToAdd } = this.state;
 
-        const finalizedChars = getNameToggle === true ? "$$GetName$$" : charsToAdd;
+        let finalizedChars = getNameToggle === true ? "$$GetName$$" : charsToAdd;
 
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
+        finalizedChars = cleanDoubleQuotes(finalizedChars);
         const validationTest = createLineBeginningAllInputsValidation(finalizedChars, getNameToggle);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -72,7 +74,7 @@ class CreateLineBeginningAllInputs extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { charsToAdd, getNameToggle } = this.state;
+        const { getNameToggle, charsToAdd } = this.state;
 
         let additionPreviews = [];
         let deletionPreviews = [];
@@ -80,8 +82,9 @@ class CreateLineBeginningAllInputs extends Component {
         // What characters do we add in this additional line?
         // The user input: charsToAdd, or the name of the input, which is noted as "$$GetName$$"?
 
-        const finalizedChars = getNameToggle === true ? "$$GetName$$" : charsToAdd;
+        let finalizedChars = getNameToggle === true ? "$$GetName$$" : charsToAdd;
 
+        finalizedChars = cleanDoubleQuotes(finalizedChars);
         const validationTest = createLineBeginningAllInputsValidation(finalizedChars, getNameToggle);
         if (validationTest.valid === false) {
             // create error message and return out

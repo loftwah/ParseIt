@@ -7,6 +7,7 @@ import {
     UPDATE_CONTAINER_DISPLAY,
     UPDATE_SAVED_TEXT_CONTAINER_DISPLAY,
     UPDATE_LOCAL_INPUT_TEXT,
+    UPDATE_FROM_NAVBAR_ITEM,
     TOGGLE_PREVIEW_ON,
     TOGGLE_PREVIEW_OFF,
     TOGGLE_OUTPUT_TEXT_ON,
@@ -36,6 +37,7 @@ const initState = {
     initializeCode: false,
     toggleTextbox: true,
     togglePDF: false,
+    toggleFromNavbarItem: false,
     deletionsPreview: '',
     additionsPreview: '',
     inputContainerDisplay: 0, // Controls the radio button for "Display Input"
@@ -68,6 +70,9 @@ function textReducer(state = initState, action) {
         case UPDATE_LOCAL_INPUT_TEXT:
             // console.log('[TextReducer] got a UPDATE_LOCAL_INPUT_TEXT action');
             return { ...state, localInputText: action.payload };
+        case UPDATE_FROM_NAVBAR_ITEM:
+            // console.log('[TextReducer] got a UPDATE_FROM_NAVBAR_ITEM action');
+            return { ...state, toggleFromNavbarItem: action.payload };
         case TOGGLE_PREVIEW_ON:
             // console.log('[TextReducer] got a TOGGLE_PREVIEW_ON action');
             return { ...state, previewToggle: action.payload };

@@ -47,6 +47,7 @@ import CreateLineEndAllInputs from '../parse-function-components/create-line-end
 import CreateLineEndAllInputsComplete from '../parse-function-components/create-line-end-all-inputs-module/create-line-end-all-inputs-module-complete';
 import CreateLineAtLastInput from '../parse-function-components/create-line-end-last-input-module/create-line-end-last-input-module';
 import CreateLineAtLastInputComplete from '../parse-function-components/create-line-end-last-input-module/create-line-end-last-input-module-complete';
+import ProgressLoader from '../navbar-components/progress-loader/progress-loader';
 
 import * as actions from '../../actions';
 
@@ -57,6 +58,7 @@ class ParseFunctionContainer extends Component {
             modules: [], // JSX for modules
             moduleCode: [], // moduleCode will be converted into codeText for reducer
             codeErrorMsg: '',
+            isProgressLoaderBusy: false, // used when coming from navbar
         };
         this.handleDeleteModule = this.handleDeleteModule.bind(this);
         this.ouptutModulesFromModuleCodeState = this.ouptutModulesFromModuleCodeState.bind(this);
@@ -64,7 +66,7 @@ class ParseFunctionContainer extends Component {
     }
 
     componentDidMount() {
-        const { codeText, updateOutputText, inputText } = this.props;
+        const { codeText, updateOutputText, inputText, toggleFromNavbarItem } = this.props;
 
         let miscDropdown = document.querySelectorAll('.dropdown-trigger-misc-module');
         M.Dropdown.init(miscDropdown, { coverTrigger: false });
@@ -87,9 +89,9 @@ class ParseFunctionContainer extends Component {
         let createDropdown = document.querySelectorAll('.dropdown-trigger-create-module');
         M.Dropdown.init(createDropdown, { coverTrigger: false });
 
-        // component has mounted with code text (this happens when a user returns from a nav item) - run parseIt code to build the JSX of all modules
-        // We need to build the modules from scratch, rather than store the JSX inside the redux state, for the case where a user wants to delete a module
-        if (codeText !== '') {
+        // If we mounted this component via toggling navbar items - we need to build the modules from scratch, rather than store the JSX inside the redux state (for the case where a user wants to delete a module)
+        // If we came from navbar item, run the following
+        if (toggleFromNavbarItem === true) {
             // Bring back the input text
             updateOutputText(inputText);
 
@@ -107,19 +109,27 @@ class ParseFunctionContainer extends Component {
             }
 
             // update the state with moduleCode
-            this.setState({
-                moduleCode
-            });
+            // Also turn on the ProgressLoader component if we have a lot of modules that we need to load
+            if (moduleCode.length > 15) {
+                this.setState({
+                    moduleCode,
+                    isProgressLoaderBusy: true
+                });
+            } else {
+                this.setState({
+                    moduleCode
+                });
+            }
 
-            // build all modules found in the moduleCode state
-            this.ouptutModulesFromModuleCodeState(moduleCode);
+            // build all modules found in the moduleCode state inside getSnapshotBeforeUpdate
         }
     }
 
     async getSnapshotBeforeUpdate(prevProps, prevState) {
         const { moduleCode } = this.state;
         const { updateOutputText, initializeCodeToggle, initializeCode,
-            togglePreviewOff, toggleSavedTextOff, toggleOutputTextOn } = this.props;
+            togglePreviewOff, toggleSavedTextOff, toggleOutputTextOn,
+            toggleFromNavbarItem, updateFromNavbarItem } = this.props;
 
         if (initializeCode === true) {
             // A component told this component to initialize all code inside ParseIt code container
@@ -147,7 +157,31 @@ class ParseFunctionContainer extends Component {
             updateOutputText(this.props.inputText);
 
             // build all modules found in the moduleCode state
+
+            // doing a setTimeout like the "else if":
+            // Pro: Will load parseit container and all the text
+            // Con: Will be "glitchy" if there are very few modules involve (very quick load)
             this.ouptutModulesFromModuleCodeState(moduleCode);
+        }
+        else if (toggleFromNavbarItem === true) {
+            // We have came from a navbar item
+
+            // When the user toggles from navbar back to ParseIt home - we will need to re-render everything back
+            // The state was updated during component mount (from snapshot) - now we will build all modules found in the moduleCode state we have brought back
+
+            // Go back to default view state
+            this.props.updateSavedTextContainerDisplay("combine-saves");
+            this.props.updateContainerDisplay(0);
+            this.props.toggleSavedTextOff();
+            this.props.moduleActiveOff();
+            this.props.togglePreviewOff();
+
+            // We only need a small amount of time to load the page before outputting modules
+            // Note: returning a new Promise inside the ouptutModulesFromModuleCodeState function and resolving it after the codeErrorMsg setState did not work as planned - there might be a better way
+            setTimeout(() => this.ouptutModulesFromModuleCodeState(moduleCode), 1);
+
+            // turn off "from navbar item" action
+            updateFromNavbarItem(false);
         }
     }
 
@@ -1450,7 +1484,8 @@ class ParseFunctionContainer extends Component {
             if (isValidCode.valid === false) {
                 // if invalid, log out the error and quit
                 this.setState({
-                    codeErrorMsg: isValidCode.message
+                    codeErrorMsg: isValidCode.message,
+                    isProgressLoaderBusy: false
                 });
                 return;
             } else if (isValidCode.valid === true && i === moduleCodeArr.length - 1) {
@@ -1596,12 +1631,13 @@ class ParseFunctionContainer extends Component {
             }
         }
         this.setState({
-            codeErrorMsg: ''
+            codeErrorMsg: '',
+            isProgressLoaderBusy: false,
         })
     }
 
     render() {
-        let { modules, codeErrorMsg } = this.state;
+        let { modules, codeErrorMsg, isProgressLoaderBusy } = this.state;
         const { moduleActiveToggle } = this.props;
 
         let key = 0;
@@ -1615,6 +1651,11 @@ class ParseFunctionContainer extends Component {
 
         return (
             <div className="parse-function-container">
+
+                {isProgressLoaderBusy === true ? (<ProgressLoader />) : (
+                    <div className="progress-loader-not-busy"></div>
+                )}
+
                 <ParseItCode
                     parseItCode={this.parseItCode}
                     errorMsg={codeErrorMsg}
@@ -1723,7 +1764,8 @@ const mapStateToProps = (state) => {
         moduleActiveToggle: state.textRed.moduleActiveToggle,
         deletionsPreview: state.textRed.deletionsPreview,
         additionsPreview: state.textRed.additionsPreview,
-        initializeCode: state.textRed.initializeCode
+        initializeCode: state.textRed.initializeCode,
+        toggleFromNavbarItem: state.textRed.toggleFromNavbarItem,
     };
 };
 

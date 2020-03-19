@@ -72,6 +72,7 @@ class InputPDF extends Component {
     async fileUploadHandler() {
         const { selectedFiles, selectedFileNames } = this.state;
         const { updateInputText, updateOutputText, initializeCodeToggle, codeText } = this.props;
+
         if (selectedFiles.length === 0) {
             this.setState({
                 errorMsg: 'Please browse for a PDF.'
@@ -103,8 +104,35 @@ class InputPDF extends Component {
             uploadProgress: `${selectedFiles.length} out of ${selectedFiles.length} PDFs have been uploaded`
         });
 
-        updateInputText(initInputPDF);
-        updateOutputText(initInputPDF);
+        // Before submitting, clean up all "odd" double-spaces inside text and name
+        let cleanedLocalInput = [];
+        for (let containerIdx = 0; containerIdx < initInputPDF.length; containerIdx++) {
+            let container = initInputPDF[containerIdx];
+            let containerText = container.text;
+            let containerName = container.name;
+            while (containerText.indexOf("”") !== -1) {
+                containerText = containerText.replace("”", "\"");
+            }
+
+            while (containerText.indexOf("“") !== -1) {
+                containerText = containerText.replace("“", "\"");
+            }
+
+            while (containerName.indexOf("”") !== -1) {
+                containerName = containerName.replace("”", "\"");
+            }
+
+            while (containerName.indexOf("“") !== -1) {
+                containerName = containerName.replace("“", "\"");
+            }
+
+            container.text = containerText;
+            container.name = containerName;
+            cleanedLocalInput.push(container);
+        }
+
+        updateInputText(cleanedLocalInput);
+        updateOutputText(cleanedLocalInput);
 
         // If there is ParseIt code, fire it up
         if (codeText !== "") {

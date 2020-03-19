@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
+import * as actions from '../../../actions';
 import './what-is-parseit-nav.css';
-import Navbar from '../../navbar/navbar'
+import Navbar from '../../navbar/navbar';
 
 class WhatIsParseItNav extends Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        // Let the reducer know that a navbar item has been loaded in (this component)
+        // When we return home - a progress loader will come up, and modules will load
+        // And PDF/Text toggle will accurately display what is being worked on when loading is complete
+        const { updateFromNavbarItem } = this.props;
+        updateFromNavbarItem(true);
     }
 
     render() {
@@ -31,4 +41,10 @@ class WhatIsParseItNav extends Component {
     };
 };
 
-export default WhatIsParseItNav;
+const mapStateToProps = (state) => {
+    return {
+        toggleFromNavbarItem: state.textRed.toggleFromNavbarItem,
+    };
+};
+
+export default connect(mapStateToProps, actions)(WhatIsParseItNav);

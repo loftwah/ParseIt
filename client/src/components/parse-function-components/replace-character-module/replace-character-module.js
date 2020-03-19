@@ -6,6 +6,7 @@ import './replace-character-module.css';
 import * as actions from '../../../actions';
 import { escapeRegExp, replaceAndInsertChar } from './replace-character-module-functions';
 import { replaceCharacterValidation } from './replace-character-module-validation';
+import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class ReplaceCharacterModule extends Component {
     constructor(props) {
@@ -48,11 +49,15 @@ class ReplaceCharacterModule extends Component {
         // Future: be able to delete a certain number of instances?
         const { handleModuleCode,
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
-        const { replaceCharacter, insertCharacter } = this.state;
+        let { replaceCharacter, insertCharacter } = this.state;
 
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
+
+        replaceCharacter = cleanDoubleQuotes(replaceCharacter);
+        insertCharacter = cleanDoubleQuotes(insertCharacter);
+
         const moduleCode = this.createCode(replaceCharacter, insertCharacter);
         const validationTest = replaceCharacterValidation(replaceCharacter, insertCharacter);
         if (validationTest.valid === false) {
@@ -76,7 +81,10 @@ class ReplaceCharacterModule extends Component {
         const { previewToggle, togglePreviewOn, togglePreviewOff,
             outputText, updateDeletionsPreview, updateAdditionsPreview,
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
-        const { replaceCharacter, insertCharacter } = this.state;
+        let { replaceCharacter, insertCharacter } = this.state;
+
+        replaceCharacter = cleanDoubleQuotes(replaceCharacter);
+        insertCharacter = cleanDoubleQuotes(insertCharacter);
 
         // validate the inputs
         const validationTest = replaceCharacterValidation(replaceCharacter, insertCharacter);
@@ -234,7 +242,7 @@ class ReplaceCharacterModule extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
                         <a
                             href="!#"
