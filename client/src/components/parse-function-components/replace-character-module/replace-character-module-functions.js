@@ -17,7 +17,7 @@ export const replaceAndInsertChar = (text, replaceChar, insertChar) => {
     const textLines = text.split('\n');
     let newText = [];
     for (let i = 0; i < textLines.length; i++) {
-        if (textLines[i] === replaceChar && insertChar == "") {
+        if (textLines[i] === replaceChar && insertChar === "") {
             continue;
         }
         newText.push(textLines[i]);

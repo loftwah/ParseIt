@@ -5,9 +5,6 @@ import './remove-blank-lines-module.css';
 import * as actions from '../../../actions';
 
 class RemoveBlankLinesComplete extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         const { outputText, updateOutputText } = this.props;

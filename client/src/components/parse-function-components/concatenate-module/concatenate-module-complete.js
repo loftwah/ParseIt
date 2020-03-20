@@ -5,9 +5,6 @@ import './concatenate-module.css';
 import * as actions from '../../../actions';
 
 class ConcatenateModuleComplete extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         const { outputText, updateOutputText } = this.props;

@@ -29,7 +29,6 @@ class OutputSavedText extends Component {
         // loop through all individual containers in the chosen saved container
         let createOutput = [];
         const savedTextContainer = savedText[savedTextContainerDisplay].inputContainers;
-        const savedTextInputName = savedText[savedTextContainerDisplay].name;
         const convertTextToJSX = []
 
         for (let i = 0; i < savedTextContainer.length; i++) {

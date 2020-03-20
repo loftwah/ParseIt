@@ -73,7 +73,7 @@ class MultipleSplitLinesAfterWordComplete extends Component {
 
                 if (direction === "forward" && endsWithSpace === false) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx++ < line.length) {
+                    while (instanceIter !== 0 && found === true && idx++ < line.length) {
                         idx = line.indexOf(charToSplit, idx);
                         if (idx === - 1) {
                             found = false;
@@ -92,7 +92,7 @@ class MultipleSplitLinesAfterWordComplete extends Component {
 
                 } else if (direction === "forward" && endsWithSpace === true) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx++ < line.length) {
+                    while (instanceIter !== 0 && found === true && idx++ < line.length) {
                         idx = line.indexOf(charToSplit, idx);
                         if (idx === - 1) {
                             found = false;
@@ -107,7 +107,7 @@ class MultipleSplitLinesAfterWordComplete extends Component {
                     // use the idx from the while loop
                 } else if (direction === "backward" && endsWithSpace === false) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx-- > -1) {
+                    while (instanceIter !== 0 && found === true && idx-- > -1) {
                         idx = line.lastIndexOf(charToSplit, idx);
                         if (idx === -1) {
                             found = false;
@@ -126,7 +126,7 @@ class MultipleSplitLinesAfterWordComplete extends Component {
 
                 } else if (direction === "backward" && endsWithSpace === true) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx-- > -1) {
+                    while (instanceIter !== 0 && found === true && idx-- > -1) {
                         idx = line.lastIndexOf(charToSplit, idx);
                         if (idx === -1) {
                             found = false;

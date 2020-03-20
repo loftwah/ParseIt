@@ -6,9 +6,6 @@ import './preview-additions.css';
 import * as actions from '../../../actions';
 
 class PreviewAdditions extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const { inputContainerDisplay, additionsPreview } = this.props;

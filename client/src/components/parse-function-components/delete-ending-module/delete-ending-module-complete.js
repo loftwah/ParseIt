@@ -29,7 +29,7 @@ class DeleteEndingModuleComplete extends Component {
             let found = false;
 
             // will a deletion ever be found?
-            if (outputText[inputContainerNum].text.indexOf(stoppingCharacters) == -1) {
+            if (outputText[inputContainerNum].text.indexOf(stoppingCharacters) === -1) {
                 // We will never find stopping characters - output the original text
                 finalText.push({
                     inputContainer: outputText[inputContainerNum].inputContainer,
@@ -43,7 +43,7 @@ class DeleteEndingModuleComplete extends Component {
 
                 let stoppingCharIdx = textLines[i].lastIndexOf(stoppingCharacters);
 
-                if (found === false && textLines[i] === stoppingCharacters && stoppingCharacters == "") {
+                if (found === false && textLines[i] === stoppingCharacters && stoppingCharacters === "") {
                     found = true;
                 } else if (found === false && stoppingCharIdx !== -1) {
                     found = true;
@@ -80,7 +80,7 @@ class DeleteEndingModuleComplete extends Component {
         const { stoppingCharacters } = this.props;
         const { moduleActiveToggle } = this.props;
         const deleteBtnVisible = moduleActiveToggle === true ? "hidden" : "visible";
-        
+
         return (
             <div className="delete-ending-function">
                 <div className="delete-ending-card card white">

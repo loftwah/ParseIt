@@ -75,7 +75,7 @@ class MultipleSplitLinesBeforeWordComplete extends Component {
 
                 if (direction === "forward" && beginsWithSpace === false) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx++ < line.length) {
+                    while (instanceIter !== 0 && found === true && idx++ < line.length) {
                         idx = line.indexOf(charToSplit, idx);
                         if (idx === - 1) {
                             found = false;
@@ -91,7 +91,7 @@ class MultipleSplitLinesBeforeWordComplete extends Component {
 
                 } else if (direction === "forward" && beginsWithSpace === true) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx++ < line.length) {
+                    while (instanceIter !== 0 && found === true && idx++ < line.length) {
                         idx = line.indexOf(charToSplit, idx);
                         if (idx === - 1) {
                             found = false;
@@ -103,7 +103,7 @@ class MultipleSplitLinesBeforeWordComplete extends Component {
                     // use the idx from the while loop
                 } else if (direction === "backward" && beginsWithSpace === false) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx-- > -1) {
+                    while (instanceIter !== 0 && found === true && idx-- > -1) {
                         idx = line.lastIndexOf(charToSplit, idx);
                         if (idx === -1) {
                             found = false;
@@ -119,7 +119,7 @@ class MultipleSplitLinesBeforeWordComplete extends Component {
 
                 } else if (direction === "backward" && beginsWithSpace === true) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx-- > -1) {
+                    while (instanceIter !== 0 && found === true && idx-- > -1) {
                         idx = line.lastIndexOf(charToSplit, idx);
                         if (idx === -1) {
                             found = false;
@@ -220,7 +220,7 @@ class MultipleSplitLinesBeforeWordComplete extends Component {
         const { moduleActiveToggle } = this.props;
         const deleteBtnVisible = moduleActiveToggle === true ? "hidden" : "visible";
 
-        let instancePlural = instance > 1 ? 'instances': 'instance';
+        let instancePlural = instance > 1 ? 'instances' : 'instance';
 
         return (
             <div className="multiple-split-lines-before-word-function">

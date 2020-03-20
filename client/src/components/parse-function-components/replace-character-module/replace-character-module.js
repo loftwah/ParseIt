@@ -4,7 +4,7 @@ import reactStringReplace from 'react-string-replace';
 
 import './replace-character-module.css';
 import * as actions from '../../../actions';
-import { escapeRegExp, replaceAndInsertChar } from './replace-character-module-functions';
+import { escapeRegExp } from './replace-character-module-functions';
 import { replaceCharacterValidation } from './replace-character-module-validation';
 import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
@@ -40,7 +40,7 @@ class ReplaceCharacterModule extends Component {
     }
 
     createCode = (replaceCharacter, insertCharacter) => {
-        return "ReplaceCharacters" + " \"(" + replaceCharacter + ")\" \"(" + insertCharacter + ")\"";
+        return "ReplaceCharacters \"(" + replaceCharacter + ")\" \"(" + insertCharacter + ")\"";
     }
 
     handleSubmit = e => {

@@ -7,9 +7,6 @@ import * as actions from '../../../actions';
 import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class ParseItCode extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     handleCodeChange = e => {
         const { updateCodeText } = this.props;

@@ -49,7 +49,7 @@ class DeleteLineIfHasCharacters extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "DeleteLineIfHasPhrase" + " \"(" + chars + ")\"";
+        const moduleCode = "DeleteLineIfHasPhrase \"(" + chars + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id
@@ -100,7 +100,7 @@ class DeleteLineIfHasCharacters extends Component {
                         // This line DOES contain the user input of "chars"
                         // we will delete this line
                         deleteIdx++;
-                        if (line == "") {
+                        if (line === "") {
                             createSingleDeletionPreview.push(<div className="line" key={deleteIdx}>
                                 <span className="line-number"
                                     style={{ background: "rgb(255, 210, 217)", float: "left" }}>[{deleteIdx}]&#160;</span>

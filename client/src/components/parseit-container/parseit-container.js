@@ -12,9 +12,6 @@ import PreviewsMain from '../previews/previews-main/previews-main';
 import OutputSavedText from '../output-saved-text/output-saved-text';
 
 class ParseItContainer extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         const { previewToggle, toggleOutputText, toggleSavedText, outputText } = this.props;

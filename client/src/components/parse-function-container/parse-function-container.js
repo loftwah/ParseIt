@@ -1505,7 +1505,7 @@ class ParseFunctionContainer extends Component {
             let moduleType = moduleCodeLine.split(' ')[0];
             // the slice takes off the 2 ending quotations and ending parenthesis off of the 2nd param
             let moduleParams = moduleCodeLine.slice(0, moduleCodeLine.length - 2)
-                .replace(moduleType + ' \"(', '').split(")\" \"(");
+                .replace(moduleType + ' "(', '').split(")\" \"(");
 
             let id, stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
             let charToAdd, linesToDelete, startCharacters, endCharacters, charDeleteLine, charKeepLine;

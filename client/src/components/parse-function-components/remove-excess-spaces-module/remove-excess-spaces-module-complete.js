@@ -5,9 +5,6 @@ import './remove-excess-spaces-module.css';
 import * as actions from '../../../actions';
 
 class RemoveExcessSpacesComplete extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         const { outputText, updateOutputText } = this.props;

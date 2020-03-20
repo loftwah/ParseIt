@@ -3,7 +3,7 @@ export const validateCode = (moduleCode, lineNum) => {
     let moduleType = moduleCode.split(' ')[0];
     // the slice takes off the 2 ending quotations and ending parenthesis off of the 2nd param
     let moduleParams = moduleCode.slice(0, moduleCode.length - 2)
-        .replace(moduleType + ' \"(', '').split(")\" \"(");
+        .replace(moduleType + ' "(', '').split(")\" \"(");
 
     // For all modules with parameters, the last 2 characters MUST be the following: ")
     const moduleWithParamsValidEnding = (moduleCode) => {
@@ -17,7 +17,7 @@ export const validateCode = (moduleCode, lineNum) => {
         valid: true
     };
 
-    let stoppingCharacters, charToSplit, lineNumBegin, lineMultiple, direction, instance;
+    let charToSplit, lineNumBegin, lineMultiple, direction, instance;
     let charToAdd, linesToDelete, startCharacters, endCharacters, charDeleteLine, charKeepLine;
 
     // If a module has no parameters, return out of this function
@@ -92,7 +92,7 @@ export const validateCode = (moduleCode, lineNum) => {
                     message: `To use the ${moduleType} module, you must strictly write: ${moduleType}`
                 };
             }
-            break;
+        // code will break here
         case "RemoveBlankLines":
             // RemoveBlankLines takes no params
             // Therefore, return out of function if the moduleCode is the module
@@ -107,7 +107,7 @@ export const validateCode = (moduleCode, lineNum) => {
                     message: `To use the ${moduleType} module, you must strictly write: ${moduleType}`
                 };
             }
-            break;
+        // code will break here
         case "RemoveExcessSpaces":
             // RemoveExcessSpaces takes no params
             // Therefore, return out of function if the moduleCode is the module
@@ -122,7 +122,7 @@ export const validateCode = (moduleCode, lineNum) => {
                     message: `To use the ${moduleType} module, you must strictly write: ${moduleType}`
                 };
             }
-            break;
+        // code will break here
         case "SplitLinesBeforeWord":
             // Must only have 1 parameter
             if (moduleParams.length !== 1) {
@@ -712,7 +712,7 @@ export const validateCode = (moduleCode, lineNum) => {
     // NOTE: Modules that take no parameters (ie: concatenate) should be handled and returned out of the function at this point
     if (moduleType !== "") {
         let eliminateModType = moduleCode.slice(moduleType.length);
-        let beginParamValid = eliminateModType.indexOf(' \"(') === 0 ? true : false;;
+        let beginParamValid = eliminateModType.indexOf(' "(') === 0 ? true : false;
         if (beginParamValid === false) {
             validationObj = {
                 valid: false,

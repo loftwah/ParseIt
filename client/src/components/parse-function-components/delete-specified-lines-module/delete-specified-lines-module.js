@@ -178,13 +178,10 @@ class DeleteSpecifiedLines extends Component {
             });
         }
 
-        // If validate is not false, the function will return a split array
-        let userRanges = validate;
-
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "DeleteCertainLines" + " \"(" + linesToDelete + ")\"";
+        const moduleCode = "DeleteCertainLines \"(" + linesToDelete + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id
@@ -259,7 +256,6 @@ class DeleteSpecifiedLines extends Component {
         let additionPreviews = [];
         let deletionPreviews = [];
 
-        let inputContainerText;
         for (let inputContainer = 0; inputContainer < outputText.length; inputContainer++) {
 
             let addIdx = 0;

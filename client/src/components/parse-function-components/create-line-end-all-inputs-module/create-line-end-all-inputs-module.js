@@ -50,7 +50,7 @@ class CreateLineEndAllInputs extends Component {
             return;
         }
 
-        const moduleCode = "CreateLineEndAllInputs" + " \"(" + charsToAdd + ")\"";
+        const moduleCode = "CreateLineEndAllInputs \"(" + charsToAdd + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

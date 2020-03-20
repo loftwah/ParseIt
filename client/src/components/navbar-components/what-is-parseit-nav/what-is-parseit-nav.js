@@ -6,9 +6,6 @@ import './what-is-parseit-nav.css';
 import Navbar from '../../navbar/navbar';
 
 class WhatIsParseItNav extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         // Let the reducer know that a navbar item has been loaded in (this component)

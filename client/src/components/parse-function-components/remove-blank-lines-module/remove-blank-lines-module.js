@@ -5,9 +5,6 @@ import './remove-blank-lines-module.css';
 import * as actions from '../../../actions';
 
 class RemoveBlankLinesModule extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     handleDelete = (e) => {
         e.preventDefault();
@@ -135,7 +132,7 @@ class RemoveBlankLinesModule extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
 
                         <a

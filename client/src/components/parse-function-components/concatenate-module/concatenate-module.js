@@ -5,9 +5,6 @@ import './concatenate-module.css';
 import * as actions from '../../../actions';
 
 class ConcatenateModule extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     handleDelete = (e) => {
         e.preventDefault();
@@ -133,7 +130,7 @@ class ConcatenateModule extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
 
                         <a

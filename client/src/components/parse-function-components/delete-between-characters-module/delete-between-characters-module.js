@@ -61,7 +61,7 @@ class DeleteBetweenCharactersModule extends Component {
             return;
         }
 
-        const moduleCode = "DeleteBetweenPhrases" + " \"(" + startCharacters + ")\" \"(" + endCharacters + ")\"";
+        const moduleCode = "DeleteBetweenPhrases \"(" + startCharacters + ")\" \"(" + endCharacters + ")\"";
 
         handleModuleCode({
             code: moduleCode,

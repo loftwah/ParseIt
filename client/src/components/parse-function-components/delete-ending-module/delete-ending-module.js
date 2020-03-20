@@ -51,7 +51,7 @@ class DeleteEndingModule extends Component {
             return;
         }
 
-        const moduleCode = "DeleteLastPhraseUntilEnd" + " \"(" + stoppingCharacters + ")\"";
+        const moduleCode = "DeleteLastPhraseUntilEnd \"(" + stoppingCharacters + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id
@@ -97,7 +97,7 @@ class DeleteEndingModule extends Component {
 
             // will a deletion ever be found?
             let willBeFound;
-            if (inputContainerText.indexOf(stoppingCharacters) == -1) {
+            if (inputContainerText.indexOf(stoppingCharacters) === -1) {
                 willBeFound = false; // We will never find stopping characters
                 // In this situation: we want to output a preview that is unchanged
             } else {
@@ -127,7 +127,7 @@ class DeleteEndingModule extends Component {
                 let line = outputTextSplitNewLineRev[i];
                 let stoppingCharIdx = line.lastIndexOf(stoppingCharacters);
 
-                if (line === "" && found == false && willBeFound === true) {
+                if (line === "" && found === false && willBeFound === true) {
                     // If line is empty and characters aren't found
                     // no addition preview
                     //deletion preview
@@ -139,7 +139,7 @@ class DeleteEndingModule extends Component {
                     deleteIdx--;
 
                 }
-                else if (line === "" && (found == true || willBeFound === false)) { // If line is empty and characters ARE found
+                else if (line === "" && (found === true || willBeFound === false)) { // If line is empty and characters ARE found
                     // addition preview
                     createSingleAdditionPreview.push((<div className="line" key={addIdx}>
                         <span className="line-number">[{addIdx}]&#160;</span>
@@ -201,7 +201,7 @@ class DeleteEndingModule extends Component {
                         deleteIdx--;
                     }
 
-                } else if (found === true || willBeFound == false) {
+                } else if (found === true || willBeFound === false) {
                     // show the remaining text inside deletions and additions previews
 
                     createSingleAdditionPreview.push((<div className="line" key={addIdx}>

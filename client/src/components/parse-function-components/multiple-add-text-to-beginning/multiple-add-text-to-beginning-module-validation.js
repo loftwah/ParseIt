@@ -31,7 +31,7 @@ export const multipleAddTextToBeginningValidation = (lineNumBegin, lineMultiple,
     if (charToAdd.length === 0) {
         return { valid: false, error: 'Text to Be Added Before Line: Please fill the input' };
     } else if (charToAddHasSep === true) {
-        return { valid: false, error: 'Text to Be Added Before Line: The use of the exact characters )\" \"( as characters to add before lines is forbidden.\nAs a workaround, use more modules to get your intended result.' };
+        return { valid: false, error: 'Text to Be Added Before Line: The use of the exact characters )" "( as characters to add before lines is forbidden.\nAs a workaround, use more modules to get your intended result.' };
     }
 
     return { valid: true, error: undefined };

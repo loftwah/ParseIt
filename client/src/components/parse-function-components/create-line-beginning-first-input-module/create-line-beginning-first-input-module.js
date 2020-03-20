@@ -50,7 +50,7 @@ class CreateLineBeginningFirstInput extends Component {
             return;
         }
 
-        const moduleCode = "CreateLineBeginningFirstInput" + " \"(" + charsToAdd + ")\"";
+        const moduleCode = "CreateLineBeginningFirstInput \"(" + charsToAdd + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

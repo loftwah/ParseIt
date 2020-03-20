@@ -44,7 +44,7 @@ class ReplaceCharacterModuleComplete extends Component {
 
     render() {
         const { insertCharacter, replaceCharacter } = this.state;
-        const { id, moduleActiveToggle } = this.props;
+        const { moduleActiveToggle } = this.props;
         const deleteBtnVisible = moduleActiveToggle === true ? "hidden" : "visible";
 
         return (

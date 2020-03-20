@@ -85,6 +85,8 @@ class SplitLinesAfterWordComplete extends Component {
                                     // we do not need to show any space deletion, words don't matter to the user
                                     lineSegment = lineSegment.slice(findSpacePointer);
                                     break;
+                                default:
+                                    console.log('charHasSpaceOnEnd is not defined');
                             }
                             newText.push(firstSegment);
                         }

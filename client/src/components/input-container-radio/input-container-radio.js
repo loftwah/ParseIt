@@ -7,9 +7,6 @@ import * as actions from '../../actions';
 class InputContainerRadio extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            displayContainer: 0 // may delete in the future
-        }
         this.handleRadioButtonInputDisplayOnChange = this.handleRadioButtonInputDisplayOnChange.bind(this);
         this.handleRadioButtonSavedDisplayOnChange = this.handleRadioButtonSavedDisplayOnChange.bind(this);
     }
@@ -52,7 +49,6 @@ class InputContainerRadio extends Component {
 
     render() {
         const { outputText, inputContainerDisplay, savedText, previewToggle } = this.props;
-        let { displayContainer } = this.state;
 
         // Toggle between inputContainers
         let inputContainerButtons = outputText.map(containerOutput => {
@@ -140,13 +136,6 @@ class InputContainerRadio extends Component {
 
         }
 
-        // Saved Text - last two buttons for combining
-        let outputSplitNewLine;
-        if (outputText.length === 0) {
-            outputSplitNewLine = [];
-        } else {
-            outputSplitNewLine = outputText[displayContainer].text.split('\n');
-        }
         return (
             // Display all possible inputContainers
             <div className="input-text-container">
@@ -164,7 +153,7 @@ class InputContainerRadio extends Component {
                                 ) : (
                                         <div className="no-container-buttons">
                                             No Inputs to Display
-                                    </div>
+                                        </div>
                                     )}
                             </div>
 

@@ -5,18 +5,8 @@ import './preview-deletions.css';
 import * as actions from '../../../actions';
 
 class PreviewDeletions extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    // When component updates, turn output text into input text?
-    componentDidUpdate() {
-        const { updateInputText, outputText } = this.props
-        // updateInputText(outputText)
-    }
 
     render() {
-        // may get rid of "outputText " variable?
         const { inputContainerDisplay, deletionsPreview } = this.props;
 
         return (

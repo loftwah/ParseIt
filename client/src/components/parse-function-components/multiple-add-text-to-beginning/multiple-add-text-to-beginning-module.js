@@ -66,7 +66,7 @@ class MultipleAddTextToBeginning extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "MultipleAddTextToBeginning" + " \"(" + lineNumBegin + ")\" \"(" + lineMultiple + ")\" \"(" + charToAdd + ")\"";
+        const moduleCode = "MultipleAddTextToBeginning \"(" + lineNumBegin + ")\" \"(" + lineMultiple + ")\" \"(" + charToAdd + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

@@ -50,7 +50,7 @@ class SplitLinesBeforeWord extends Component {
             return;
         }
 
-        const moduleCode = "SplitLinesBeforeWord" + " \"(" + charToSplit + ")\"";
+        const moduleCode = "SplitLinesBeforeWord \"(" + charToSplit + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

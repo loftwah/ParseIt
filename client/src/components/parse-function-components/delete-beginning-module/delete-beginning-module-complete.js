@@ -29,7 +29,7 @@ class DeleteBeginningModuleComplete extends Component {
             let found = false;
 
             // will a deletion ever be found?
-            if (outputText[inputContainerNum].text.indexOf(stoppingCharacters) == -1) {
+            if (outputText[inputContainerNum].text.indexOf(stoppingCharacters) === -1) {
                 // We will never find stopping characters - output the original text
                 finalText.push({
                     inputContainer: outputText[inputContainerNum].inputContainer,
@@ -43,7 +43,7 @@ class DeleteBeginningModuleComplete extends Component {
 
                 let stoppingCharIdx = textLines[i].indexOf(stoppingCharacters);
 
-                if (found === false && textLines[i] === stoppingCharacters && stoppingCharacters == "") {
+                if (found === false && textLines[i] === stoppingCharacters && stoppingCharacters === "") {
                     found = true;
                 } else if (found === false && stoppingCharIdx !== -1) {
                     found = true;

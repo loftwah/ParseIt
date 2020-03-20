@@ -82,7 +82,7 @@ class MultipleSplitLinesAfterWord extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "MultipleSplitLinesAfterWord" + " \"(" + lineNumBegin + ")\" \"(" + lineMultiple + ")\" \"(" + charToSplit + ")\" \"(" + direction + ")\" \"(" + instance + ")\"";
+        const moduleCode = "MultipleSplitLinesAfterWord \"(" + lineNumBegin + ")\" \"(" + lineMultiple + ")\" \"(" + charToSplit + ")\" \"(" + direction + ")\" \"(" + instance + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id
@@ -160,7 +160,7 @@ class MultipleSplitLinesAfterWord extends Component {
 
                 if (direction === "forward" && endsWithSpace === false) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx++ < line.length) {
+                    while (instanceIter !== 0 && found === true && idx++ < line.length) {
                         idx = line.indexOf(charToSplit, idx);
                         if (idx === - 1) {
                             found = false;
@@ -179,7 +179,7 @@ class MultipleSplitLinesAfterWord extends Component {
 
                 } else if (direction === "forward" && endsWithSpace === true) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx++ < line.length) {
+                    while (instanceIter !== 0 && found === true && idx++ < line.length) {
                         idx = line.indexOf(charToSplit, idx);
                         if (idx === - 1) {
                             found = false;
@@ -194,7 +194,7 @@ class MultipleSplitLinesAfterWord extends Component {
                     // use the idx from the while loop
                 } else if (direction === "backward" && endsWithSpace === false) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx-- > -1) {
+                    while (instanceIter !== 0 && found === true && idx-- > -1) {
                         idx = line.lastIndexOf(charToSplit, idx);
                         if (idx === -1) {
                             found = false;
@@ -213,7 +213,7 @@ class MultipleSplitLinesAfterWord extends Component {
 
                 } else if (direction === "backward" && endsWithSpace === true) {
                     // Search through the line at the particular instance where charToSplit is found
-                    while (instanceIter !== 0 && found == true && idx-- > -1) {
+                    while (instanceIter !== 0 && found === true && idx-- > -1) {
                         idx = line.lastIndexOf(charToSplit, idx);
                         if (idx === -1) {
                             found = false;

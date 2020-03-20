@@ -55,7 +55,7 @@ class MultipleDeleteLine extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        const moduleCode = "MultipleDeleteLine" + " \"(" + lineNumBegin + ")\" \"(" + lineMultiple + ")\"";
+        const moduleCode = "MultipleDeleteLine \"(" + lineNumBegin + ")\" \"(" + lineMultiple + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

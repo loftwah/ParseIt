@@ -36,7 +36,7 @@ class SavedTextModule extends Component {
 
         savedTextName = cleanDoubleQuotes(savedTextName);
 
-        const moduleCode = "SaveText" + " \"(" + savedTextName + ")\"";
+        const moduleCode = "SaveText \"(" + savedTextName + ")\"";
 
         const validationTest = savedTextValidation(savedTextName);
         if (validationTest.valid === false) {

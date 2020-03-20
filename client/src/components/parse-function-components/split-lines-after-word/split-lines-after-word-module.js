@@ -58,7 +58,7 @@ class SplitLinesAfterWord extends Component {
             return;
         }
 
-        const moduleCode = "SplitLinesAfterWord" + " \"(" + charToSplit + ")\"";
+        const moduleCode = "SplitLinesAfterWord \"(" + charToSplit + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

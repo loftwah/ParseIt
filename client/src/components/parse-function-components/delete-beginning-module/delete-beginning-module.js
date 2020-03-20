@@ -42,7 +42,7 @@ class DeleteBeginningModule extends Component {
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
         stoppingCharacters = cleanDoubleQuotes(stoppingCharacters);
-        const moduleCode = "DeleteBeginningUntilPhrase" + " \"(" + stoppingCharacters + ")\"";
+        const moduleCode = "DeleteBeginningUntilPhrase \"(" + stoppingCharacters + ")\"";
 
         const validationTest = deleteBeginningValidation(stoppingCharacters);
         if (validationTest.valid === false) {
@@ -94,7 +94,7 @@ class DeleteBeginningModule extends Component {
 
             // will a deletion ever be found?
             let willBeFound;
-            if (inputContainerText.indexOf(stoppingCharacters) == -1) {
+            if (inputContainerText.indexOf(stoppingCharacters) === -1) {
                 willBeFound = false; // We will never find stopping characters
                 // In this situation: we want to output a preview that is unchanged
             } else {
@@ -108,7 +108,7 @@ class DeleteBeginningModule extends Component {
                 let stoppingCharIdx = line.indexOf(stoppingCharacters);
                 idx = idx + 1;
 
-                if (line === "" && found == false && willBeFound == true) {
+                if (line === "" && found === false && willBeFound === true) {
                     // If line is empty and characters aren't found
 
                     // no addition preview
@@ -119,7 +119,7 @@ class DeleteBeginningModule extends Component {
                         <p className="line-text" style={{ background: "red" }}>&#160;</p>
                     </div>)
                 }
-                else if (line === "" && (found == true || willBeFound == false)) {
+                else if (line === "" && (found === true || willBeFound === false)) {
                     // If line is empty and characters ARE found
                     // addition preview
                     addIdx = addIdx + 1;
@@ -133,7 +133,7 @@ class DeleteBeginningModule extends Component {
                         <p className="line-text">&#160;</p>
                     </div>)
                 }
-                else if (found === false && stoppingCharIdx === -1 && willBeFound == true) {
+                else if (found === false && stoppingCharIdx === -1 && willBeFound === true) {
                     // If found is false, and line does not contain the stopping characters:
                     // The whole line will be deleted
                     return (<div className="line" key={idx}>
@@ -141,7 +141,7 @@ class DeleteBeginningModule extends Component {
                         <span className="line-text" style={{ background: "red" }}><b>{line}</b></span>
                     </div>)
 
-                } else if (found === false && stoppingCharIdx !== -1 && willBeFound == true) {
+                } else if (found === false && stoppingCharIdx !== -1 && willBeFound === true) {
                     // We have found the first instance of the stopping character
                     // we will not delete anymore
                     found = true;
@@ -162,7 +162,7 @@ class DeleteBeginningModule extends Component {
                         <span className="line-text-keep">{sliceKeep}</span>
                     </div>)
 
-                } else if (found === true || willBeFound == false) {
+                } else if (found === true || willBeFound === false) {
                     // show the remaining text inside deletions and additions previews
 
                     addIdx = addIdx + 1;
@@ -177,7 +177,6 @@ class DeleteBeginningModule extends Component {
                         <p className="line-text">{line}</p>
                     </div>)
                 }
-
             })
 
             additionPreviews.push(createSingleAdditionPreview);

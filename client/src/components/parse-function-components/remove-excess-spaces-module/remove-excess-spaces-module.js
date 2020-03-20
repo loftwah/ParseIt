@@ -5,9 +5,6 @@ import './remove-excess-spaces-module.css';
 import * as actions from '../../../actions';
 
 class RemoveExcessSpacesModule extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     handleDelete = (e) => {
         e.preventDefault();
@@ -258,6 +255,7 @@ class RemoveExcessSpacesModule extends Component {
                         <p className="line-text">{line}</p>
                     </div>)
                 }
+                return;
             })
             additionPreviews.push(createSingleAdditionPreview);
             deletionPreviews.push(createSingleDeletionPreview);
@@ -302,7 +300,7 @@ class RemoveExcessSpacesModule extends Component {
                                     href="!#"
                                     onClick={this.handlePreview}>
                                     Preview Changes
-                            </a>
+                                </a>
                             )}
 
                         <a

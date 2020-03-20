@@ -60,7 +60,7 @@ class CreateLineBeginningAllInputs extends Component {
             return;
         }
 
-        const moduleCode = "CreateLineBeginningAllInputs" + " \"(" + finalizedChars + ")\"";
+        const moduleCode = "CreateLineBeginningAllInputs \"(" + finalizedChars + ")\"";
         handleModuleCode({
             code: moduleCode,
             id: id

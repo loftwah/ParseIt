@@ -31,7 +31,7 @@ export const multipleSplitLinesBeforeWordValidation = (lineNumBegin, lineMultipl
     if (charToSplit.length === 0) {
         return { valid: false, error: 'Split  Before Characters: Please fill the input' };
     } else if (charToSplitHasSep === true) {
-        return { valid: false, error: 'Split  Before Characters: The use of the exact characters )\" \"( as characters to split lines is forbidden.\nAs a workaround, use more modules to get your intended result.' };
+        return { valid: false, error: 'Split  Before Characters: The use of the exact characters )" "( as characters to split lines is forbidden.\nAs a workaround, use more modules to get your intended result.' };
     }
 
     if (instance.length === 0) {
