@@ -25,7 +25,7 @@ class ProgressLoader extends Component {
                         </div>
                         <div className="nav-progress-text">
                             <p className="center">Loading Text and Modules</p>
-                            <p className="center">Please wait...</p>
+                            <p className="center">Please Wait...</p>
                         </div>
                     </div>
                 </div>

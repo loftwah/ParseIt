@@ -27,16 +27,18 @@ class Navbar extends Component {
                             <i className="material-icons">menu</i></a>
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li> <NavLink to='/what-is-parseit'><b>What is ParseIt?</b></NavLink> </li>
-                            <li> <NavLink to='/'><b>ParseIt Code</b></NavLink></li>
-                            <li> <NavLink to='/'><b>ParseIt Tricks</b></NavLink></li>
+                            <li> <NavLink to='/'><b>Tutorial</b></NavLink></li>
+                            <li> <NavLink to='/'><b>Examples</b></NavLink></li>
+                            <li> <NavLink to='/'><b>Tricks</b></NavLink></li>
                         </ul>
                     </div>
                 </nav>
 
                 <ul id="slide-out" className="sidenav">
                     <li><NavLink to='/what-is-parseit'>What is ParseIt?</NavLink> </li>
-                    <li><NavLink to='/'>ParseIt Code</NavLink></li>
-                    <li><NavLink to='/'>ParseIt Tricks</NavLink></li>
+                    <li><NavLink to='/'>Tutorial</NavLink></li>
+                    <li><NavLink to='/'>Examples</NavLink></li>
+                    <li><NavLink to='/'>Tricks</NavLink></li>
                 </ul>
             </div>
         );

@@ -20,6 +20,17 @@ class InputText extends Component {
         this.handleTextareaChange = this.handleTextareaChange.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.toggleTextbox === false && prevState.togglePDF === true
+            && this.state.toggleTextbox === true && this.state.togglePDF === false) {
+
+            // When toggling between Text and PDF, the Dummy Text modal will disappear
+            // If toggling back, we want to initialize the Dummy Text modal again
+            let modalDummyTextConf = document.querySelectorAll('.modal-dummy-text');
+            M.Modal.init(modalDummyTextConf);
+        }
+    }
+
     componentDidMount() {
         const { moduleActiveOff, togglePreviewOff, inputText,
             toggleTextboxReducer, localInputTextReducer } = this.props;
@@ -29,6 +40,9 @@ class InputText extends Component {
 
         let modalPdfConf = document.querySelectorAll('.modal-pdf');
         M.Modal.init(modalPdfConf);
+
+        let modalDummyTextConf = document.querySelectorAll('.modal-dummy-text');
+        M.Modal.init(modalDummyTextConf);
 
         // Case: user goes to navbar, and then back to the home page
         // We need to update the visual states of this component and parse-it code component
@@ -41,7 +55,6 @@ class InputText extends Component {
                     togglePDF: false,
                     disableTextBtn: true,
                     disablePDFbtn: false,
-
                 });
                 break;
             case (false):
@@ -201,6 +214,9 @@ class InputText extends Component {
     }
 
     handleToggleTextboxOn = e => {
+        const { updateInputText, updateOutputText, updateCodeText, updateSavedTextContainerDisplay,
+            updateContainerDisplay, updateSavedText, toggleOutputTextOn, toggleSavedTextOff,
+            moduleActiveOff, togglePreviewOff, toggleTextboxOn, togglePdfOff } = this.props
         this.setState({
             toggleTextbox: true,
             togglePDF: false,
@@ -211,23 +227,31 @@ class InputText extends Component {
         })
 
         // Clear everything
-        this.props.updateInputText([]);
-        this.props.updateOutputText([]);
-        this.props.updateCodeText('');
-        this.props.updateSavedTextContainerDisplay("combine-saves");
-        this.props.updateContainerDisplay(0);
-        this.props.updateSavedText([]);
-        this.props.toggleOutputTextOn();
-        this.props.toggleSavedTextOff();
-        this.props.moduleActiveOff();
-        this.props.togglePreviewOff();
+        updateInputText([]);
+        updateOutputText([]);
+        updateCodeText('');
+        updateSavedTextContainerDisplay("combine-saves");
+        updateContainerDisplay(0);
+        updateSavedText([]);
+        toggleOutputTextOn();
+        toggleSavedTextOff();
+        moduleActiveOff();
+        togglePreviewOff();
 
         // Let the reducer know that we are working inside the Plain Text component
-        this.props.toggleTextboxOn();
-        this.props.togglePdfOff();
+        toggleTextboxOn();
+        togglePdfOff();
+
+        this.setState({
+            localInputText: [{ inputContainer: 0, text: '', name: "Textbox 1" }],
+            textboxNumber: 1
+        })
     }
 
     handleTogglePDFOn = e => {
+        const { updateInputText, updateOutputText, updateCodeText, updateSavedTextContainerDisplay,
+            updateContainerDisplay, updateSavedText, toggleOutputTextOn, toggleSavedTextOff,
+            moduleActiveOff, togglePreviewOff, togglePdfOn, toggleTextboxOff } = this.props
         this.setState({
             toggleTextbox: false,
             togglePDF: true,
@@ -238,20 +262,20 @@ class InputText extends Component {
         })
 
         // Clear everything
-        this.props.updateInputText([]);
-        this.props.updateOutputText([]);
-        this.props.updateCodeText('');
-        this.props.updateSavedTextContainerDisplay("combine-saves");
-        this.props.updateContainerDisplay(0);
-        this.props.updateSavedText([]);
-        this.props.toggleOutputTextOn()
-        this.props.toggleSavedTextOff();
-        this.props.moduleActiveOff();
-        this.props.togglePreviewOff();
+        updateInputText([]);
+        updateOutputText([]);
+        updateCodeText('');
+        updateSavedTextContainerDisplay("combine-saves");
+        updateContainerDisplay(0);
+        updateSavedText([]);
+        toggleOutputTextOn()
+        toggleSavedTextOff();
+        moduleActiveOff();
+        togglePreviewOff();
 
         // Let the reducer know we are using the PDF component
-        this.props.togglePdfOn();
-        this.props.toggleTextboxOff();
+        togglePdfOn();
+        toggleTextboxOff();
     }
 
     handleTextboxNumChange = e => {
@@ -302,7 +326,8 @@ class InputText extends Component {
 
     handleDummyText = e => {
         e.preventDefault();
-        const { updateContainerDisplay, updateLocalText } = this.props;
+        const { updateContainerDisplay, updateLocalText, inputText, initializeCodeToggle,
+            updateInputText, updateOutputText, moduleActiveOff, togglePreviewOff } = this.props;
 
         const text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.\nLorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.\nIt was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker   including versions of Lorem Ipsum.";
 
@@ -323,6 +348,18 @@ class InputText extends Component {
 
         updateLocalText(initInputText);
         updateContainerDisplay(0);
+
+        // If the user was working with text previously, let's fire up the dummy text
+        // When it comes to user-experience, firing up the code seems to be the most natural step at this time
+        if (inputText.length !== 0) {
+            updateInputText(initInputText);
+            updateOutputText(initInputText);
+
+            moduleActiveOff();
+            togglePreviewOff();
+            initializeCodeToggle(true);
+        }
+
     }
 
     render() {
@@ -384,11 +421,13 @@ class InputText extends Component {
         // only allow the user to toggle textbox from the button IF the input text is empty
         // otherwise, toggle textbox during the modal
         const textBtnCanToggle = inputText.length === 0 ? this.handleToggleTextboxOn : undefined;
+        const dummyTextBtnCanReplaceInput = inputText.length === 0 ? this.handleDummyText : undefined;
         const PDFbtnCanToggle = inputText.length === 0 ? this.handleTogglePDFOn : undefined;
         const canTriggerModal = inputText.length === 0 ? 'no-trigger' : 'modal-trigger';
         const titleScreen = toggleTextbox === true && togglePDF === false ? 'Parse: Plain Text' : 'Parse: PDF';
 
         return (
+
             <div className="input-text-container">
                 <div className="input-type">
                     <br />
@@ -440,10 +479,26 @@ class InputText extends Component {
 
                 {toggleTextbox === true && togglePDF === false ? (
                     <div className="textbox-input">
-                        <button className="waves-effect waves-light btn dummy-text-button deep-purple darken-1"
-                            onClick={this.handleDummyText}>
+
+                        <button className={`waves-effect waves-light btn ${canTriggerModal} dummy-text-button deep-purple darken-1`}
+                            onClick={dummyTextBtnCanReplaceInput}
+                            href="#modal-dummy-text-id">
                             Click for dummy text
                         </button>
+
+                        <div id="modal-dummy-text-id" className="modal modal-dummy-text">
+                            <div className="modal-content">
+                                <h4>You Are Currently Working With Text</h4>
+                                <p>The "Dummy Text" option will give you 3 Textboxes of content to parse. It will require you to discard all current Textbox input and output data.</p>
+                                <p>Would you like to discard your Textbox data and use Dummy Text instead?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="modal-close waves-effect waves-red btn-flat right">No</button>
+                                <button className="modal-close waves-effect waves-green btn-flat left"
+                                    onClick={this.handleDummyText}>Yes</button>
+                            </div>
+                        </div>
+
                         <select className="browser-default textbox-number-dropdown-menu"
                             value={textBoxVal}
                             onChange={this.handleTextboxNumChange}>
