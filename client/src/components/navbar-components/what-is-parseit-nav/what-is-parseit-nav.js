@@ -22,15 +22,43 @@ class WhatIsParseItNav extends Component {
                 <Navbar />
                 <div className="what-is-parseit-container">
                     <div className="container-text">
-                        <h1 className="center">What is ParseIt?</h1>
-                        <h4>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                        <h1 className="center parse-it-question">What is ParseIt?</h1>
+                        <h5 className="center parse-it-answer">ParseIt automates the process of extracting valuable information from large amounts of PDF documents or complex text data, and combining that information together.</h5>
 
-                        Why do we use it?
-                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                        <h4>Parse Your Text Without Coding</h4>
 
+                        <ul className="browser-default what-is-parse-it-list">
+                            <li><h6 className="text">ParseIt eliminates the need to write software to extract information from text data.</h6></li>
+                            <li><h6 className="text">A non-technical business person can easily upload a large batch of similarly-structured PDF files (e.g. invoices, receipts, HR forms, analysis reports, etc.) or text, and be able to extract information quickly.</h6></li>
+                        </ul>
 
-                        Where does it come from?
-                        Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</h4>
+                        <h4>One Tool For Parsing</h4>
+
+                        <ul className="browser-default what-is-parse-it-list">
+                            <li><h6 className="text">All of the modules of ParseIt are abstract and versatile; allowing the user to create entirely custom parsing operations when pairing multiple modules together.</h6></li>
+                        </ul>
+
+                        <h4>Faster Than Creating Your Own Software</h4>
+
+                        <ul className="browser-default what-is-parse-it-list">
+                            <li><h6 className="text">With instant results and intuitive visuals, one can parse through text faster using ParseIt than someone developing a parsing program for their one particular situation.</h6></li>
+                        </ul>
+
+                        <h4>Simple, Intuitive ParseIt Code</h4>
+
+                        <ul className="browser-default what-is-parse-it-list">
+                            <li><h6 className="text">ParseIt offers its own optional, user-friendly coding language to allow users to work incredibly fast.</h6></li>
+                        </ul>
+
+                        <h5>How ParseIt Code Works</h5>
+
+                        <ul className="browser-default what-is-parse-it-list">
+                            <li><h6 className="text">After each created module, ParseIt will deliver a line of text for that module under ParseIt Code. One line of code represents one module.</h6></li>
+                            <li><h6 className="text">If a user is satisfied with how their modules parse their text, they can re-use that code in the future for similar text or PDFs.</h6></li>
+                            <li><h6 className="text">When it comes time to parse again, a user can simply upload their PDFs or text, paste in their previous code and run.</h6></li>
+                            <li><h6 className="text">Users can exchange codes with each other for different parsing operations, which will instantly load in all desired modules.</h6></li>
+                        </ul>
+
                     </div>
                 </div>
             </div>

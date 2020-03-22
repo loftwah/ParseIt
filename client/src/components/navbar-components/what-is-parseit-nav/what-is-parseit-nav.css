@@ -4,3 +4,11 @@ div.what-is-parseit-container {
     padding-right: 5%;
     padding-bottom: 200px;
 }
+
+ul.what-is-parse-it-list .text{
+    line-height: 1.5;
+}
+
+.parse-it-answer {
+    line-height: 1.5;
+}

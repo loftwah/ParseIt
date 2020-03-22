@@ -71,7 +71,7 @@ class InputPDF extends Component {
 
     async fileUploadHandler() {
         const { selectedFiles, selectedFileNames } = this.state;
-        const { updateInputText, updateOutputText, initializeCodeToggle, codeText } = this.props;
+        const { updateInputText, updateOutputText, updateContainerDisplay, initializeCodeToggle, codeText } = this.props;
 
         if (selectedFiles.length === 0) {
             this.setState({
@@ -79,6 +79,12 @@ class InputPDF extends Component {
             })
             return;
         }
+
+        // Make sure the input displaly is 0
+        // It is possible that the user can:
+        // 1) Upload 2 PDFs, 2) Toggle display on 2nd PDF, 3) Submit 1 PDF => crash application
+        // We will force the user on the 1st display (or 0th display, indexed at 0)
+        updateContainerDisplay(0);
 
         // uploading is now in progress
         this.setState({

@@ -135,7 +135,7 @@ class InputText extends Component {
 
         // This Submit will also submit anything in our ParseIt code reducer (in case we want to update the text)
         const { initializeCodeToggle, moduleActiveOff, updateInputText, updateOutputText, updateLocalText,
-            togglePreviewOff, codeText } = this.props;
+            updateContainerDisplay, togglePreviewOff, codeText } = this.props;
         const { localInputText } = this.state;
 
         // Before submitting, clean up all "odd" double-spaces inside text and name
@@ -175,6 +175,9 @@ class InputText extends Component {
 
         moduleActiveOff();
         togglePreviewOff();
+
+        // Always change the display input to 0
+        updateContainerDisplay(0);
 
         // If there is no codeText, don't initialize code
         // Only initialize if there's codeText

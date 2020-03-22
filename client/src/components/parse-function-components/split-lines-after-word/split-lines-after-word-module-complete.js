@@ -25,10 +25,12 @@ class SplitLinesAfterWordComplete extends Component {
         const charEndsWithSpace = charToSplit[charToSplit] === " " ? true : false;
         const charHasSpaceOnEnd = (charBeginsWithSpace || charEndsWithSpace) === true ? true : false;
 
-        for (let inputContainerNum = 0; inputContainerNum < outputText.length; inputContainerNum++) {
+        for (let inputContainer = 0; inputContainer < outputText.length; inputContainer++) {
 
-            let containerSplitNewLine = outputText[inputContainerNum].text.split('\n');
             let newText = [];
+            let inputContainerNum = inputContainer;
+
+            let containerSplitNewLine = outputText[inputContainer].text.split('\n');
 
             for (let i = 0; i < containerSplitNewLine.length; i++) {
 
@@ -50,11 +52,10 @@ class SplitLinesAfterWordComplete extends Component {
                     let lineSegment = line;
 
                     let findSpacePointer;
+                    findSpacePointer = lineSegment.indexOf(charToSplit) + charToSplit.length;
 
                     while (lineSegment.lastIndexOf(charToSplit) !== -1) {
                         // where editing begins
-
-                        findSpacePointer = lineSegment.indexOf(charToSplit) + charToSplit.length;
 
                         while (charEndsWithSpace === false
                             && lineSegment[findSpacePointer] !== " "
@@ -66,7 +67,6 @@ class SplitLinesAfterWordComplete extends Component {
 
                         // check to see if findSpacePointer is at the end of the line, if it is LEAVE THE LOOP
                         if (findSpacePointer === lineSegment.length) {
-                            // If we made it to the end of the line with nothing inside the deletion JSX array, simply return the whole line untouched
                             newText.push(lineSegment);
                             break;
                         } else {
@@ -90,11 +90,13 @@ class SplitLinesAfterWordComplete extends Component {
                             }
                             newText.push(firstSegment);
                         }
+                        findSpacePointer = lineSegment.indexOf(charToSplit) + charToSplit.length;
                     }
 
-                    // Handle remaining characters
                     if (findSpacePointer !== lineSegment.length) {
-                        newText.push(lineSegment);
+                        if (lineSegment !== "") {
+                            newText.push(lineSegment);
+                        }
                     }
                 }
             }
@@ -107,7 +109,6 @@ class SplitLinesAfterWordComplete extends Component {
                 name: outputText[inputContainerNum].name
             })
         }
-
         updateOutputText(finalText);
 
     }

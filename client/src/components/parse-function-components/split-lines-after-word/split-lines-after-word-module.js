@@ -94,7 +94,6 @@ class SplitLinesAfterWord extends Component {
         const charHasSpaceOnEnd = (charBeginsWithSpace || charEndsWithSpace) === true ? true : false;
 
         for (let inputContainer = 0; inputContainer < outputText.length; inputContainer++) {
-
             let addIdx = 0;
             let deleteIdx = 0;
 
@@ -145,11 +144,10 @@ class SplitLinesAfterWord extends Component {
                     let deletionPreviewLineJSX = [];
 
                     let findSpacePointer;
+                    findSpacePointer = lineSegment.indexOf(charToSplit) + charToSplit.length;
 
                     while (lineSegment.lastIndexOf(charToSplit) !== -1) {
                         // where editing begins
-
-                        findSpacePointer = lineSegment.indexOf(charToSplit) + charToSplit.length;
 
                         while (charEndsWithSpace === false
                             && lineSegment[findSpacePointer] !== " "
@@ -321,11 +319,11 @@ class SplitLinesAfterWord extends Component {
                                 </div>);
                             }
                         }
+                        findSpacePointer = lineSegment.indexOf(charToSplit) + charToSplit.length;
                     }
 
                     // Handle remaining characters
                     if (findSpacePointer !== lineSegment.length) {
-                        addIdx++;
 
                         switch (charHasSpaceOnEnd) {
                             case false:
@@ -345,12 +343,16 @@ class SplitLinesAfterWord extends Component {
                                 console.log("charHasSpaceOnEnd is undefined");
                         }
 
-                        createSingleAdditionPreview.push(<div className="line" key={addIdx}>
-                            <span className="line-number" style={{ background: "rgb(250, 217, 155)" }}>[{addIdx}]&#160;</span>
-                            <p className="line-text" style={{ background: "orange" }}>{lineSegment}</p>
-                        </div>);
-                    }
+                        // Don't add blank lines "" to the output
+                        if (lineSegment !== "") {
+                            addIdx++;
+                            createSingleAdditionPreview.push(<div className="line" key={addIdx}>
+                                <span className="line-number" style={{ background: "rgb(250, 217, 155)" }}>[{addIdx}]&#160;</span>
+                                <p className="line-text" style={{ background: "orange" }}>{lineSegment}</p>
+                            </div>);
+                        }
 
+                    }
                     // Handling Deletion Previews
 
                     createSingleDeletionPreview.push(
