@@ -2,7 +2,18 @@ div.what-is-parseit-container {
     position: relative;
     padding-left: 5%;
     padding-right: 5%;
-    padding-bottom: 200px;
+    padding-bottom: 100px;
+}
+
+div.parse-it-question {
+    font-size: max(4vw, 40px);
+    padding-top: 10px
+}
+
+div.parse-it-answer {
+    font-size: max(1.5vw, 18px);
+    padding-top: 10px;
+    padding-bottom: 20px
 }
 
 ul.what-is-parse-it-list .text{
@@ -11,4 +22,54 @@ ul.what-is-parse-it-list .text{
 
 .parse-it-answer {
     line-height: 1.5;
+}
+
+div.iframe-container{
+    position: relative;
+    width: 100%; /* Fill the width of the parent */
+    padding-bottom: 56.25%; /* YouTube's 16:9 aspect ratio */
+    margin-bottom: 150px; /* Additional space between iframe and element below */
+    height: 0;
+  }
+div.iframe-container iframe{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%; /* Fill the width of the parent */
+    height: calc(100% + 130px); /* Fill height of parent, but add more height = black horizontal space on top & bottom of YT video */
+    border-style:solid
+}
+
+div.iframe-wrapper {
+    max-width: 800px; /* controls max-width of iframe */
+    margin-left: auto; /* center everything */
+    margin-right: auto; /* center everything */
+}
+
+.container-text img{
+    max-width: 500px;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 8px;
+    border-width: 2px
+}
+
+p.image-caption {
+    max-width: 500px;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+span.image-caption-video {
+    max-width: 500px;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

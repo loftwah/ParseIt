@@ -5,6 +5,8 @@ import * as actions from '../../../actions';
 import './what-is-parseit-nav.css';
 import Navbar from '../../navbar/navbar';
 
+import parseWithoutCodeImg from '../../../images/what-is-parseit-parse-without-coding.png';
+
 class WhatIsParseItNav extends Component {
 
     componentDidMount() {
@@ -16,21 +18,39 @@ class WhatIsParseItNav extends Component {
     }
 
     render() {
-        console.log('ParseItNav has rendered')
         return (
             <div className="what-is-parseit-nav-component">
                 <Navbar />
                 <div className="what-is-parseit-container">
                     <div className="container-text">
-                        <h1 className="center parse-it-question">What is ParseIt?</h1>
-                        <h5 className="center parse-it-answer">ParseIt automates the process of extracting valuable information from large amounts of PDF documents or complex text data, and combining that information together.</h5>
+                        <div className="center parse-it-question">What is ParseIt?</div>
+                        <div className="center parse-it-answer">ParseIt automates the process of extracting valuable information from large amounts of PDF documents or complex text data, and combines that information together.</div>
+
+                        <div className="iframe-wrapper">
+                            <div className="iframe-container">
+                                <iframe
+                                    src='https://www.youtube.com/embed/MyCBmAK2g-Q?rel=0;&autoplay=1&mute=1'
+                                    frameBorder='0'
+                                    allow='autoplay; encrypted-media'
+                                    allowFullScreen
+                                    title='video'
+                                />
+                            </div>
+                            <p className="center grey-text text-darken-1"> <i>Extracting all P.O. Numbers, Representative Names, Representative Emails, Shipping and Product Info from multiple invoice PDFs.</i></p>
+                        </div>
 
                         <h4>Parse Your Text Without Coding</h4>
 
                         <ul className="browser-default what-is-parse-it-list">
-                            <li><h6 className="text">ParseIt eliminates the need to write software to extract information from text data.</h6></li>
+                            <li><h6 className="text">ParseIt eliminates the need to write software for extracting information from text and PDF data.</h6></li>
                             <li><h6 className="text">A non-technical business person can easily upload a large batch of similarly-structured PDF files (e.g. invoices, receipts, HR forms, analysis reports, etc.) or text, and be able to extract information quickly.</h6></li>
                         </ul>
+
+                        <img src={parseWithoutCodeImg} alt="" />
+                        <p className="image-caption center grey-text text-darken-1"><i>All ParseIt Modules have a "preview" option to help you visualize how that module will parse your text, before you actually use the module.</i></p>
+                        <span className="image-caption-video center">
+                            Video: <a href="https://www.youtube.com/watch?v=IROfLEoTVHM" target="_blank" rel="noopener noreferrer">Parsing Weather Text Without Code and With ParseIt Code</a>
+                        </span>
 
                         <h4>One Tool For Parsing</h4>
 
@@ -44,10 +64,10 @@ class WhatIsParseItNav extends Component {
                             <li><h6 className="text">With instant results and intuitive visuals, one can parse through text faster using ParseIt than someone developing a parsing program for their one particular situation.</h6></li>
                         </ul>
 
-                        <h4>Simple, Intuitive ParseIt Code</h4>
+                        <h4>Simple, Optional ParseIt Code</h4>
 
                         <ul className="browser-default what-is-parse-it-list">
-                            <li><h6 className="text">ParseIt offers its own optional, user-friendly coding language to allow users to work incredibly fast.</h6></li>
+                            <li><h6 className="text">ParseIt offers its own optional, user-friendly coding language to allow users to load in modules instantly.</h6></li>
                         </ul>
 
                         <h5>How ParseIt Code Works</h5>
@@ -58,6 +78,19 @@ class WhatIsParseItNav extends Component {
                             <li><h6 className="text">When it comes time to parse again, a user can simply upload their PDFs or text, paste in their previous code and run.</h6></li>
                             <li><h6 className="text">Users can exchange codes with each other for different parsing operations, which will instantly load in all desired modules.</h6></li>
                         </ul>
+
+                        <div className="iframe-wrapper">
+                            <div className="iframe-container">
+                                <iframe
+                                    src='https://www.youtube.com/embed/BsRwaxLhEtY?rel=0;'
+                                    frameBorder='0'
+                                    allow='encrypted-media'
+                                    allowFullScreen
+                                    title='video'
+                                />
+                            </div>
+                            <p className="center grey-text text-darken-1"> <i>A coworker found a way to extract one item's information (Widget D) from multiple invoice PDFs.</i></p>
+                        </div>
 
                     </div>
                 </div>
