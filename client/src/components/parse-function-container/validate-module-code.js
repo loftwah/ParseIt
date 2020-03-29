@@ -317,7 +317,7 @@ export const validateCode = (moduleCode, lineNum) => {
             if (moduleParams.length !== 3) {
                 return validationObj = {
                     valid: false,
-                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 3 parameters\nStructure: ${moduleType} "(number: line begin)" "(number: line multiple)" "(phrase to add)"`
+                    message: `Error: Line Number ${lineNum} at ${moduleType}\nReason: This module takes 3 parameters\nStructure: ${moduleType} "(number: line begin)" "(number: line multiple)" "(phrase)"`
                 };
             } else if (validParamEnding !== true) {
                 return validationObj = {

@@ -1,0 +1,31 @@
+div.tutorial-container {
+    position: relative;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 100px;
+}
+
+div.tutorial-header {
+    font-size: max(4vw, 40px);
+    padding-top: 10px
+}
+
+ol.tutorial-list .text{
+    line-height: 1.5;
+}
+
+ul.tutorial-list .text{
+    line-height: 1.5;
+}
+
+.circle {
+    list-style-type: circle;
+}
+
+.preface {
+    line-height: 1.5;
+}
+
+.spaced-circle li{
+    line-height: 1.5;  
+}

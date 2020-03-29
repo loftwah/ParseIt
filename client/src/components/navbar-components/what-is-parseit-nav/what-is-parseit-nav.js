@@ -36,7 +36,7 @@ class WhatIsParseItNav extends Component {
                                     title='video'
                                 />
                             </div>
-                            <p className="center grey-text text-darken-1"> <i>Extracting all P.O. Numbers, Representative Names, Representative Emails, Shipping and Product Info from multiple invoice PDFs.</i></p>
+                            <p className="center grey-text text-darken-1"> <i>All P.O. Numbers, Representative Names, Representative Emails, Shipping and Product Info are extracted from multiple invoice PDFs. The aforementioned information is then grouped together by PDF.</i></p>
                         </div>
 
                         <h4>Parse Your Text Without Coding</h4>
