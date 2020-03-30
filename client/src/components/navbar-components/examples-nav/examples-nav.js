@@ -26,8 +26,6 @@ class ExamplesNav extends Component {
                     <div className="container-text">
                         <div className="center examples-header">Examples</div>
 
-                        <h4>What You Can Do With ParseIt</h4>
-
                         <ul class="collapsible examples-collapsible">
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">chat</i>Create a YouTube Transcript</div>
