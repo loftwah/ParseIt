@@ -1,0 +1,35 @@
+div.examples-container {
+    position: relative;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 100px;
+}
+
+div.examples-header {
+    font-size: max(4vw, 40px);
+    padding-top: 10px
+}
+
+.example-code-text {
+    background: black;
+    cursor: text;
+    font-family: 'Courier New';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.example-code-text p {
+    color: white;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 15px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+p.website-link{
+    margin-bottom: 20px
+}

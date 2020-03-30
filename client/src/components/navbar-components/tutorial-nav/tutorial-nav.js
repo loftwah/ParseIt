@@ -295,7 +295,7 @@ class TutorialNav extends Component {
                         <ol className="browser-default tutorial-list">
                             <h6 className="text"><li>The more PDF files or number of input text you upload, the better.</li></h6>
                             <ul class="browser-default tutorial-list circle spaced-circle">
-                                <h6 ><li>If you want to create reusable ParseIt code for the future, start by uploading many files/text. Uploading a lot of data will give you an idea on how the data differs between each other, which will give you an idea on how to go about extracting the necessary information.</li></h6>
+                                <h6 ><li>If you want to create reusable ParseIt code for the future, start by uploading many files/text. Uploading a lot of data will give you an idea on how the data differs between each other; knowing this will help you find a reusable solution for extracting the information you need.</li></h6>
                             </ul>
                             <h6 className="text"><li>Watch out for references to data that may change.</li></h6>
 

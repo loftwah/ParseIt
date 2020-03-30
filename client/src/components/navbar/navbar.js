@@ -28,7 +28,7 @@ class Navbar extends Component {
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li> <NavLink to='/what-is-parseit'><b>What is ParseIt?</b></NavLink> </li>
                             <li> <NavLink to='/tutorial'><b>Tutorial</b></NavLink></li>
-                            <li> <NavLink to='/'><b>Examples</b></NavLink></li>
+                            <li> <NavLink to='/examples'><b>Examples</b></NavLink></li>
                             <li> <NavLink to='/'><b>Tricks</b></NavLink></li>
                         </ul>
                     </div>
@@ -37,7 +37,7 @@ class Navbar extends Component {
                 <ul id="slide-out" className="sidenav">
                     <li><NavLink to='/what-is-parseit'>What is ParseIt?</NavLink> </li>
                     <li><NavLink to='/tutorial'>Tutorial</NavLink></li>
-                    <li><NavLink to='/'>Examples</NavLink></li>
+                    <li><NavLink to='/examples'>Examples</NavLink></li>
                     <li><NavLink to='/'>Tricks</NavLink></li>
                 </ul>
             </div>
