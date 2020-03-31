@@ -1,4 +1,4 @@
-div.tutorial-container {
+div.tricks-container {
     position: relative;
     padding-left: 5%;
     padding-right: 5%;
@@ -8,17 +8,17 @@ div.tutorial-container {
     margin-right: auto; /* center everything */
 }
 
-div.tutorial-header {
+div.tricks-header {
     font-size: max(4vw, 40px);
     padding-top: 10px;
     font-weight: 500;
 }
 
-ol.tutorial-list .text{
+ol.tricks-list .text{
     line-height: 1.5;
 }
 
-ul.tutorial-list .text{
+ul.tricks-list .text{
     line-height: 1.5;
 }
 

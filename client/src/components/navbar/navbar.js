@@ -29,7 +29,7 @@ class Navbar extends Component {
                             <li> <NavLink to='/what-is-parseit'><b>What is ParseIt?</b></NavLink> </li>
                             <li> <NavLink to='/tutorial'><b>Tutorial</b></NavLink></li>
                             <li> <NavLink to='/examples'><b>Examples</b></NavLink></li>
-                            <li> <NavLink to='/'><b>Tricks</b></NavLink></li>
+                            <li> <NavLink to='/tricks'><b>Tricks</b></NavLink></li>
                         </ul>
                     </div>
                 </nav>
@@ -38,7 +38,7 @@ class Navbar extends Component {
                     <li><NavLink to='/what-is-parseit'>What is ParseIt?</NavLink> </li>
                     <li><NavLink to='/tutorial'>Tutorial</NavLink></li>
                     <li><NavLink to='/examples'>Examples</NavLink></li>
-                    <li><NavLink to='/'>Tricks</NavLink></li>
+                    <li><NavLink to='/tricks'>Tricks</NavLink></li>
                 </ul>
             </div>
         );

@@ -5,6 +5,7 @@ import ParseItContainer from './components/parseit-container/parseit-container';
 import WhatIsParseItNav from './components/navbar-components/what-is-parseit-nav/what-is-parseit-nav';
 import TutorialNav from './components/navbar-components/tutorial-nav/tutorial-nav';
 import ExamplesNav from './components/navbar-components/examples-nav/examples-nav';
+import TricksNav from './components/navbar-components/tricks-nav/tricks-nav';
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 					<Route path='/what-is-parseit' component={WhatIsParseItNav} />
 					<Route path='/tutorial' component={TutorialNav} />
 					<Route path='/examples' component={ExamplesNav} />
+					<Route path='/tricks' component={TricksNav} />
 				</Switch>
 			</div>
 		</BrowserRouter>
