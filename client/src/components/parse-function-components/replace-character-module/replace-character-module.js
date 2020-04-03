@@ -6,7 +6,7 @@ import './replace-character-module.css';
 import * as actions from '../../../actions';
 import { escapeRegExp } from './replace-character-module-functions';
 import { replaceCharacterValidation } from './replace-character-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class ReplaceCharacterModule extends Component {
     constructor(props) {
@@ -55,8 +55,8 @@ class ReplaceCharacterModule extends Component {
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
-        replaceCharacter = cleanDoubleQuotes(replaceCharacter);
-        insertCharacter = cleanDoubleQuotes(insertCharacter);
+        replaceCharacter = cleanQuotationMarks(replaceCharacter);
+        insertCharacter = cleanQuotationMarks(insertCharacter);
 
         const moduleCode = this.createCode(replaceCharacter, insertCharacter);
         const validationTest = replaceCharacterValidation(replaceCharacter, insertCharacter);
@@ -83,8 +83,8 @@ class ReplaceCharacterModule extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         let { replaceCharacter, insertCharacter } = this.state;
 
-        replaceCharacter = cleanDoubleQuotes(replaceCharacter);
-        insertCharacter = cleanDoubleQuotes(insertCharacter);
+        replaceCharacter = cleanQuotationMarks(replaceCharacter);
+        insertCharacter = cleanQuotationMarks(insertCharacter);
 
         // validate the inputs
         const validationTest = replaceCharacterValidation(replaceCharacter, insertCharacter);

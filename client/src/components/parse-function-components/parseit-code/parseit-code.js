@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import './parseit-code.css';
 import * as actions from '../../../actions';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class ParseItCode extends Component {
 
@@ -22,7 +22,7 @@ class ParseItCode extends Component {
         const { parseItCode } = this.props; // passed in props
 
         // clean quotes
-        codeText = cleanDoubleQuotes(codeText);
+        codeText = cleanQuotationMarks(codeText);
 
         parseItCode(codeText);
         moduleActiveOff();

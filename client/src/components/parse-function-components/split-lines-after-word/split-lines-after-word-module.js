@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './split-lines-after-word-module.css';
 import * as actions from '../../../actions';
 import { splitAfterWordValidation } from './split-lines-after-word-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class SplitLinesAfterWord extends Component {
     constructor(props) {
@@ -48,7 +48,7 @@ class SplitLinesAfterWord extends Component {
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
-        charToSplit = cleanDoubleQuotes(charToSplit);
+        charToSplit = cleanQuotationMarks(charToSplit);
         const validationTest = splitAfterWordValidation(charToSplit);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -74,7 +74,7 @@ class SplitLinesAfterWord extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         let { charToSplit } = this.state;
 
-        charToSplit = cleanDoubleQuotes(charToSplit);
+        charToSplit = cleanQuotationMarks(charToSplit);
         const validationTest = splitAfterWordValidation(charToSplit);
         if (validationTest.valid === false) {
             // create error message and return out

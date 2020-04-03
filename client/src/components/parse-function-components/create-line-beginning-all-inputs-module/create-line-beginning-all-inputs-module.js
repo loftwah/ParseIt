@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './create-line-beginning-all-inputs-module.css';
 import * as actions from '../../../actions';
 import { createLineBeginningAllInputsValidation } from './create-line-beginning-all-inputs-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class CreateLineBeginningAllInputs extends Component {
     constructor(props) {
@@ -50,7 +50,7 @@ class CreateLineBeginningAllInputs extends Component {
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
-        finalizedChars = cleanDoubleQuotes(finalizedChars);
+        finalizedChars = cleanQuotationMarks(finalizedChars);
         const validationTest = createLineBeginningAllInputsValidation(finalizedChars, getNameToggle);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -84,7 +84,7 @@ class CreateLineBeginningAllInputs extends Component {
 
         let finalizedChars = getNameToggle === true ? "$$GetName$$" : charsToAdd;
 
-        finalizedChars = cleanDoubleQuotes(finalizedChars);
+        finalizedChars = cleanQuotationMarks(finalizedChars);
         const validationTest = createLineBeginningAllInputsValidation(finalizedChars, getNameToggle);
         if (validationTest.valid === false) {
             // create error message and return out

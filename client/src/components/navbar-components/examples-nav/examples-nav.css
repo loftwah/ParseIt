@@ -12,6 +12,7 @@ div.examples-header {
     font-size: max(4vw, 40px);
     padding-top: 10px;
     font-weight: 500;
+    font-family: Georgia, 'Times New Roman', Times, serif
 }
 
 .example-code-text {

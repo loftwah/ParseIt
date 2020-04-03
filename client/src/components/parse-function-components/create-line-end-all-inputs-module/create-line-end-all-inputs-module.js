@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './create-line-end-all-inputs-module.css';
 import * as actions from '../../../actions';
 import { createLineEndAllInputsValidation } from './create-line-end-all-inputs-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class CreateLineEndAllInputs extends Component {
     constructor(props) {
@@ -40,7 +40,7 @@ class CreateLineEndAllInputs extends Component {
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
-        charsToAdd = cleanDoubleQuotes(charsToAdd);
+        charsToAdd = cleanQuotationMarks(charsToAdd);
         const validationTest = createLineEndAllInputsValidation(charsToAdd);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -66,7 +66,7 @@ class CreateLineEndAllInputs extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         let { charsToAdd } = this.state;
 
-        charsToAdd = cleanDoubleQuotes(charsToAdd);
+        charsToAdd = cleanQuotationMarks(charsToAdd);
         const validationTest = createLineEndAllInputsValidation(charsToAdd);
         if (validationTest.valid === false) {
             // create error message and return out

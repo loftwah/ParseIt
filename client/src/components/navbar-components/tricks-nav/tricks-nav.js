@@ -23,7 +23,7 @@ class TricksNav extends Component {
                     <div className="container-text">
                         <div className="center tricks-header">Tricks</div>
 
-                        <h4 className="center">Tips and Tricks for ParseIt Modules</h4>
+                        <h4>Tips and Tricks for ParseIt Modules</h4>
 
                         <ol className="browser-default tricks-list">
                             <h6 className="text"><li>To delete all instances of a phrase, use the "Replace Characters" module.</li></h6>
@@ -33,7 +33,7 @@ class TricksNav extends Component {
                                 <h6 className="text"><li>If the chracters you want to delete happen to be an entire line, that whole line will be deleted.</li></h6>
                             </ul>
 
-                            <h6 className="text"><li>Instead of trying to parse information in one shot, consider parsing text in “chunks” using the "Save Text" module.</li></h6>
+                            <h6 className="text"><li>Instead of trying to parse information in one shot, consider parsing text in "chunks" using the "Save Text" module.</li></h6>
 
                             <ul class="browser-default tricks-list circle">
                                 <h6 className="text"><li>This module will save that "chunk" of data you are working on, and return you the original data to create more "chunks" if you wish.</li></h6>

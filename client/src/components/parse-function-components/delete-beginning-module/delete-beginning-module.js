@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './delete-beginning-module.css';
 import * as actions from '../../../actions';
 import { deleteBeginningValidation } from './delete-beginning-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class DeleteBeginningModule extends Component {
     constructor(props) {
@@ -41,7 +41,7 @@ class DeleteBeginningModule extends Component {
         // Output text gets updated on the "complete" module
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
-        stoppingCharacters = cleanDoubleQuotes(stoppingCharacters);
+        stoppingCharacters = cleanQuotationMarks(stoppingCharacters);
         const moduleCode = "DeleteBeginningUntilPhrase \"(" + stoppingCharacters + ")\"";
 
         const validationTest = deleteBeginningValidation(stoppingCharacters);
@@ -69,7 +69,7 @@ class DeleteBeginningModule extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         let { stoppingCharacters } = this.state;
 
-        stoppingCharacters = cleanDoubleQuotes(stoppingCharacters);
+        stoppingCharacters = cleanQuotationMarks(stoppingCharacters);
 
         // Validate the inputs
         const validationTest = deleteBeginningValidation(stoppingCharacters);

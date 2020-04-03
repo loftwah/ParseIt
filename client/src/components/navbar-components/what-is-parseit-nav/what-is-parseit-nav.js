@@ -24,7 +24,7 @@ class WhatIsParseItNav extends Component {
                 <div className="what-is-parseit-container">
                     <div className="container-text">
                         <div className="center parse-it-question">What is ParseIt?</div>
-                        <div className="center parse-it-answer">ParseIt automates the process of extracting valuable information from large amounts of PDF documents or complex text data, and combines that information together.</div>
+                        <div className="center parse-it-answer">ParseIt eliminates the need of having to write software to extract information from large amounts of PDF documents or complex text data. Anyone can create useful parsing operations fast, regardless of technical ability.</div>
 
                         <div className="iframe-wrapper">
                             <div className="iframe-container">
@@ -42,8 +42,8 @@ class WhatIsParseItNav extends Component {
                         <h4>Parse Your Text Without Coding</h4>
 
                         <ul className="browser-default what-is-parse-it-list">
-                            <li><h6 className="text">ParseIt eliminates the need to write software for extracting information from text and PDF data.</h6></li>
-                            <li><h6 className="text">A non-technical business person can easily upload a large batch of similarly-structured PDF files (e.g. invoices, receipts, HR forms, analysis reports, etc.) or text, and be able to extract information quickly.</h6></li>
+                            <li><h6 className="text">Instead of creating parsing software, users have the ability to funnel their PDF and text data through a custom stack of parsing modules. All modules offer previews of how that module will manipulate a users' data.</h6></li>
+                            <li><h6 className="text yellow-highlight">Using ParseIt, A non-technical business person can easily upload a large batch of similarly-structured PDF files (e.g. invoices, receipts, HR forms, analysis reports, etc.) or text, and be able to extract information quickly.</h6></li>
                         </ul>
 
                         <img src={parseWithoutCodeImg} alt="" />

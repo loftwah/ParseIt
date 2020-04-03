@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './delete-line-if-doesnt-have-characters-module.css';
 import * as actions from '../../../actions';
 import { deleteLineIfDoesntHaveCharsValidation } from './delete-line-if-doesnt-have-characters-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class DeleteLineIfDoesntHaveCharacters extends Component {
     constructor(props) {
@@ -36,7 +36,7 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
             togglePreviewOff, id, moduleActiveOff, completeModule } = this.props;
         let { chars } = this.state;
 
-        chars = cleanDoubleQuotes(chars);
+        chars = cleanQuotationMarks(chars);
         const validationTest = deleteLineIfDoesntHaveCharsValidation(chars);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -65,7 +65,7 @@ class DeleteLineIfDoesntHaveCharacters extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         let { chars } = this.state;
 
-        chars = cleanDoubleQuotes(chars);
+        chars = cleanQuotationMarks(chars);
         const validationTest = deleteLineIfDoesntHaveCharsValidation(chars);
         if (validationTest.valid === false) {
             // create error message and return out

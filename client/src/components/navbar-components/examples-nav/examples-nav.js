@@ -30,6 +30,20 @@ class ExamplesNav extends Component {
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">chat</i>Create a YouTube Transcript</div>
                                 <div class="collapsible-body">
+
+                                    <div className="iframe-wrapper">
+                                        <div className="iframe-container">
+                                            <iframe
+                                                src='https://www.youtube.com/embed/9i4bUjGg9ys?rel=0;'
+                                                frameBorder='0'
+                                                allow='encrypted-media'
+                                                allowFullScreen
+                                                title='video'
+                                            />
+                                        </div>
+                                        <p className="center grey-text text-darken-1"> <i>Video Example: Create a YouTube Transcript</i></p>
+                                    </div>
+
                                     <h5>Remove Timestamps and Concatenate </h5>
                                     <div className="example-code-text">
                                         <p>MultipleDeleteLine "(1)" "(2)"</p>
@@ -49,6 +63,20 @@ class ExamplesNav extends Component {
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">filter_drama</i>Extract Weather From weather.gov HTML</div>
                                 <div class="collapsible-body">
+
+                                    <div className="iframe-wrapper">
+                                        <div className="iframe-container">
+                                            <iframe
+                                                src='https://www.youtube.com/embed/fVsDxFqaKHk?rel=0;'
+                                                frameBorder='0'
+                                                allow='encrypted-media'
+                                                allowFullScreen
+                                                title='video'
+                                            />
+                                        </div>
+                                        <p className="center grey-text text-darken-1"> <i>Video Example: Extract Weather From weather.gov HTML</i></p>
+                                    </div>
+
                                     <p className="website-link">
                                         <span>Website: <a href="https://www.weather.gov/" target="_blank" rel="noopener noreferrer">weather.gov</a></span>
                                     </p>
@@ -89,6 +117,20 @@ class ExamplesNav extends Component {
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">assignment</i>Extract Invoice Information From "Tutorial" Invoice PDFs</div>
                                 <div class="collapsible-body">
+
+                                    <div className="iframe-wrapper">
+                                        <div className="iframe-container">
+                                            <iframe
+                                                src='https://www.youtube.com/embed/SY1ERK1HMOo?rel=0;'
+                                                frameBorder='0'
+                                                allow='encrypted-media'
+                                                allowFullScreen
+                                                title='video'
+                                            />
+                                        </div>
+                                        <p className="center grey-text text-darken-1"> <i>Video Example: Extract Invoice Information From "Tutorial" Invoice PDFs</i></p>
+                                    </div>
+
                                     <div className="example-code-text">
                                         <p>Concatenate</p>
                                         <p>DeleteBeginningUntilPhrase "(P.O.)"</p>
@@ -173,6 +215,20 @@ class ExamplesNav extends Component {
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">whatshot</i>Extract COVID-19 U.S. "Confirmed Cases" Data From World Health Organization PDFs</div>
                                 <div class="collapsible-body">
+
+                                <div className="iframe-wrapper">
+                                        <div className="iframe-container">
+                                            <iframe
+                                                src='https://www.youtube.com/embed/NJXDQWLnO2E?rel=0;'
+                                                frameBorder='0'
+                                                allow='encrypted-media'
+                                                allowFullScreen
+                                                title='video'
+                                            />
+                                        </div>
+                                        <p className="center grey-text text-darken-1"> <i>Video Example: Extract COVID-19 U.S. "Confirmed Cases" Data From World Health Organization PDFs</i></p>
+                                    </div>
+
                                     <p className="website-link">
                                         <span>John Hopkins GitHub repo of WHO Situation Report PDFs: <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank" rel="noopener noreferrer">COVID-19</a></span>
                                     </p>

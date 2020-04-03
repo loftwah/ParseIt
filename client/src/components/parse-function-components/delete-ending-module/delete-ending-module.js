@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './delete-ending-module.css';
 import * as actions from '../../../actions';
 import { deleteEndingValidation } from './delete-ending-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class DeleteEndingModule extends Component {
     constructor(props) {
@@ -41,7 +41,7 @@ class DeleteEndingModule extends Component {
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
-        stoppingCharacters = cleanDoubleQuotes(stoppingCharacters);
+        stoppingCharacters = cleanQuotationMarks(stoppingCharacters);
         const validationTest = deleteEndingValidation(stoppingCharacters);
         if (validationTest.valid === false) {
             // create error message and return out
@@ -68,7 +68,7 @@ class DeleteEndingModule extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         let { stoppingCharacters } = this.state;
 
-        stoppingCharacters = cleanDoubleQuotes(stoppingCharacters);
+        stoppingCharacters = cleanQuotationMarks(stoppingCharacters);
         const validationTest = deleteEndingValidation(stoppingCharacters);
         if (validationTest.valid === false) {
             // create error message and return out

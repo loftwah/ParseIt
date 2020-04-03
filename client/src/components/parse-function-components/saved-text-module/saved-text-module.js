@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './saved-text-module.css';
 import * as actions from '../../../actions';
 import { savedTextValidation } from './saved-text-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class SavedTextModule extends Component {
     constructor(props) {
@@ -34,7 +34,7 @@ class SavedTextModule extends Component {
         const { handleModuleCode, id, moduleActiveOff, completeModule } = this.props;
         let { savedTextName } = this.state;
 
-        savedTextName = cleanDoubleQuotes(savedTextName);
+        savedTextName = cleanQuotationMarks(savedTextName);
 
         const moduleCode = "SaveText \"(" + savedTextName + ")\"";
 

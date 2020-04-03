@@ -135,15 +135,17 @@ class InputText extends Component {
 
         // This Submit will also submit anything in our ParseIt code reducer (in case we want to update the text)
         const { initializeCodeToggle, moduleActiveOff, updateInputText, updateOutputText, updateLocalText,
-            updateContainerDisplay, togglePreviewOff, codeText } = this.props;
+            updateContainerDisplay, togglePreviewOff, codeText, previewToggle } = this.props;
         const { localInputText } = this.state;
 
-        // Before submitting, clean up all "odd" double-spaces inside text and name
+        // Before submitting, clean up all "odd" quotations inside text and name
         let cleanedLocalInput = [];
         for (let containerIdx = 0; containerIdx < localInputText.length; containerIdx++) {
             let container = localInputText[containerIdx];
             let containerText = container.text;
             let containerName = container.name;
+
+            // weird double quotes in text
             while (containerText.indexOf("”") !== -1) {
                 containerText = containerText.replace("”", "\"");
             }
@@ -152,12 +154,31 @@ class InputText extends Component {
                 containerText = containerText.replace("“", "\"");
             }
 
+            // weird apostrophes in text
+            while (containerText.indexOf("‘") !== -1) {
+                containerText = containerText.replace("‘", "'");
+            }
+
+            while (containerText.indexOf("’") !== -1) {
+                containerText = containerText.replace("’", "'");
+            }
+
+            // weird double quotes in name
             while (containerName.indexOf("”") !== -1) {
                 containerName = containerName.replace("”", "\"");
             }
 
             while (containerName.indexOf("“") !== -1) {
                 containerName = containerName.replace("“", "\"");
+            }
+
+            // weird apostrophes in name
+            while (containerName.indexOf("‘") !== -1) {
+                containerName = containerName.replace("‘", "'");
+            }
+
+            while (containerName.indexOf("’") !== -1) {
+                containerName = containerName.replace("’", "'");
             }
 
             container.text = containerText;
@@ -173,7 +194,6 @@ class InputText extends Component {
         updateOutputText(cleanedLocalInput);
         updateLocalText(cleanedLocalInput);
 
-        moduleActiveOff();
         togglePreviewOff();
 
         // Always change the display input to 0

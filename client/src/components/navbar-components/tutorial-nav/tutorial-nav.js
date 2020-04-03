@@ -23,6 +23,13 @@ class TutorialNav extends Component {
                     <div className="container-text">
                         <div className="center tutorial-header">Tutorial</div>
 
+                        <h4>ParseIt Overview: Stacking Modules</h4>
+
+                        <h6 className="text">ParseIt comes with 21 simple, open-ended modules that can either add, remove, replace, split or save text. <span className="yellow-highlight">The purpose of ParseIt is to "stack" these modules on top of each other, and have your input funneled through each module.</span> The parsing operation starts at the top module and ends at the bottom module. It is up to the user to choose the modules, module sequence and module inputs to form a solution.</h6>
+
+                        <h6 className="text">As you are manually creating modules, ParseIt automatically generates ParseIt Code of your module sequence in code-form. If you were working from scratch, this code is what you would use to load in all modules you are currently working with.</h6>
+
+
                         <h4>Workflow: Plain Text</h4>
 
                         <ol className="browser-default tutorial-list">

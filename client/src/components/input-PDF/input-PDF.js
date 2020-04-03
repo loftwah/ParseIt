@@ -71,7 +71,8 @@ class InputPDF extends Component {
 
     async fileUploadHandler() {
         const { selectedFiles, selectedFileNames } = this.state;
-        const { updateInputText, updateOutputText, updateContainerDisplay, initializeCodeToggle, codeText } = this.props;
+        const { updateInputText, updateOutputText, updateContainerDisplay,
+            initializeCodeToggle, codeText, moduleActiveOff } = this.props;
 
         if (selectedFiles.length === 0) {
             this.setState({
@@ -116,6 +117,8 @@ class InputPDF extends Component {
             let container = initInputPDF[containerIdx];
             let containerText = container.text;
             let containerName = container.name;
+
+            // weird double quotes in text
             while (containerText.indexOf("”") !== -1) {
                 containerText = containerText.replace("”", "\"");
             }
@@ -124,12 +127,31 @@ class InputPDF extends Component {
                 containerText = containerText.replace("“", "\"");
             }
 
+            // weird apostrophes in text
+            while (containerText.indexOf("‘") !== -1) {
+                containerText = containerText.replace("‘", "'");
+            }
+
+            while (containerText.indexOf("’") !== -1) {
+                containerText = containerText.replace("’", "'");
+            }
+
+            // weird double quotes in name
             while (containerName.indexOf("”") !== -1) {
                 containerName = containerName.replace("”", "\"");
             }
 
             while (containerName.indexOf("“") !== -1) {
                 containerName = containerName.replace("“", "\"");
+            }
+
+            // weird apostrophes in name
+            while (containerName.indexOf("‘") !== -1) {
+                containerName = containerName.replace("‘", "'");
+            }
+
+            while (containerName.indexOf("’") !== -1) {
+                containerName = containerName.replace("’", "'");
             }
 
             container.text = containerText;
@@ -139,6 +161,7 @@ class InputPDF extends Component {
 
         updateInputText(cleanedLocalInput);
         updateOutputText(cleanedLocalInput);
+        moduleActiveOff();
 
         // If there is ParseIt code, fire it up
         if (codeText !== "") {

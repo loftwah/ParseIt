@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './delete-between-characters-module.css';
 import * as actions from '../../../actions';
 import { deleteBetweenCharsValidation } from './delete-between-characters-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class DeleteBetweenCharactersModule extends Component {
     constructor(props) {
@@ -49,8 +49,8 @@ class DeleteBetweenCharactersModule extends Component {
         // "complete" module is also where ParseIt code updates 
         togglePreviewOff();
 
-        startCharacters = cleanDoubleQuotes(startCharacters);
-        endCharacters = cleanDoubleQuotes(endCharacters);
+        startCharacters = cleanQuotationMarks(startCharacters);
+        endCharacters = cleanQuotationMarks(endCharacters);
 
         const validationTest = deleteBetweenCharsValidation(startCharacters, endCharacters);
         if (validationTest.valid === false) {
@@ -78,8 +78,8 @@ class DeleteBetweenCharactersModule extends Component {
             toggleOutputTextOn, toggleSavedTextOff } = this.props;
         let { startCharacters, endCharacters } = this.state;
 
-        startCharacters = cleanDoubleQuotes(startCharacters);
-        endCharacters = cleanDoubleQuotes(endCharacters);
+        startCharacters = cleanQuotationMarks(startCharacters);
+        endCharacters = cleanQuotationMarks(endCharacters);
 
         const validationTest = deleteBetweenCharsValidation(startCharacters, endCharacters);
         if (validationTest.valid === false) {

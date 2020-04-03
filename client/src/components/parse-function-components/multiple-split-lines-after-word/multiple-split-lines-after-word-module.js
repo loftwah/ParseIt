@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './multiple-split-lines-after-word-module.css';
 import * as actions from '../../../actions';
 import { multipleSplitLinesAfterWordValidation } from './multiple-split-lines-after-word-module-validation';
-import { cleanDoubleQuotes } from '../universal-functions-for-modules/universal-functions-for-modules';
+import { cleanQuotationMarks } from '../universal-functions-for-modules/universal-functions-for-modules';
 
 class MultipleSplitLinesAfterWord extends Component {
     constructor(props) {
@@ -68,7 +68,7 @@ class MultipleSplitLinesAfterWord extends Component {
         const { lineNumBegin, lineMultiple, direction, instance } = this.state;
         let { charToSplit } = this.state;
 
-        charToSplit = cleanDoubleQuotes(charToSplit);
+        charToSplit = cleanQuotationMarks(charToSplit);
         const validationTest = multipleSplitLinesAfterWordValidation(lineNumBegin, lineMultiple, charToSplit, instance);
 
         if (validationTest.valid === false) {
@@ -99,7 +99,7 @@ class MultipleSplitLinesAfterWord extends Component {
         const { lineMultiple, direction, instance } = this.state;
         let { charToSplit, lineNumBegin } = this.state;
 
-        charToSplit = cleanDoubleQuotes(charToSplit);
+        charToSplit = cleanQuotationMarks(charToSplit);
         const validationTest = multipleSplitLinesAfterWordValidation(lineNumBegin, lineMultiple, charToSplit, instance);
 
         if (validationTest.valid === false) {
