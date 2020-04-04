@@ -1,6 +1,6 @@
 # ParseIt
 
-ParseIt eliminates the need of having to write software to extract information from large amounts of PDF documents or complex text data. Anyone can create useful parsing operations fast, regardless of technical ability.
+ParseIt eliminates the need of having to write software to extract information, or to perform data science, using large amounts of PDF documents or complex text data. Anyone can create useful parsing operations fast, regardless of technical ability.
 
 Using ParseIt, A non-technical business person can easily upload a large batch of similarly-structured PDF files (e.g. invoices, receipts, HR forms, analysis reports, etc.) or text, and be able to extract information quickly.
 
