@@ -42,12 +42,12 @@ class WhatIsParseItNav extends Component {
                         <h4>Parse Your Text Without Coding</h4>
 
                         <ul className="browser-default what-is-parse-it-list">
-                            <li><h6 className="text">Instead of creating parsing software, users have the ability to funnel their PDF and text data through a custom stack of parsing modules. All modules offer previews of how that module will manipulate a users' data.</h6></li>
+                            <li><h6 className="text">Instead of creating parsing software, users have the ability to funnel their PDF and text data through a custom sequence of parsing modules. All modules offer previews of how that module will manipulate a user's data.</h6></li>
                             <li><h6 className="text yellow-highlight">Using ParseIt, A non-technical business person can easily upload a large batch of similarly-structured PDF files (e.g. invoices, receipts, HR forms, analysis reports, etc.) or text, and be able to extract information quickly.</h6></li>
                         </ul>
 
-                        <img src={parseWithoutCodeImg} alt="" />
-                        <p className="image-caption center grey-text text-darken-1"><i>All ParseIt Modules have a "preview" option to help you visualize how that module will parse your text, before you actually use the module.</i></p>
+                        <img className="medium-img" src={parseWithoutCodeImg} alt="" />
+                        <p className="medium-image-caption center grey-text text-darken-1"><i>All ParseIt Modules have a "preview" option to help you visualize how that module will parse your text, before you actually use the module.</i></p>
                         <span className="image-caption-video center">
                             Video: <a href="https://www.youtube.com/watch?v=IROfLEoTVHM" target="_blank" rel="noopener noreferrer">Parsing Weather Text Without Code and With ParseIt Code</a>
                         </span>
@@ -67,7 +67,7 @@ class WhatIsParseItNav extends Component {
                         <h4>Simple, Optional ParseIt Code</h4>
 
                         <ul className="browser-default what-is-parse-it-list">
-                            <li><h6 className="text">ParseIt offers its own optional, user-friendly coding language to allow users to load in modules instantly.</h6></li>
+                            <li><h6 className="text">ParseIt offers its own optional, user-friendly coding language that represents your sequence of modules in code-form. It can be used to allow users to load in modules instantly or make quick edits.</h6></li>
                         </ul>
 
                         <h5>How ParseIt Code Works</h5>

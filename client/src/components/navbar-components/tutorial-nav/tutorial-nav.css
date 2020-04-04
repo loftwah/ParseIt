@@ -9,7 +9,7 @@ div.tutorial-container {
 }
 
 div.tutorial-header {
-    font-size: max(4vw, 40px);
+    font-size: calc(2vw + 35px);
     padding-top: 10px;
     font-weight: 500;
     font-family: Georgia, 'Times New Roman', Times, serif
