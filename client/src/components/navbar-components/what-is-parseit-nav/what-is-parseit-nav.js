@@ -24,7 +24,7 @@ class WhatIsParseItNav extends Component {
                 <div className="what-is-parseit-container">
                     <div className="container-text">
                         <div className="center parse-it-question">What is ParseIt?</div>
-                        <div className="center parse-it-answer">ParseIt eliminates the need of having to write software to extract information, or to perform data science, using large amounts of PDF documents or complex text data. Anyone can create useful parsing operations fast, regardless of technical ability.</div>
+                        <div className="center parse-it-answer">ParseIt eliminates the need of having to write software to extract information, or to perform data science, for large amounts of PDF documents or complex text data. Anyone can create useful parsing operations fast, regardless of technical ability.</div>
 
                         <div className="iframe-wrapper">
                             <div className="iframe-container">

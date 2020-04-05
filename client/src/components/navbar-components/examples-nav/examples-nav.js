@@ -131,6 +131,10 @@ class ExamplesNav extends Component {
                                         <p className="center grey-text text-darken-1"> <i>Video Example: Extract Invoice Information From "Tutorial" Invoice PDFs</i></p>
                                     </div>
 
+                                    <p className="website-link">
+                                        <span>Tutorial PDFs: <a href="https://github.com/MikeM711/ParseIt/tree/master/demo/tutorial-invoices" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+                                    </p>
+
                                     <div className="example-code-text">
                                         <p>Concatenate</p>
                                         <p>DeleteBeginningUntilPhrase "(P.O.)"</p>
